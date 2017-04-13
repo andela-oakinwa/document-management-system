@@ -1,0 +1,11 @@
+{
+  "name": "document-management-system",
+  "version": "1.0.0",
+  "description": "A full-stack document management system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oluwafemi Akinwa",
+  "license": "MIT"
+}
