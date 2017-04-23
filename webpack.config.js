@@ -2,8 +2,9 @@ import path from 'path';
 import webpack from 'webpack';
 
 module.exports = {
-  entry: '/app.js',
+  entry: './app.js',
   output: { path: __dirname, filename: 'bundle.js' },
+  watch: true,
   module: {
     loaders: [
       {
