@@ -1,0 +1,23 @@
+language: node_js
+
+node_js:
+  - stable
+
+install:
+  - npm install
+
+script:
+  - npm test
+
+after_success: 'npm run coveralls'
+
+notifications:
+  email:
+    recipients:
+      - oluwafemi.akinwa@andela.com
+      - kaiser.phemi@protonmail.ch
+  slack:
+    rooms:
+      - andela: KtLgTrjrNVcoO1cr9tCjYcEh
+    on_success: change # default: always
+    on_failure: always # default: always
