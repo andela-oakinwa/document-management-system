@@ -4,4 +4,4 @@
 [![Issue Count](https://codeclimate.com/github/andela-oakinwa/document-management-system/badges/issue_count.svg)](https://codeclimate.com/github/andela-oakinwa/document-management-system)
 [![Coverage Status](https://coveralls.io/repos/github/andela-oakinwa/document-management-system/badge.svg?branch=master)](https://coveralls.io/github/andela-oakinwa/document-management-system?branch=master)
 
-- *This is a full stack Document Management System that makes use of RESTful APIs
+- This is a full stack Document Management System that makes use of RESTful APIs
