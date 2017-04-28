@@ -2,4 +2,3 @@
 webpack.config.js
 karma.conf.js
 out/
-server.js
