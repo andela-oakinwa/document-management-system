@@ -1,23 +1,34 @@
-import path from 'path';
-import webpack from 'webpack';
+const path = require('path'),
+webpack = require('webpack');
 
 module.exports = {
-  entry: './app.js',
-  output: { path: __dirname, filename: 'bundle.js' },
+  entry: './server/server.js',
+  output: { path: __dirname, filename: './public/build/bundle.js' },
   watch: true,
   module: {
-    loaders: [
+    rules: [
       {
-        test: /.jsx?$/,
+        test: /\.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react']
-        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js']
   }
-};
+}
