@@ -1,34 +1,31 @@
-const path = require('path'),
-webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
-  entry: './server/server.js',
-  output: { path: __dirname, filename: './public/build/bundle.js' },
+  entry: './server/Server.js',
+  output: { path: __dirname, filename: './client/public/build/Bundle.js' },
   watch: true,
   module: {
     rules: [
       {
         test: /\.js?$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'eslint-loader' }
+        ]
       },
       {
         test: /\.css$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true
-            }
+          { loader: 'style-loader' },
+          { loader: 'css-loader',
+            options: { modules: true }
           }
         ]
       }
     ]
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['*', '.js', '.css']
   }
-}
+};
