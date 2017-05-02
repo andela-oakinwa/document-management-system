@@ -8,8 +8,11 @@ install:
 
 script:
   - npm test
+  - make test-coveralls
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
 
-after_success: 'npm run coveralls'
+after_success: 
+  - npm run coveralls
 
 notifications:
   email:
