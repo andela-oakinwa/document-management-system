@@ -74,10 +74,7 @@ Resources related to users account access
 
 ### Deletes A User [DELETE]
 
-+ Response 200 
-    {
-
-    }
++ Response 204
 
 # Group Documents
 Resources related to documents attached to users accounts
@@ -131,7 +128,7 @@ Resources related to documents attached to users accounts
 
 ### Deletes A Document [DELETE]
 
-+ Response 200
++ Response 204
 
 ## Find All Documents For User [/users/{user_id}/documents]
 
