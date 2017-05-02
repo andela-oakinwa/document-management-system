@@ -1,80 +1,155 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://doqman.herokuapp.com/
 
-# Polls API
+# Doqman
+API for the Doqman Document Management System
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+# Group Users
+Resources related to users account access
 
-## Questions Collection [/questions]
+## User Login [/users/login]
 
-### List All Questions [GET]
+### Logs A User In [POST]
+
++ Response 202 (application/json)
+    {
+
+    }
+
+## User Logout [/users/logout]
+
+### Logs A User Out [POST]
 
 + Response 200 (application/json)
+    {
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+    }
 
-### Create a New Question [POST]
+## Create User [/users/]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+### Creates a New User [POST]
 
 + Response 201 (application/json)
+    {
 
-    + Headers
+    }
 
-            Location: /questions/2
+## Instances of User [/users/]
 
-    + Body
+### Find Matching Instances of User [GET]
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ Response 200 
+    {
+
+    }
+
+## Users Pagination [/users/?limit={integer}&offset={integer}]
+
+### Pagination For Users [GET]
+
++ Response 200
+    {
+
+    }
+
+## Find User [/users/{user_id}]
+
+### Finds A User With The Specified ID [GET]
+
++ Response 200 (application/json)
+    {
+
+    }
+
+## Update User [/users/{user_id}]
+
+### Updates A User's Attributes [PUT]
+
++ Response 200 (application/json)
+    {
+
+    }
+
+## Delete User [/users/{user_id}]
+
+### Deletes A User [DELETE]
+
++ Response 204
+
+# Group Documents
+Resources related to documents attached to users accounts
+
+## Create Document [/documents/]
+
+### Creates A New Document Instance [POST]
+
++ Response 200 
+    {
+
+    }
+
+## Get Document [/documents/]
+
+### Find Matching Instances Of Document [GET]
+
++ Response 200 
+    {
+
+    }
+
+## Document Pagination [/documents/?limit={integer}&offset={integer}]
+
+### Pagination For Document List [GET]
+
++ Response 200 
+    {
+
+    }
+
+## Find Document [/documents/{document_id}]
+
+### Finds A Document [GET]
+
++ Response 200
+    {
+
+    }
+
+## Update Document Attributes [/documents/{document_id}]
+
+### Updates A Document's Attribute [PUT]
+
++ Response 200 
+    {
+
+    }
+
+## Delete Document [/documents/{document_id}]
+
+### Deletes A Document [DELETE]
+
++ Response 204
+
+## Find All Documents For User [/users/{user_id}/documents]
+
+### Find All Documents Belonging To A User [GET]
+
++ Response 200 (application/json)
+    {
+
+    }
+
+# Group Search
+
+## Search For A User [/search/users/?q={username}]
+
+### Search For A User [GET]
+
++ Response 200 (application/json)
+    {
+
+    }
+
+## Search For A Document [/search/documents/?q={doctitle}]
+
+### Search For A Document [GET]
