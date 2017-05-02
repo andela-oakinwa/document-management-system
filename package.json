@@ -36,16 +36,21 @@
     "eslint-plugin-react": "^6.10.3",
     "express": "^4.15.2",
     "fs": "0.0.1-security",
+    "jade": "^1.11.0",
     "jasmine-core": "^2.6.0",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.0.1",
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "^1.1.0",
     "karma-opera-launcher": "^1.0.0",
     "karma-safari-launcher": "^1.0.0",
+    "karma-verbose-reporter": "0.0.6",
+    "node-sass": "^4.5.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1"
   },
@@ -53,6 +58,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "jade": "^1.11.0",
-    "js-logger": "^1.3.0"
+    "js-logger": "^1.3.0",
+    "karma-webpack": "^2.0.3"
   }
 }
