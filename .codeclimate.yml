@@ -1,0 +1,29 @@
+engines:
+  duplication:
+    enabled: false
+  csslint:
+    enabled: true
+    checks:
+      important:
+        enabled: false
+      box-sizing:
+        enabled: false
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.css"
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+exclude_paths:
+- node_modules/
+- server/tests/
