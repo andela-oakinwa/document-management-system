@@ -1,6 +1,4 @@
 engines:
-  duplication:
-    enabled: false
   csslint:
     enabled: true
     checks:
@@ -15,6 +13,9 @@ engines:
       - javascript
   eslint:
     enabled: true
+    checks:
+      import/no-unresolved:
+        enabled: false
   fixme:
     enabled: true
 ratings:
