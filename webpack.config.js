@@ -18,7 +18,8 @@ module.exports = {
         test: /\.js?$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader!eslint-loader' }
+          { loader: 'babel-loader' },
+          { loader: 'eslint-loader' }
         ]
       },
       {
@@ -32,7 +33,7 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'style-loader!css-loader!sass-loader' }
+          { loader: 'sass-loader' }
         ]
       }
     ]
