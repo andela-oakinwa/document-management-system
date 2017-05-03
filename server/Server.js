@@ -7,9 +7,9 @@ import Sequelize from 'sequelize';
 import app from './config/App';
 
 /**
- * Define database connection
+ * Define database connection and server port
  */
-const connection = new Sequelize('doqman_test', 'postgres', 'admin', { 
+const connection = new Sequelize('doqman_test', 'postgres', 'admin', {
     host: 'localhost',
     dialect: 'postgres'
   }),
