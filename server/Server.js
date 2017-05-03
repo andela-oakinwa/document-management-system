@@ -3,9 +3,17 @@
  */
 import http from 'http';
 import logger from 'js-logger';
+import Sequelize from 'sequelize';
 import app from './config/App';
 
-const port = process.env.PORT || 3000;
+/**
+ * Define database connection
+ */
+const connection = new Sequelize('doqman_test', 'postgres', 'admin', { 
+    host: 'localhost',
+    dialect: 'postgres'
+  }),
+  port = process.env.PORT || 3000;
 
 logger.useDefaults();
 app.set('port', port);

@@ -5,6 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 
+
 // Create an instance of the express app
 const app = express();
 
@@ -23,7 +24,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/users', userRouter);
-app.use('/documents', docRouter);
+app.use('/documents', documentRouter);
 app.use('/roles', roleRouter);
 
 app.get('*', (request, response) => {
