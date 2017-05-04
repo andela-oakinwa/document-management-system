@@ -268,7 +268,12 @@ Resources related to documents attached to users accounts
                 "email": "femi@mail.com"
             },
             "documents": {
-                ""
+                "count": 1,
+                "rows": {
+                    "documentId": 3,
+                    "title": "Manifest",
+                    
+                }
             }
         }
     }
