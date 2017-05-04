@@ -17,7 +17,8 @@
     "env": {
       "node": true,
       "es6": true,
-      "mocha": true
+      "mocha": true,
+      "jasmine": true
     },
     "rules": {
       "max-len": ["error", 80, 4],
