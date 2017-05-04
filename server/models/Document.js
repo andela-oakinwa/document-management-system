@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isIn: {
           values: [['public', 'private', 'role']],
-          message: 'public, private or role required'
+          message: 'public, private or role required.'
         },
       }
     },
