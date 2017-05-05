@@ -20,7 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (request, response) => {
-  response.status(200).send({ message: 'Welcome to Doqman Document Management System' });
+  response.status(200)
+  .send({ message: 'Welcome to Doqman Document Management System' });
 });
 
 app.use('/users', userRouter);
