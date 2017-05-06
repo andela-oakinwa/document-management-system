@@ -30,6 +30,7 @@
       "consistent-return": 0,
       "no-param-reassign": 0,
       "comma-dangle": 0,
+      "no-underscore-dangle": [2, { "allow": [] }],
       "curly": ["error", "multi-line"],
       "import/no-unresolved": 0,
       "import/extensions": 0,
