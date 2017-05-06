@@ -7,16 +7,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
-        value: true,
-        message: 'Role already exist.'
+        args: true,
+        msg: 'Role already exist.'
       },
       validate: {
         is: {
-          pattern: /\w+/g,
-          message: 'Input a valid title.'
+          args: /\w+/g,
+          msg: 'Input a valid title.'
         },
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         }
       }
     }

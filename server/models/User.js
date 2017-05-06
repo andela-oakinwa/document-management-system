@@ -5,21 +5,17 @@ import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    userId: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     userName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
-        value: true,
-        message: 'Username already exist.'
+        args: true,
+        msg: 'Username already exist.'
       },
       validate: {
         is: {
-          pattern: /\w+/g,
-          message: 'Input a valid username.'
+          args: /\w+/g,
+          msg: 'Input a valid username.'
         }
       }
     },
@@ -28,11 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         },
         is: {
-          pattern: /\w+/g,
-          message: 'Input a valid firstname.'
+          args: /\w+/g,
+          msg: 'Input a valid firstname.'
         }
       }
     },
@@ -41,11 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         },
         is: {
-          pattern: /\w+/g,
-          message: 'Input a valid firstname.'
+          args: /\w+/g,
+          msg: 'Input a valid firstname.'
         }
       }
     },
@@ -54,12 +50,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         value: true,
-        message: 'Email already exist.'
+        msg: 'Email already exist.'
       },
       validate: {
         isEmail: {
           value: true,
-          message: 'Input a valid email address.'
+          msg: 'Input a valid email address.'
         }
       }
     },

@@ -3,16 +3,12 @@
  */
 module.exports = (sequelize, DataTypes) => {
   const Document = sequelize.define('Document', {
-    documentId: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         }
       }
     },
@@ -26,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'public',
       validate: {
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         },
         isIn: {
-          values: [['public', 'private', 'role']],
-          message: 'public, private or role required.'
+          args: [['public', 'private', 'role']],
+          msg: 'public, private or role required.'
         },
       }
     },
@@ -39,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          message: 'This field cannot be empty.'
+          msg: 'This field cannot be empty.'
         }
       }
     },
