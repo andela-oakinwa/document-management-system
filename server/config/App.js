@@ -1,5 +1,5 @@
 /**
- * Dependencies declared
+ * Dependencies called
  */
 import express from 'express';
 import bodyParser from 'body-parser';
