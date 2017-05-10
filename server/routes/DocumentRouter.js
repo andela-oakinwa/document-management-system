@@ -1,7 +1,13 @@
+/**
+ * Dependencies declared
+ */
 import express from 'express';
 import DocumentController from '../controllers/DocumentController';
 import Authentication from '../middlewares/Authentication';
-
+/**
+ * Document router object
+ * @type {Object}
+ */
 const documentRouter = express.Router();
 /**
  * Default routes for creating document
