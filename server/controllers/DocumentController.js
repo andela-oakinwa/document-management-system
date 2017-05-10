@@ -49,6 +49,7 @@ const DocumentController = {
    * @return {Object} Response object
    */
   getAllDocument(request, response) {
+    
   
   },
   /**
