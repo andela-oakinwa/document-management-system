@@ -18,7 +18,7 @@ roleRouter.route('/')
     RoleController.createRole)
   .get(Authentication.verifyToken,
     Authentication.checkAdminRights,
-    RoleController.getAll);
+    RoleController.getAllRole);
 /**
  * Routes for accessing, creating and deleting role
  */
@@ -28,7 +28,9 @@ roleRouter.route('/:id')
     RoleController.updateRole)
   .get(Authentication.verifyToken,
     Authentication.checkAdminRights,
-    )
-  .delete();
+    RoleController.getRole)
+  .delete(Authentication.verifyToken,
+    Authentication.checkAdminRights,
+    RoleController.deleteRole);
 
 export default roleRouter;
