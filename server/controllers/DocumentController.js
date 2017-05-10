@@ -70,7 +70,7 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  delete() {
+  delete(request, response) {
 
   }
 
