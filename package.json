@@ -9,7 +9,7 @@
     "clean-dist": "rimraf ./client/public/dist && mkdir client/public/dist",
     "clean-build": "rimraf ./client/public/build && mkdir client/public/build",
     "clean": "npm-run-all clean-dist clean-build",
-    "test": "babel-node server/tests/**/*.js",
+    "test": "jasmine-node server/tests/**/*.js",
     "babel": "babel",
     "server": "nodemon server/Server.js",
     "webpack": "webpack -p --watch --progress --colors",
