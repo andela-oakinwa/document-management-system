@@ -4,12 +4,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import userRouter from './UserRouter';
+import roleRouter from './RoleRouter';
+import documentRouter from './DocumentRouter';
 
 
 // Create an instance of the express app
 const app = express();
 
-// Disables logging sensitive info to the URL
+// Disables logging sensitive
 app.disable('x-powered-by');
 
 // Log requests to the console.
