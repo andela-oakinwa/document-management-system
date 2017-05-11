@@ -105,7 +105,7 @@ const UserController = {
    * @param  {Object} response Response object
    * @return {Object}          Returned object
    */
-  getAllUser(request, response) {
+  getAllUsers(request, response) {
     db.User
       .findAndCountAll(request.doqmanFilter)
       .then((users) => {
