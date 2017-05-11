@@ -1,9 +1,11 @@
 /**
- * Document Controller
+ * Dependencies declared
  */
 import db from '../models';
 import Helper from '../helpers/Helper';
-
+/**
+ * Document Controller
+ */
 const DocumentController = {
 
   /**
@@ -13,18 +15,19 @@ const DocumentController = {
    * @param {Object} response Response object
    * @returns {Object} Response object
    */
-  create(request, response) {
+  createDocument(request, response) {
     db.Document
       .create(request.documentInput)
-        .then((document) => {
-          document = Helper.getDocument(document);
+        .then((content) => {
+          content = Helper.getDocument(content);
           response.status(201)
             .send({
               message: 'Your document was created succesfully.',
-              document
+              content
             });
         })
-        .catch(error => response.status(500).send(error.errors));
+        .catch(error => response.status(500)
+          .send(error.errors));
   },
   /**
    * Get a document by Id
@@ -34,11 +37,11 @@ const DocumentController = {
    * @return {Object} Response object
    */
   getDocument(request, response) {
-    const document = Helper.getDocument(request.singleDocument);
+    const content = Helper.getDocument(request.singleDocument);
     return response.status(200)
       .send({
-        message: 'This document was retrieved succesfully',
-        document
+        message: 'This document was retrieved succesfully.',
+        content
       });
   },
   /**
@@ -59,10 +62,10 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  update(request, response) {
+  updateDocument(request, response) {
     request.documentInstance.update()
     
-  }, 
+  },
   /**
    * Delete document by Id
    * Route: DELETE /documents/:id
@@ -70,8 +73,13 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  delete(request, response) {
-
+  deleteDocument(request, response) {
+    return request.body.document.destroy()
+      .then(() => {
+        response.status(200)
+        .send({
+          message: `Document with id:${request.params.id} has been deleted` });
+      });
   }
 
 };
