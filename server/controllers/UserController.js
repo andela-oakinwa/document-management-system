@@ -36,11 +36,72 @@ const UserController = {
           });
       });
   },
-  login(request, response) {},
-  logout(request, response) {},
-  getUser(request, response) {},
+  /**
+   * User login
+   * Route:  POST: /users/login
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @return {Object}          Return object
+   */
+  login(request, response) {
+    db.User
+      .findOne({ where: { email: request.body.email } })
+      .then((user) => {
+        if (user && user.validPassword(request.body.password)) {
+          user.update({ active: true });
+          const token = Authentication.getToken(user);
+          user = Helper.getUserProfile(user);
+          return response.status(200)
+            .send({
+              message: 'You have successfully logged in.',
+              token,
+              user
+            });
+        }
+        response.status(401)
+          .send({
+            message: 'Incorrect login credentials. Please try again.'
+          });
+      });
+  },
+  /**
+   * User logout
+   * Route: POST: /users/logout
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @return {Object}          Return object
+   */
+  logout(request, response) {
+    db.User
+      .findById(request.tokenDecode.userId)
+      .then((user) => {
+        user.update({ active: false })
+          .then(() => {
+            response.status(200)
+              .send({
+                message: 'You have successfully logged out.'
+              });
+          });
+      });
+  },
+  /**
+   * Get a user by Id
+   * Route: GET: /users/:id
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @return {Object}          Return object
+   */
+  getUser(request, response) {
+
+  },
   getAllUser(request, response) {},
   updateUser(request, response) {},
+  /**
+   * Delete a user by id
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @return {Object}          Return object
+   */
   deleteUser(request, response) {}
   
 };
