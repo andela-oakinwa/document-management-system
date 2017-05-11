@@ -13,32 +13,32 @@ const userRouter = express.Router();
  * Create user route
  */
 userRouter.route('/')
-  .get(Authentication.verifyToken,
-    Authentication.validateSearch,
+  .get(Authentication.verifyToken, Authentication.validateSearch,
     UserController.getAllUser)
-  .post(Authentication.verifyUserInput,
-    UserController.createUser);
+  .post(Authentication.verifyUserInput, UserController.createUser);
 /**
  * Login route
  */
 userRouter.route('/login')
-  .post();
+  .post(Authentication.verifyLogin, UserController.login);
 /**
  * Logout route
  */
 userRouter.route('/logout')
-  .post();
+  .post(Authentication.verifyToken, UserController.logout);
 /**
- * Search user route
+ * Route for retrieving, modification and deletion of user
  */
-userRouter.get('/search');
-
 userRouter.route('/:id')
-  .get()
-  .put()
-  .delete();
-
+  .get(Authentication.verifyToken, UserController.getUser)
+  .put(Authentication.verifyToken, Authentication.verifyUpdate,
+    UserController.updateUser)
+  .delete(Authentication.verifyToken, Authentication.checkAdminRights,
+    UserController.deleteUser);
+/**
+ * Get all user document routes
+ */
 userRouter.route('/:id/documents')
-  .get();
+  .get(Authentication.verifyToken, UserController.getUserDocuments);
 
 export default userRouter;
