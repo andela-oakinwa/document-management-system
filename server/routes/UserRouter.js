@@ -9,17 +9,28 @@ import Authentication from '../middlewares/Authentication';
  * @type {Object}
  */
 const userRouter = express.Router();
-
+/**
+ * Create user route
+ */
 userRouter.route('/')
-  .get()
-  .post();
-
+  .get(Authentication.verifyToken,
+    Authentication.validateSearch,
+    UserController.getAllUser)
+  .post(Authentication.verifyUserInput,
+    UserController.createUser);
+/**
+ * Login route
+ */
 userRouter.route('/login')
   .post();
-
+/**
+ * Logout route
+ */
 userRouter.route('/logout')
   .post();
-
+/**
+ * Search user route
+ */
 userRouter.get('/search');
 
 userRouter.route('/:id')
