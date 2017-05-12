@@ -11,7 +11,7 @@
     "clean": "npm-run-all clean-dist clean-build",
     "test": "jasmine-node server/tests/**/*.js",
     "babel": "babel",
-    "server": "nodemon server/Server.js",
+    "server": "node server/Server.js",
     "webpack": "webpack -p --watch --progress --colors",
     "webpack-dev-server": "webpack-dev-server --progress --colors --inline --watch",
     "coverage": "`npm bin`/jasmine-node cover server/tests/**/*.js",
