@@ -1,7 +1,7 @@
 /**
  * Dependencies declared
  */
-import db from '../models';
+import db from '../models/Index';
 import Helper from '../helpers/Helper';
 /**
  * Document Controller
@@ -51,9 +51,25 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  getAllDocument(request, response) {
-    
-  
+  getAllDocuments(request, response) {
+    request.doqmanFilter.attributes = Helper.getDocumentAttr();
+    db.Document
+      .findAndCountAll(request.doqmanFilter)
+      .then((documents) => {
+        const constraint = {
+          count: documents.count,
+          limit: request.doqmanFilter.limit,
+          offset: request.doqmanFilter.offset
+        };
+        delete documents.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            message: 'You have successfully retrieved all documents.',
+            documents,
+            paging
+          });
+      });
   },
   /**
    * Updates a document/document attributes by Id
@@ -63,8 +79,17 @@ const DocumentController = {
    * @return {Object} Response object
    */
   updateDocument(request, response) {
-    request.documentInstance.update()
-    
+    request.documentInstance.update(request.body)
+      .then((updatedDocument) => {
+        response.status(200)
+          .send({
+            message: 'This document has been updated successfully.',
+            updatedDocument
+          });
+      })
+      .catch((error) => {
+        response.status(500).send(error.errors);
+      });
   },
   /**
    * Delete document by Id
