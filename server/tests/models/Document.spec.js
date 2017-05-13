@@ -5,6 +5,7 @@ import db from '../../models';
 import helper from '../helper/test.helper';
 
 
+
 describe('Document Model', () => {
   let userDocument;
   let regularUser;
