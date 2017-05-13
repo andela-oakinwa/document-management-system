@@ -13,8 +13,8 @@ const userRouter = express.Router();
  * Create user route
  */
 userRouter.route('/')
-  .get(Authentication.verifyToken, Authentication.validateSearch,
-    UserController.getAllUser)
+  .get(Authentication.verifyToken,
+    UserController.getAllUsers)
   .post(Authentication.verifyUserInput, UserController.createUser);
 /**
  * Login route
@@ -31,7 +31,7 @@ userRouter.route('/logout')
  */
 userRouter.route('/:id')
   .get(Authentication.verifyToken, UserController.getUser)
-  .put(Authentication.verifyToken, Authentication.verifyUpdate,
+  .put(Authentication.verifyToken,
     UserController.updateUser)
   .delete(Authentication.verifyToken, Authentication.checkAdminRights,
     UserController.deleteUser);
