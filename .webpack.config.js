@@ -5,8 +5,8 @@
 const path = require('path'),
   ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
-  entry: ['./client/src/Index.js'],
+export default {
+  entry: ['./client/src/Index.js', './client/src/style/Index.scss'],
   output: { path: __dirname, filename: './client/public/build/Bundle.js' },
   watch: true,
   devServer: {
@@ -39,7 +39,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.css']
+    extensions: ['*', '.js', '.css', '.jsx']
   },
   resolveLoader: {
       modules: ["node_modules"],
