@@ -14,8 +14,8 @@
     "server": "nodemon --exec babel-node server/Server.js",
     "webpack": "webpack -p --watch --progress --colors",
     "webpack-dev-server": "webpack-dev-server --progress --colors --inline --watch",
-    "coverage": "`npm bin`/jasmine-node cover server/tests/**/*.js",
-    "coveralls": "istanbul cover jasmine-node --captureExceptions server/tests/**/*.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "cover": "istanbul cover _mocha server/tests/**/*.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Oluwafemi Akinwa",
   "repository": {
@@ -58,6 +58,7 @@
     "karma-verbose-reporter": "0.0.6",
     "karma-webpack": "^2.0.3",
     "mocha": "^3.3.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "node-sass": "^4.5.2",
     "path": "^0.12.7",
     "rimraf": "^2.6.1",
