@@ -1,6 +1,7 @@
 /**
  * Dependencies called
  */
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
@@ -34,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  */
 app.get('/', (request, response) => {
   response.status(200)
-  .send({ message: 'Welcome to Doqman Document Management System' });
+  .sendFile(path.join(__dirname, '../../client/src/views/Index.html'));
 });
 app.use('/users', userRouter);
 app.use('/documents', documentRouter);
