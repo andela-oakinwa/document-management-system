@@ -1,5 +1,6 @@
 /**
  * Roles model
+ * @return {Object} Role
  */
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {

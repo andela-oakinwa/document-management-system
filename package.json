@@ -9,13 +9,13 @@
     "clean-dist": "rimraf ./client/public/dist && mkdir client/public/dist",
     "clean-build": "rimraf ./client/public/build && mkdir client/public/build",
     "clean": "npm-run-all clean-dist clean-build",
-    "test": "jasmine-node server/tests/**/*.js",
+    "test": "mocha --autotest server/tests/**/*.js",
     "babel": "babel",
-    "server": "nodemon server/Server.js",
+    "server": "nodemon --exec babel-node server/Server.js",
     "webpack": "webpack -p --watch --progress --colors",
     "webpack-dev-server": "webpack-dev-server --progress --colors --inline --watch",
-    "coverage": "`npm bin`/jasmine-node cover server/tests/**/*.js",
-    "coveralls": "istanbul cover jasmine-node --captureExceptions server/tests/**/*.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "cover": "istanbul cover _mocha server/tests/**/*.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Oluwafemi Akinwa",
   "repository": {
@@ -32,6 +32,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "clean-webpack-plugin": "^0.1.16",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.0",
@@ -55,6 +57,8 @@
     "karma-safari-launcher": "^1.0.0",
     "karma-verbose-reporter": "0.0.6",
     "karma-webpack": "^2.0.3",
+    "mocha": "^3.3.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "node-sass": "^4.5.2",
     "path": "^0.12.7",
     "rimraf": "^2.6.1",
@@ -70,6 +74,7 @@
     "express": "^4.15.2",
     "jade": "^1.11.0",
     "js-logger": "^1.3.0",
+    "jsonwebtoken": "^7.4.0",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0",
     "pg": "^6.1.5",
@@ -77,6 +82,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "sequelize": "^3.30.4",
-    "sequelize-cli": "^2.7.0"
+    "sequelize-cli": "^2.7.0",
+    "validator": "^7.0.0"
   }
 }

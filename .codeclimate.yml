@@ -7,7 +7,7 @@ engines:
       box-sizing:
         enabled: false
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - javascript
@@ -21,10 +21,10 @@ engines:
 ratings:
   paths:
   - "**.css"
-  - "**.inc"
   - "**.js"
   - "**.jsx"
   - "**.module"
 exclude_paths:
 - node_modules/
 - server/tests/
+- out/
