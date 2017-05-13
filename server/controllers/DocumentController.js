@@ -106,7 +106,6 @@ const DocumentController = {
           message: `Document with id:${request.params.id} has been deleted` });
       });
   }
-
 };
 
 export default DocumentController;
