@@ -2,8 +2,9 @@
  * Dependencies declared
  * @type {Object}
  */
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 const path = require('path'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin');
+  
 
 export default {
   entry: ['./client/src/Index.js', './client/src/style/Index.scss'],
