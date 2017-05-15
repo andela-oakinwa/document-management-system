@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  */
 app.get('/', (request, response) => {
   response.status(200)
-  .sendFile(path.join(__dirname, '../../client/src/views/Index.html'));
+  .sendFile(path.join(__dirname, '../../client/public/Index.html'));
 });
 app.use('/users', userRouter);
 app.use('/documents', documentRouter);
