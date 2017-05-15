@@ -1,48 +1,60 @@
 /**
  * Dependencies declared
- * @type {Object}
  */
+import path from 'path'
+import Webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-const path = require('path'),
+const extractPlugin = new ExtractTextPlugin ({
+  filename: 'Index.css'
+});
   
-module.exports = {
-  entry: ['./client/src/Index.js', './client/src/style/Index.scss'],
-  output: { path: __dirname, filename: './client/public/build/Bundle.js' },
-  watch: true,
-  devServer: {
-    contentBase: 'client/public/'
+export default {
+  entry: ['./client/src/Index.jsx', './client/src/style/Index.scss'],
+  output: { 
+    path: path.resolve(__dirname, 'client/public/build/'),
+    filename: 'Bundle.js',
+    publicPath: '/client/public/'
   },
+  watch: true,
   module: {
     rules: [
       {
         test: /\.js?$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader' },
-          { loader: 'eslint-loader' }
-        ]
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'style-loader!css-loader' }
+          { 
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015']
+            }
+          },
+          { 
+            loader: 'eslint-loader'
+          }
         ]
       },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'sass-loader' }
-        ]
+        use: extractPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
+  plugins: [
+    extractPlugin,
+    new Webpack.optimize.UglifyJsPlugin()
+  ],
   resolve: {
-    extensions: ['*', '.js', '.css', '.jsx']
+    extensions: ['*', '.js', '.jsx', '.css', '.scss']
   },
   resolveLoader: {
-      modules: ["node_modules"],
-      extensions: ["*", ".js"]
+      modules: ['node_modules'],
+      extensions: ['*', '.js']
   }
 };
