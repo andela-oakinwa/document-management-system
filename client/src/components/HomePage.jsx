@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+import NavigationBar from './navigation_bar/NavigationBar';
 
 class HomePage extends Component {
-    render() {
-        return (
-            <div>
-            <p>Main page</p>
-            </div>
-        );
-    };
+  render() {
+    return(
+      <NavigationBar />,
+      <p>Welcome to my app</p>
+    );
+  }
 }
 
 export default HomePage;

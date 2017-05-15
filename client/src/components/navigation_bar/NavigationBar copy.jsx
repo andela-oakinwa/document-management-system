@@ -1,6 +1,10 @@
+/**
+ * Dependencies declared
+ */
 import React, { Component } from 'react';
-
-
+/**
+ * 
+ */
 class NavigationBar extends Component {
   render() {
     return(
