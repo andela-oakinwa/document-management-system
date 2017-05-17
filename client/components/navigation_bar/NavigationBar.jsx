@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-class NavigationBar extends Component {
+class NavigationBar extends React.Component {
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
-    return (
-      <nav>
+    return(
+      <nav role="navigation">
         <div className="nav-wrapper">
-          <a href="Index.html" className="brand-logo"><img src="../src/assets/images/dms-logo.png"/></a>
+          <Link to="/" className="brand-logo">doqMan</Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li><a href="About.jsx">About</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/signup">Sign Up</Link></li>
           </ul>
         </div>
-      </nav>  
+      </nav>
     );
-  }
+  }  
 }
 
 export default NavigationBar;

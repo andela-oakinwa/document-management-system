@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import validateInput from '../../../server/middlewares/Authentication.login';
-import { login } from '../../actions/authActions';
+import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 
-class LoginPage extends React.Component {
+class LoginPage extends Component {
+  /**
+   * Constructor
+   * @param  {Object} props 
+   * @return {Object} 
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -12,19 +17,25 @@ class LoginPage extends React.Component {
       password: '',
       errors: {},
     };
-
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
-
+  /**
+   * Verifies user inputs
+   * @return {Boolean} true or false
+   */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
-
-  onSubmit(e) {
-    e.preventDefault();
+  /**
+   * Handles submit event
+   * @param  {Object} event
+   * @return {Object} 
+   */
+  onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {} });
       this.props.login(this.state).then(
@@ -39,11 +50,18 @@ class LoginPage extends React.Component {
         });
     }
   }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  /**
+   * Checks for state change
+   * @param  {Object} event 
+   * @return {Object} 
+   */
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const { errors } = this.state;
 

@@ -1,12 +1,19 @@
 import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
-
+/**
+ * Login form 
+ * @param  {Object} options.errors     
+ * @param  {Object} options.onChange   
+ * @param  {Object} options.loginProps 
+ * @param  {Object} options.onSubmit   
+ * @return {Object}                    
+ */
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <h1>Login</h1>
       <Row>
-        {errors.form && <div style={{ color: '#F44336' }}>{errors.form}</div>}
+        {errors.form && <div style={{ color: '#BD1D11' }}>{errors.form}</div>}
         <Input
             label="Username or Email"
             s={12}
