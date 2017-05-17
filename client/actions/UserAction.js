@@ -1,72 +1,70 @@
 import axios from 'axios';
-import * as types from './types';
+import * as types from './ActionType';
 
 /**
  * Dispatch action to fetch users
  * @param {number} offset
  * @returns {Array} users
  */
-export const fetchUsers = (offset) => {
-  const pageOffset = offset || 0;
-  const limit = 5;
-  return (dispatch) => {
-    return axios.get(`/users?offset=${pageOffset}&limit=${limit}`)
-      .then((res) => {
-        dispatch({
-          type: types.SET_USERS,
-          users: res.data.rows,
+const fetchUsers = (offset) => {
+    const pageOffset = offset || 0,
+      limit = 5;
+    return (dispatch) => {
+      return axios.get(`/users?offset=${pageOffset}&limit=${limit}`)
+        .then((response) => {
+          dispatch({
+            type: types.SET_USERS,
+            users: response.data.rows,
+          });
+          dispatch({
+            type: types.SET_PAGINATION,
+            pagination: res.data.pagination
+          });
         });
-        dispatch({
-          type: types.SET_PAGINATION,
-          pagination: res.data.pagination
-        });
-      });
-  };
-};
-
+    };
+  },
 /**
  * Dispatch action to fetch a user
- * @param {any} id
+ * @param {Object} id
  * @returns {Object} function
  */
-export const fetchUser = (id) => {
-  return (dispatch) => {
-    return axios.get(`/users/${id}`)
-      .then(res => dispatch({
-        type: types.USER_FETCHED,
-        user: res.data,
-      }));
-  };
-};
-
+  fetchUser = (id) => {
+    return (dispatch) => {
+      return axios.get(`/users/${id}`)
+        .then(response => dispatch({
+          type: types.USER_FETCHED,
+          user: response.data,
+        }));
+    };
+  },
 /**
  * Dispatch action to update a user
- * @param {any} user
- * @param {any} userId
+ * @param {Object} user
+ * @param {Object} userId
  * @returns {Object} function
  */
-export const updateUser = (user, userId) => {
-  return (dispatch) => {
-    return axios.put(`/users/${userId}`, user)
-      .then(res => dispatch({
-        type: types.USER_UPDATED,
-        user: res.data,
-      }));
-  };
-};
-
+  updateUser = (user, userId) => {
+    return (dispatch) => {
+      return axios.put(`/users/${userId}`, user)
+        .then(response => dispatch({
+          type: types.USER_UPDATED,
+          user: response.data,
+        }));
+    };
+  },
 /**
  * Dispatches action for delete
- * @param {any} id
+ * @param {Object} id
  * @returns {Object} function
  */
-export const deleteUser = (id) => {
-  return (dispatch) => {
-    return axios.delete(`/users/${id}`)
-      .then(res => dispatch({
-        type: types.USER_DELETED,
-        userId: id,
-      }));
+  deleteUser = (id) => {
+    return (dispatch) => {
+      return axios.delete(`/users/${id}`)
+        .then(() => dispatch({
+          type: types.USER_DELETED,
+          userId: id,
+        }));
+    };
   };
-};
 
+export { fetchUsers, fetchUser, updateUser, deleteUser };

@@ -1,18 +1,17 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
-import * as types from './types';
-
+import * as types from './ActionType';
 /**
  * Dispatch action to sign up a user
- * @param {any} userData
+ * @param {Object} userData
  * @returns {Object} function
  */
-export default function userSignupRequest(userData) {
+const signupRequest = (userData) => {
   return (dispatch) => {
     return axios.post('/users', userData)
-      .then((res) => {
-        const token = res.data.token;
+      .then((response) => {
+        const token = response.data.token;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
         dispatch({
@@ -21,5 +20,6 @@ export default function userSignupRequest(userData) {
         });
       });
   };
-}
+};
 
+export default signupRequest;
