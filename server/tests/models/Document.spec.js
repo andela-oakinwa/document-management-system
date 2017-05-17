@@ -8,8 +8,8 @@ import helper from '../helper/test.helper';
 describe('Document Model', () => {
   let userDocument;
   let regularUser;
-  const requiredFields = ['title', 'content'];
-  const emptyFields = ['title', 'content', 'access'];
+  const requiredFields = ['title', 'content'],
+    emptyFields = ['title', 'content', 'access'];
 
   before((done) => {
     db.Role.create({ title: 'regular', id: 2 })

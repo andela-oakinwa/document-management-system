@@ -1,9 +1,11 @@
 /**
+ * Dependencies declared
+ */
+import db from '../models/Index';
+import Helper from '../helpers/Helper';
+/**
  * Document Controller
  */
-import db from '../models';
-import Helper from '../helpers/Helper';
-
 const DocumentController = {
 
   /**
@@ -13,18 +15,19 @@ const DocumentController = {
    * @param {Object} response Response object
    * @returns {Object} Response object
    */
-  create(request, response) {
+  createDocument(request, response) {
     db.Document
       .create(request.documentInput)
-        .then((document) => {
-          document = Helper.getDocument(document);
+        .then((content) => {
+          content = Helper.getDocument(content);
           response.status(201)
             .send({
               message: 'Your document was created succesfully.',
-              document
+              content
             });
         })
-        .catch(error => response.status(500).send(error.errors));
+        .catch(error => response.status(500)
+          .send(error.errors));
   },
   /**
    * Get a document by Id
@@ -34,11 +37,11 @@ const DocumentController = {
    * @return {Object} Response object
    */
   getDocument(request, response) {
-    const document = Helper.getDocument(request.singleDocument);
+    const content = Helper.getDocument(request.singleDocument);
     return response.status(200)
       .send({
-        message: 'This document was retrieved succesfully',
-        document
+        message: 'This document was retrieved succesfully.',
+        content
       });
   },
   /**
@@ -48,9 +51,25 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  getAllDocument(request, response) {
-    
-  
+  getAllDocuments(request, response) {
+    request.doqmanFilter.attributes = Helper.getDocumentAttr();
+    db.Document
+      .findAndCountAll(request.doqmanFilter)
+      .then((documents) => {
+        const constraint = {
+          count: documents.count,
+          limit: request.doqmanFilter.limit,
+          offset: request.doqmanFilter.offset
+        };
+        delete documents.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            message: 'You have successfully retrieved all documents.',
+            documents,
+            paging
+          });
+      });
   },
   /**
    * Updates a document/document attributes by Id
@@ -59,10 +78,19 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  update(request, response) {
-    request.documentInstance.update()
-    
-  }, 
+  updateDocument(request, response) {
+    request.documentInstance.update(request.body)
+      .then((updatedDocument) => {
+        response.status(200)
+          .send({
+            message: 'This document has been updated successfully.',
+            updatedDocument
+          });
+      })
+      .catch((error) => {
+        response.status(500).send(error.errors);
+      });
+  },
   /**
    * Delete document by Id
    * Route: DELETE /documents/:id
@@ -70,10 +98,14 @@ const DocumentController = {
    * @param {Object} response Response object
    * @return {Object} Response object
    */
-  delete() {
-
+  deleteDocument(request, response) {
+    return request.body.document.destroy()
+      .then(() => {
+        response.status(200)
+        .send({
+          message: `Document with id:${request.params.id} has been deleted` });
+      });
   }
-
 };
 
 export default DocumentController;

@@ -1,48 +1,33 @@
-/**
- * Dependencies declared
- * @type {Object}
- */
-const path = require('path'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
-  entry: ['./client/src/Index.js'],
-  output: { path: __dirname, filename: './client/public/build/Bundle.js' },
-  watch: true,
-  devServer: {
-    contentBase: 'client/public/'
+export default {
+  devtool: 'eval-source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    path.join(__dirname, '/client/Index.jsx')
+    ],
+  output: { 
+    path: '/',
+    filename: 'Bundle.js',
+    publicPath: '/'
   },
+  watch: true,
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   module: {
-    rules: [
+    loaders:[
       {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-          { loader: 'eslint-loader' }
-        ]
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'style-loader!css-loader' }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          { loader: 'sass-loader' }
-        ]
+        test: /\.jsx$/,
+        include: path.join(__dirname, 'client'),
+        loaders: ['react-hot-loader', 'babel-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.css']
-  },
-  resolveLoader: {
-      modules: ["node_modules"],
-      extensions: ["*", ".js"]
+    extensions: [' ', '.js', '.jsx']
   }
 };

@@ -3,16 +3,27 @@
  */
 import http from 'http';
 import logger from 'js-logger';
+import * as dotenv from 'dotenv';
+
 import app from './config/App';
 
 /**
- * Define database connection and server port
+ * Disables logging error
+ * @type {Object}
  */
-const port = process.env.PORT || 3000;
+dotenv.config({
+  silent: true
+});
+/**
+ * Define server port
+ */
+const port = process.env.PORT || 4000;
 
 logger.useDefaults();
 app.set('port', port);
-
+/**
+ * Server port
+ */
 const server = http.createServer(app);
 server.listen(port);
 logger.info(`App is running at: ${port}/`);

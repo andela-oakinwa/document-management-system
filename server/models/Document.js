@@ -1,5 +1,6 @@
 /**
  * Document model
+ * @return {Object} Document
  */
 module.exports = (sequelize, DataTypes) => {
   const Document = sequelize.define('Document', {
