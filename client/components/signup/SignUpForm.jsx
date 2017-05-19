@@ -1,16 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 class SignUpForm extends React.Component {
   // States and events decalred here
   constructor(props) {
     super(props);
     this.state = {
+      firstname: '',
+      lastname: '',
       username: '',
       email: '',
       password: '',
       passwordConfirmation: ''
-
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -22,64 +24,93 @@ class SignUpForm extends React.Component {
   // Forwards data to server
   onSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.props.userSignupRequest(this.state);
   }
   // Renders object to the DOM
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <h1>Come aboard and enjoy the package</h1>
-        <div>
-          <label className="">Username</label>
-          <input
-            value={this.state.username}
-            onChange={this.onChange}
-            type="text" 
-            name="username" 
-            className="" 
-          />
-        </div>
+      <div className="container">
+        <form className="col s12" onSubmit={this.onSubmit}>
+          <h5 className="center">Create Account</h5>
+          <div className="row">
+            <div className="input-field col s6">
+              <label>First Name</label>
+              <input
+                value={this.state.firstname}
+                onChange={this.onChange}
+                type="text"
+                name="firstname"
+                className="validate"
+              />  
+            </div>
+            <div className="input-field col s6">
+              <label>Last Name</label>
+              <input 
+                value={this.state.lastname}
+                onChange={this.onChange}
+                type="text"
+                name="lastname"
+                class="validate" 
+              />
+            </div>
+          </div>
+          
+          <div className="input-field">
+            <label>Username</label>
+            <input
+              value={this.state.username}
+              onChange={this.onChange}
+              type="text" 
+              name="username" 
+              className="validate" 
+            />
+          </div>
 
-        <div>
-          <label className="">Email</label>
-          <input
-            value={this.state.email}
-            onChange={this.onChange}
-            type="text" 
-            name="email" 
-            className="" 
-          />
-        </div>
+          <div className="input-field">
+            <label>Email</label>
+            <input
+              value={this.state.email}
+              onChange={this.onChange}
+              type="email" 
+              name="email" 
+              className="" 
+            />
+          </div>
 
-        <div>
-          <label className="">Password</label>
-          <input
-            value={this.state.password}
-            onChange={this.onChange}
-            type="text" 
-            name="password" 
-            className="" 
-          />
-        </div>
+          <div className="input-field">
+            <label>Password</label>
+            <input
+              value={this.state.password}
+              onChange={this.onChange}
+              type="password" 
+              name="password" 
+              className="" 
+            />
+          </div>
 
-        <div>
-          <label className="">Password Confirmation</label>
-          <input
-            value={this.state.passwordConfirmation}
-            onChange={this.onChange}
-            type="text" 
-            name="passwordConfirmation" 
-            className="" 
-          />
-        </div>
-        <div>
-          <button className="btn btn-large blue">
-            Sign Up
-          </button>
-        </div>
-      </form>
+          <div className="input-field">
+            <label>Password Confirmation</label>
+            <input
+              value={this.state.passwordConfirmation}
+              onChange={this.onChange}
+              type="password" 
+              name="passwordConfirmation" 
+              className="" 
+            />
+          </div>
+          <div>
+            <button className="btn btn-large blue">
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
+}
+
+SignUpForm.propTypes = {
+  userSignupRequest: React.PropTypes.func.isRequired
 }
 
 export default SignUpForm;
