@@ -3,6 +3,7 @@
  */
 import db from '../../../models';
 import helper from '../helper/test.helper';
+import chai from 'chai';
 
 
 describe('Document Model', () => {
