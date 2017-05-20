@@ -12,7 +12,8 @@ class SignUpForm extends React.Component {
       username: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      errors: {}
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -24,10 +25,17 @@ class SignUpForm extends React.Component {
   // Forwards data to server
   onSubmit(event) {
     event.preventDefault();
-    this.props.signupRequest(this.state);
+    this.setState({ errors: {} });
+    this.props.signupRequest(this.state)
+      .then(
+        () => {},
+        ({ data }) => this.setState({ errors: data })
+      );
+
   }
   // Renders object to the DOM
   render() {
+    const { errors } = this.state;
     return (
       <div className="container sign-up-form">
         <form className="col s12" onSubmit={this.onSubmit} method="post">
@@ -56,7 +64,7 @@ class SignUpForm extends React.Component {
           </div>
           
           <div className="input-field">
-            <label>Username</label>
+            <label data-error={errors.username}>Username</label>
             <input
               value={this.state.username}
               onChange={this.onChange}
@@ -73,7 +81,7 @@ class SignUpForm extends React.Component {
               onChange={this.onChange}
               type="email" 
               name="email" 
-              className="" 
+              className="validate" 
             />
           </div>
 
@@ -84,7 +92,7 @@ class SignUpForm extends React.Component {
               onChange={this.onChange}
               type="password" 
               name="password" 
-              className="" 
+              className="validate" 
             />
           </div>
 
