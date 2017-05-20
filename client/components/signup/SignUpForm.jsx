@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import map from 'lodash/map';
 
 class SignUpForm extends React.Component {
   // States and events decalred here
@@ -23,13 +24,13 @@ class SignUpForm extends React.Component {
   // Forwards data to server
   onSubmit(event) {
     event.preventDefault();
-    this.props.userSignupRequest(this.state);
+    this.props.signupRequest(this.state);
   }
   // Renders object to the DOM
   render() {
     return (
-      <div className="container">
-        <form className="col s12" onSubmit={this.onSubmit}>
+      <div className="container sign-up-form">
+        <form className="col s12" onSubmit={this.onSubmit} method="post">
           <h5 className="center">Create Account</h5>
           <div className="row">
             <div className="input-field col s6">
@@ -88,13 +89,13 @@ class SignUpForm extends React.Component {
           </div>
 
           <div className="input-field">
-            <label>Password Confirmation</label>
+            <label>Re-type Password</label>
             <input
               value={this.state.passwordConfirmation}
               onChange={this.onChange}
               type="password" 
               name="passwordConfirmation" 
-              className="" 
+              className="validate" 
             />
           </div>
           <div>
@@ -109,7 +110,7 @@ class SignUpForm extends React.Component {
 }
 
 SignUpForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired
+  signupRequest: React.PropTypes.func.isRequired
 }
 
 export default SignUpForm;

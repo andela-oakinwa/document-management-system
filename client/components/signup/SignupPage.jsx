@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SignUpForm from './SignUpForm';
-import { userSignupRequest } from '../../actions/SignUpAction';
+import signupRequest from '../../actions/SignUpAction';
 
 class SignUpPage extends React.Component {
   render() {
-    const { userSignupRequest } = this.props;
+    const { signupRequest } = this.props;
     return (
       <div className="row">
-        <div>
-          <SignUpForm userSignupRequest={userSignupRequest} />
+        <div className="col s8 offset-s2">
+          <SignUpForm signupRequest={signupRequest} />
         </div>
       </div>
     );
@@ -18,7 +18,7 @@ class SignUpPage extends React.Component {
 }
 
 SignUpPage.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired
+  signupRequest: React.PropTypes.func.isRequired
 };
 
-export default connect(null, { userSignupRequest  })(SignUpPage);
+export default connect(null, { signupRequest  })(SignUpPage);
