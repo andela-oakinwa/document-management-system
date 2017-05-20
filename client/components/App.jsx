@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import NavigationBar from './navigation_bar/NavigationBar';
+import FooterPage from './shared/FooterPage';
 
 class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div>
         <NavigationBar />
         {this.props.children}
+        <FooterPage />
       </div>
     );
   }

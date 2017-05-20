@@ -15,12 +15,13 @@ module.exports = (config) => {
 
     // list of files / patterns to load in the browser
     files: [
-        'server/tests/*.js'
+        'server/tests/**/**/*.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+        'node_modules'
     ],
 
 
@@ -60,7 +61,7 @@ module.exports = (config) => {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox', 'Safari'],
+    browsers: ['Chrome', 'Firefox'],
 
 
     // Continuous Integration mode

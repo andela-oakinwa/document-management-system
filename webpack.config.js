@@ -12,6 +12,9 @@ export default {
     filename: 'Bundle.js',
     publicPath: '/'
   },
+  externals: {
+    
+  },
   watch: true,
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
