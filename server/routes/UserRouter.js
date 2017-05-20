@@ -15,7 +15,7 @@ const userRouter = express.Router();
 userRouter.route('/')
   .get(Authentication.verifyToken,
     UserController.getAllUsers)
-  .post(Authentication.verifyUserInput, UserController.createUser);
+  .post(Authentication.checkSignUpDetails, Authentication.verifyUserInput, UserController.createUser);
 /**
  * Login route
  */
