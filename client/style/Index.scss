@@ -1,8 +1,40 @@
-$main-font:'Lato', sans-serif; 
-$primary-color: #e9fafb;
-$primary-bg-color: #fff;
+$font-stack:'Lato', sans-serif; 
+$primary-color: rgb(233, 250, 251);
+$primary-bg-color: rgb(255,255,255); 
+$button-color: rgb(73, 106, 226);
 
 body {
-  background-color: $primary-bg-color;
-  font-family: $main-font;  
+  background-color: $primary-color;
+  font-family: $font-stack;  
 }
+
+.get-started-btn {
+  background-color: $button-color;
+}
+
+ 
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    .input-field input[type=date]:focus + label,
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=email]:focus + label,
+    .input-field input[type=password]:focus + label {
+      color: #e91e63;
+    }
+
+    .input-field input[type=date]:focus,
+    .input-field input[type=text]:focus,
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+      border-bottom: 2px solid #e91e63;
+      box-shadow: none;
+    }
+

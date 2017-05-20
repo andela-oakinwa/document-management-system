@@ -1,51 +1,55 @@
 import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
-/**
- * Login form 
- * @param  {Object} options.errors     
- * @param  {Object} options.onChange   
- * @param  {Object} options.loginProps 
- * @param  {Object} options.onSubmit   
- * @return {Object}                    
- */
+import { Link } from 'react-router';
+
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Login</h1>
-      <Row>
-        {errors.form && <div style={{ color: '#BD1D11' }}>{errors.form}</div>}
-        <Input
-            label="Username or Email"
-            s={12}
-            placeholder="Username or Email"
-            onChange={onChange}
-            value={loginProps.identifier}
-            name="identifier"
-            id="identifier"
-            />
-        <Input
-            label="Password"
-            s={12}
-            placeholder="Password"
-            onChange={onChange}
-            value={loginProps.password}
-            type="password"
-            name="password"
-            id="password"
-            />
-        <Input
-            id="loginButton" value="Login"
-            className="btn waves-effect waves-light" name="action" type="submit" />
-      </Row>
-    </form>
-  );
-};
+    <main className="container">
+      <center>
+        <h5 className="blue-text darken-3">Please, login into your account</h5>
+        <div class="section"></div>
+        <div className="container">
+          <div className="z-depth-1 grey lighten-4 row card-panel" >
+            <form className="col s12" method="post">
+              <div className='row'>
+                <div className='col s12'>
+                </div>
+              </div>
 
-LoginForm.propTypes = {
-  errors: React.PropTypes.object.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  loginProps: React.PropTypes.object.isRequired,
-  onSubmit: React.PropTypes.func.isRequired,
+              <div className='row'>
+                <div className='input-field col s12'>
+                  <input className='validate' type='email' name='email' id='email' /><i className="small material-icons">email</i>
+                  <label htmlFor='email'>Enter your email</label>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className="input-field col s12">
+                  <input className='validate' type='password' name='password' /><i className="small material-icons">lock</i>
+                  <label htmlFor='password'>Enter your password</label>
+                </div>
+                <label style={{float:'right'}}>
+                <Link className='pink-text' to='#' style={{fontWeight:"bold"}}>Forgot Password?</Link>
+                </label>
+              </div>
+              <br />
+              <center>
+                <div className='row'>
+                  <button type='submit' name='btn_login' className='col s12 btn btn-large waves-effect white-text' style={{backgroundColor: '#496AE2'}}>Login</button>
+                </div>
+              </center>
+            </form>
+          </div>
+        </div>
+        <span class="signup-login-form__switch-copy">
+          Don’t have an account?
+        </span>
+        <Link to="/signup"> Create Account</Link>
+      </center>
+      <div class="section"></div>
+      <div class="section"></div>
+    </main>  
+  );
 };
 
 export default LoginForm;
