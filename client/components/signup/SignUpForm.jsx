@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 class SignUpForm extends React.Component {
   // States and events decalred here
@@ -99,7 +98,7 @@ class SignUpForm extends React.Component {
             />
           </div>
           <div>
-            <button className="btn btn-large blue">
+            <button className="btn blue">
               Sign Up
             </button>
           </div>

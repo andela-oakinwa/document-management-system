@@ -3,28 +3,13 @@ import { Row, Input, Button } from 'react-materialize';
 import { Link } from 'react-router';
 
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
-const loginStyle = {
-    display: 'inline-block', 
-    padding: {
-      paddingTop:32,
-      paddingRight:48,
-      paddingBottom:0,
-      paddingLeft:48
-    },
-    border: {
-      borderWidth:1,
-      borderStyle: 'solid',
-      borderColor: '#EEE'
-    }
-};
-    
   return (
-    <div>
+    <main className="container">
       <center>
         <h5 className="blue-text darken-3">Please, login into your account</h5>
         <div class="section"></div>
         <div className="container">
-          <div className="z-depth-1 grey lighten-4 row" style={loginStyle}>
+          <div className="z-depth-1 grey lighten-4 row card-panel" >
             <form className="col s12" method="post">
               <div className='row'>
                 <div className='col s12'>
@@ -33,14 +18,14 @@ const loginStyle = {
 
               <div className='row'>
                 <div className='input-field col s12'>
-                  <input className='validate' type='email' name='email' id='email' />
+                  <input className='validate' type='email' name='email' id='email' /><i className="small material-icons">email</i>
                   <label htmlFor='email'>Enter your email</label>
                 </div>
               </div>
 
               <div className='row'>
                 <div className="input-field col s12">
-                  <input className='validate' type='password' name='password' />
+                  <input className='validate' type='password' name='password' /><i className="small material-icons">lock</i>
                   <label htmlFor='password'>Enter your password</label>
                 </div>
                 <label style={{float:'right'}}>
@@ -56,11 +41,14 @@ const loginStyle = {
             </form>
           </div>
         </div>
-        <Link to="#">Create Account</Link>
+        <span class="signup-login-form__switch-copy">
+          Don’t have an account?
+        </span>
+        <Link to="/signup"> Create Account</Link>
       </center>
       <div class="section"></div>
       <div class="section"></div>
-    </div>  
+    </main>  
   );
 };
 

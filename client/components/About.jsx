@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ContentArea extends Component {
+class About extends React.Component {
   render() {
     return(
-      <form>
-        <textarea className='content-area'></textarea>
-      </form>
-
+      <div className="card-panel about blue lighten-5">
+        <p>This app is about creating and managing you documents online
+        </p>
+      </div>
     );
   }
 }
+
+export default About;
