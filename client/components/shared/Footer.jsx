@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 class Footer extends React.Component {
   render() {
     return (
-      <footer style={{backgroundColor: '#000033'}} className="page-footer">
+      <footer className="page-footer blue darken-4">
         <div class="container">
             <div className="row">
               <div className="col l6 s12">

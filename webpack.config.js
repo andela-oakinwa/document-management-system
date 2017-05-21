@@ -27,7 +27,16 @@ export default {
         test: /\.jsx$/,
         include: path.join(__dirname, 'client'),
         loaders: ['react-hot-loader', 'babel-loader']
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
+      /**{
+        test: /\.(jpg|png|svg)$/,
+        include: './client/assets/images/dms-home.png',
+        loaders: ['file-loader']
+      }*/
     ]
   },
   resolve: {

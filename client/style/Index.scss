@@ -3,6 +3,7 @@ $primary-color: rgb(233, 250, 251);
 $primary-bg-color: rgb(255,255,255); 
 $button-color: rgb(73, 106, 226);
 
+
 body {
   background-color: $primary-color;
   font-family: $font-stack;  
@@ -12,29 +13,33 @@ body {
   background-color: $button-color;
 }
 
- 
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
+.landing-page {
+  background: url('../assets/images/dms-home.png');
+}
 
-    main {
-      flex: 1 0 auto;
-    }
+.short-message {
+  background: rgb(97, 144, 232);
+  background: -webkit-linear-gradient(to top, rgb(97, 144, 232), rgb(167, 191, 232));
+  background: linear-gradient(to top, rgb(97, 144, 232), rgb(167, 191, 232));
+}
 
-    .input-field input[type=date]:focus + label,
-    .input-field input[type=text]:focus + label,
-    .input-field input[type=email]:focus + label,
-    .input-field input[type=password]:focus + label {
-      color: #e91e63;
-    }
+.sign-up-form {
+  flex: 1 0 auto;
+}
 
-    .input-field input[type=date]:focus,
-    .input-field input[type=text]:focus,
-    .input-field input[type=email]:focus,
-    .input-field input[type=password]:focus {
-      border-bottom: 2px solid #e91e63;
-      box-shadow: none;
-    }
+.input-field input[type=date]:focus + label,
+.input-field input[type=text]:focus + label,
+.input-field input[type=email]:focus + label,
+.input-field input[type=password]:focus + label {
+  color: #e91e63;
+}
+
+.input-field input[type=date]:focus,
+.input-field input[type=text]:focus,
+.input-field input[type=email]:focus,
+.input-field input[type=password]:focus {
+  border-bottom: 2px solid #e91e63;
+  box-shadow: none;
+  }
+
 

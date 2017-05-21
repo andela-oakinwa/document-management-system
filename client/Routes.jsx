@@ -8,7 +8,6 @@ import SignUpPage from './components/signup/SignUpPage';
 import About from './components/About';
 import Login from './components/login/LoginPage';
 
-
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} />

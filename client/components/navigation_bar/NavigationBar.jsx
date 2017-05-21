@@ -6,7 +6,7 @@ class NavigationBar extends React.Component {
   render() {
     return(
       <header>
-        <nav role="navigation" className="lighten-3" style={{backgroundColor: '#000033'}}>
+        <nav role="navigation" className="blue darken-4">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo"><img src='../../assets/images/dms-logo.png' /></Link>
             <Link to="#" data-activates="mobile-menu" className="button-collapse"><i className="material-icons">menu</i></Link>
