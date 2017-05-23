@@ -21,4 +21,4 @@ SignUpPage.propTypes = {
   signupRequest: React.PropTypes.func.isRequired
 };
 
-export default connect(null, { signupRequest  })(SignUpPage);
+export default connect(null, { signupRequest })(SignUpPage);

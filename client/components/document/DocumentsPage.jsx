@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination, Button } from 'react-materialize';
 import DocumentsList from './DocumentList';
-import { fetchDocuments, deleteDocument } from '../../actions/documentActions';
-import { searchDocuments } from '../../actions/searchActions';
-import Search from '../common/Search';
+import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
+import { searchDocuments } from '../../actions/Search';
+import Search from '../shared/SearchBox';
 
 class DocumentsPage extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class DocumentsPage extends React.Component {
       filtered: false
     };
     this.handleSearch = this.handleSearch.bind(this);
-    this.deleteDoc = this.deleteDoc.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterPublicDocs = this.filterPublicDocs.bind(this);
     this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
@@ -28,14 +28,14 @@ class DocumentsPage extends React.Component {
     this.setState({ renderedDocuments: this.props.documents });
   }
 
-  deleteDoc(id) {
+  deleteDocument(id) {
     this.props.deleteDocument(id)
-      .then(res => toastr.success('Document deleted successfully!'));
+      .then(respons => toastr.success('Document deleted successfully!'));
   }
 
-  handleSearch(e) {
-    e.preventDefault();
-    const query = e.target.value;
+  handleSearch(event) {
+    event.preventDefault();
+    const query = event.target.value;
     this.props.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
@@ -83,7 +83,7 @@ class DocumentsPage extends React.Component {
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
-            className="btn create-list-link hero-btn"
+            className="btn create-list-link blue darken-4"
             to="document">
               Add Document
             </Link>
@@ -137,7 +137,7 @@ DocumentsPage.propTypes = {
   metadata: React.PropTypes.object
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   let documents = [];
   documents = state.documents;
   return {
@@ -146,7 +146,7 @@ function mapStateToProps(state) {
     auth: state.auth,
     metadata: state.paginate
   };
-}
+};
 
 export default connect(mapStateToProps,
 { fetchDocuments, deleteDocument, searchDocuments })(DocumentsPage);

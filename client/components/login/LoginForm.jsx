@@ -7,7 +7,6 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
     <main className="container">
       <center>
         <h5 className="blue-text darken-3">Please, login into your account</h5>
-        <div class="section"></div>
         <div className="container">
           <div className="z-depth-1 grey lighten-4 row card-panel" >
             <form className="col s12" method="post">

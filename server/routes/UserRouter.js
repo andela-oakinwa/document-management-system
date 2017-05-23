@@ -1,47 +1,15 @@
 /**
  * Dependencies declared
  */
-import isEmpty from 'lodash/isEmpty';
 import express from 'express';
-import validator from 'validator';
 import UserController from '../controllers/UserController';
 import Authentication from '../middlewares/Authentication';
+import validateInput from '../shared/ValidateInput';
 /**
  * Routes for user
  * @type {Object}
  */
-const userRouter = express.Router(),
-  validateInput = (data) => {
-    const errors = {};
-    if (validator.isEmpty(data.firstname)) {
-      errors.firstname = 'This field is required';
-    }
-    if (validator.isEmpty(data.lastname)) {
-      errors.lastname = 'This field is required';
-    }
-    if (validator.isEmpty(data.username)) {
-      errors.username = 'This field is required';
-    }
-    if (validator.isEmpty(data.email)) {
-      errors.email = 'This field is required';
-    }
-    if (!validator.isEmail(data.email)) {
-      errors.email = 'Email is invalid';
-    }
-    if (validator.isEmpty(data.password)) {
-      errors.password = 'This field is required';
-    }
-    if (validator.isEmpty(data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'This field is required';
-    }
-    if (!validator.equals(data.password, data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'Passwords must match';
-    }
-    return {
-      errors,
-      isValid: isEmpty(errors)
-    };
-  };
+const userRouter = express.Router();
 /**
  * Create user route
  */
@@ -53,8 +21,7 @@ userRouter.post('/', (request, response) => {
 });
 userRouter.route('/')
   .post(Authentication.validateInput)
-  .get(Authentication.verifyToken,
-    UserController.getAllUsers)
+  .get(Authentication.verifyToken, UserController.getAllUsers)
   .post(Authentication.verifyUserInput, UserController.createUser);
 /**
  * Login route
@@ -71,8 +38,7 @@ userRouter.route('/logout')
  */
 userRouter.route('/:id')
   .get(Authentication.verifyToken, UserController.getUser)
-  .put(Authentication.verifyToken,
-    UserController.updateUser)
+  .put(Authentication.verifyToken, UserController.updateUser)
   .delete(Authentication.verifyToken, Authentication.checkAdminRights,
     UserController.deleteUser);
 /**

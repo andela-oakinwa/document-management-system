@@ -29,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
  * Disables logging server information
  */
 app.disable('x-powered-by');
+/**
+ * log request to the console
+ */
 app.use(logger('dev'));
 /**
  * Hot reload
