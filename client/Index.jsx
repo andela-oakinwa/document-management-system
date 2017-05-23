@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 
-// import './style/Index.scss';
+import './style/Index.scss';
 import setAuthorizationToken from './utilities/SetAuthorizationToken';
 import routes from './Routes';
 import * as types from './actions/ActionType';

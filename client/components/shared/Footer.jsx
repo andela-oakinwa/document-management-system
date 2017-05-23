@@ -3,9 +3,10 @@ import { Link } from 'react-router';
 
 class Footer extends React.Component {
   render() {
+    const url = 'https://twitter.com/Kaiser_Phemi';
     return (
       <footer className="page-footer blue darken-4">
-        <div class="container">
+        <div className="container">
             <div className="row">
               <div className="col l6 s12">
                 <h5 className="white-text">doqMan DMS</h5>
@@ -14,10 +15,9 @@ class Footer extends React.Component {
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Navigation</h5>
                 <ul>
-                  <li><Link className="white-text" to="#!">Home</Link></li>
-                  <li><Link className="white-text" to="#!">About</Link></li>
+                  <li><Link className="white-text" to="/">Home</Link></li>
+                  <li><Link className="white-text" to="/about">About</Link></li>
                   <li><Link className="white-text" to="#!">FAQ</Link></li>
-                  <li><Link className="white-text" to="#!">Contact</Link></li>
                 </ul>
               </div>
             </div>
@@ -25,11 +25,13 @@ class Footer extends React.Component {
           <div className="footer-copyright">
             <div className="container">
             © 2017 Oluwafemi Akinwa
-            <Link className="white-text right" to="#!">More Links</Link>
+            <a className="white-text right" href={url} target="_blank">
+              Follow on Twitter
+            </a>
             </div>
           </div>
       </footer>
-    ); 
+    );
   }
 }
 

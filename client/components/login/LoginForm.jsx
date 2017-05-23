@@ -47,7 +47,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
       </center>
       <div class="section"></div>
       <div class="section"></div>
-    </main>  
+    </main>
   );
 };
 

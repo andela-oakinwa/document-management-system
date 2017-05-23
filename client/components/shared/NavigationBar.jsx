@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { logout } from '../../actions/Authentication'
+import { logout } from '../../actions/Authentication';
 
 class NavigationBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
   logout(event) {
     event.preventDefault();
     this.props.logout();
@@ -13,9 +17,9 @@ class NavigationBar extends React.Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    return(
+    return (
       <header>
-        <nav role="navigation" className="blue darken-4">
+        <nav role="navigation" className="nav-bar blue darken-4">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo"><img src='../../assets/images/dms-logo.png' /></Link>
             <Link to="#" data-activates="mobile-menu" className="button-collapse"><i className="material-icons">menu</i></Link>
@@ -29,22 +33,20 @@ class NavigationBar extends React.Component {
               <li>
                 {!isAuthenticated
                   && <Link to="/login">Login</Link>}
-                }
               </li>
               {user.roleId === 1
                 && <li><Link to="/users"><span>Users</span></Link></li>
               }
-              {isAuthenticated 
+              {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>
               }
               <li>
-                {isAuthenticated 
-                    ? <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
+                {isAuthenticated
+                    ? <Link to="/" onClick={this.logout}>Logout</Link>
                     : <Link to="/signup">Sign Up</Link>
                 }
               </li>
             </ul>
-            
             <ul id="mobile-menu" className="blue side-nav">
               <li>
                 <Link to="/">
@@ -53,19 +55,19 @@ class NavigationBar extends React.Component {
               </li>
               <li><Link to="/about">About</Link></li>
               <li>
-                {!isAuthenticated 
+                {!isAuthenticated
                   && <Link to="/login">Login</Link>
                 }
               </li>
               {user.roleId === 1
                 && <li><Link to="/users"><span>Users</span></Link></li>
               }
-              {isAuthenticated 
+              {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>
               }
               <li>
-                {isAuthenticated 
-                    ? <Link to="/" onClick={this.logout.bind(this)}>Logout</Link>
+                {isAuthenticated
+                    ? <Link to="/" onClick={this.logout}>Logout</Link>
                     : <Link to="/signup">Sign Up</Link>
                 }
               </li>
@@ -74,7 +76,7 @@ class NavigationBar extends React.Component {
         </nav>
       </header>
     );
-  }  
+  }
 }
 
 NavigationBar.propTypes = {
