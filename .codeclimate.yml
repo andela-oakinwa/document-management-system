@@ -28,3 +28,6 @@ exclude_paths:
 - node_modules/
 - server/tests/
 - out/
+- coverage/
+- docs/
+- db/

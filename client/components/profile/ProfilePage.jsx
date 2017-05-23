@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ProfileForm from './ProfileForm';
-import getUser, { updateUser } from '../../actions/profileActions';
+import getUser, { updateUser } from '../../actions/Profile';
 
 class ProfilePage extends Component {
 
@@ -67,7 +67,7 @@ ProfilePage.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     userId: state.auth.user.userId,
   };

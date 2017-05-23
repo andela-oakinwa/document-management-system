@@ -13,24 +13,18 @@ const documentRouter = express.Router();
  * Default routes for creating document
  */
 documentRouter.route('/')
-  .post(Authentication.verifyToken,
-    DocumentController.createDocument)
-  .get(Authentication.verifyToken,
-    DocumentController.getAllDocuments);
+  .post(Authentication.verifyToken, DocumentController.createDocument)
+  .get(Authentication.verifyToken, DocumentController.getAllDocuments);
 /**
  * Routes to retrieve document
  */
-documentRouter.get('./search',
-  Authentication.verifyToken);
+documentRouter.get('./search', Authentication.verifyToken);
 /**
  * Routes for retrieving, updating and deleting document
  */
 documentRouter.route('/:id')
-  .get(Authentication.verifyToken,
-    DocumentController.getDocument)
-  .put(Authentication.verifyToken,
-    DocumentController.updateDocument)
-  .delete(Authentication.verifyToken,
-    DocumentController.deleteDocument);
+  .get(Authentication.verifyToken, DocumentController.getDocument)
+  .put(Authentication.verifyToken, DocumentController.updateDocument)
+  .delete(Authentication.verifyToken, DocumentController.deleteDocument);
 
 export default documentRouter;

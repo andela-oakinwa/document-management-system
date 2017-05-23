@@ -23,7 +23,7 @@ const documents = (state = [], action = {}) => {
     return [
       ...state.filter(document => document.id !== action.documentId),
     ];
-  case types.SET_DOCUMENT:
+  case types.SET_DOCUMENTS:
     return action.documents;
 
   default: return state;

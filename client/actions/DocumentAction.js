@@ -12,7 +12,7 @@ const saveDocument = (data) => {
       return axios.post('/documents', data)
          .then((response) => {
            dispatch({
-             type: types.ADD_DOCUMENT,
+             type: types.CREATE_DOCUMENT,
              document: response.data
            });
          });
@@ -54,7 +54,7 @@ const saveDocument = (data) => {
       return axios.get(`/documents/${id}`)
         .then((res) => {
           dispatch({
-            type: types.DOCUMENT_FETCHED,
+            type: types.LOAD_DOCUMENT,
             document: res.data,
           });
         });
@@ -71,7 +71,7 @@ const saveDocument = (data) => {
       return axios.put(`/documents/${data.id}`, data)
         .then((res) => {
           dispatch({
-            type: types.DOCUMENT_UPDATED,
+            type: types.UPDATE_DOCUMENT,
             document: res.data,
           });
         });
@@ -88,7 +88,7 @@ const saveDocument = (data) => {
       return axios.delete(`/documents/${id}`)
         .then(() => {
           dispatch({
-            type: types.DOCUMENT_DELETED,
+            type: types.DELETE_DOCUMENT,
             documentId: id,
           });
         });

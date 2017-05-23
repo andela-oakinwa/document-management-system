@@ -22,7 +22,7 @@ const port = process.env.PORT || 4000;
 logger.useDefaults();
 app.set('port', port);
 /**
- * Server port
+ * Creates server from import
  */
 const server = http.createServer(app);
 server.listen(port);

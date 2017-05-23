@@ -32,7 +32,7 @@ const fetchUsers = (offset) => {
     return (dispatch) => {
       return axios.get(`/users/${id}`)
         .then(response => dispatch({
-          type: types.USER_FETCHED,
+          type: types.LOAD_USER,
           user: response.data,
         }));
     };
@@ -47,7 +47,7 @@ const fetchUsers = (offset) => {
     return (dispatch) => {
       return axios.put(`/users/${userId}`, user)
         .then(response => dispatch({
-          type: types.USER_UPDATED,
+          type: types.UPDATE_USER,
           user: response.data,
         }));
     };
@@ -61,7 +61,7 @@ const fetchUsers = (offset) => {
     return (dispatch) => {
       return axios.delete(`/users/${id}`)
         .then(() => dispatch({
-          type: types.USER_DELETED,
+          type: types.DELETE_USER,
           userId: id,
         }));
     };

@@ -3,9 +3,11 @@
  */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import isEmpty from 'lodash/isEmpty';
 import validator from 'validator';
+
 import db from '../models/Index';
-import Helper from '../helpers/Helper';
+// import Helper from '../helpers/Helper';
 
 dotenv.config();
 
@@ -75,18 +77,32 @@ const Authentication = {
           });
       });
   },
-  checkSignUpDetails(data) {
+  /**
+   * Checks login details
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
+  validateInput(data) {
     const errors = {};
-    if (validator.isNull(data.email)) {
+    if (validator.isEmpty(data.firstname)) {
+      errors.firstname = 'This field is required';
+    }
+    if (validator.isEmpty(data.lastname)) {
+      errors.lastname = 'This field is required';
+    }
+    if (validator.isEmpty(data.username)) {
+      errors.username = 'This field is required';
+    }
+    if (validator.isEmpty(data.email)) {
       errors.email = 'This field is required';
     }
     if (!validator.isEmail(data.email)) {
       errors.email = 'Email is invalid';
     }
-    if (validator.isNull(data.password)) {
-      errors.email = 'This field is required';
+    if (validator.isEmpty(data.password)) {
+      errors.password = 'This field is required';
     }
-    if (validator.isNull(data.passwordConfirmation)) {
+    if (validator.isEmpty(data.passwordConfirmation)) {
       errors.passwordConfirmation = 'This field is required';
     }
     if (!validator.equals(data.password, data.passwordConfirmation)) {
@@ -94,6 +110,7 @@ const Authentication = {
     }
     return {
       errors,
+      isValid: isEmpty(errors)
     };
   },
   /**

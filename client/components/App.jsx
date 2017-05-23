@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavigationBar from './navigation_bar/NavigationBar';
+import NavigationBar from './shared/NavigationBar';
 import FooterPage from './shared/FooterPage';
 
 class App extends Component {
@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div>
         <NavigationBar />
-        {this.props.children}
+        <main>{this.props.children}</main>
         <FooterPage />
       </div>
     );
@@ -15,4 +15,3 @@ class App extends Component {
 }
 
 export default App;
- 

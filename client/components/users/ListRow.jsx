@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 
-import EditRole from './EditRole';
+import EditUserRole from './EditUserRole';
 import * as userActions from '../../actions/UserAction';
 
 class ListRow extends React.Component {
@@ -65,7 +65,7 @@ ListRow.propTypes = {
   actions: React.PropTypes.object.isRequired
 };
 
-const mapToProps= (release) => {
+const mapToProps = (release) => {
   return {
     actions: bindCreators(userActions, release),
   };

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
+import classnames from 'classnames';
+import validateInput from '../../../server/shared/ValidateInput';
 
 class SignUpForm extends React.Component {
   // States and events decalred here
@@ -12,22 +14,39 @@ class SignUpForm extends React.Component {
       username: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      errors: {}
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  // watches evens triggered from the form
+  // Watches events triggered from the form
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+  // Validates inputs
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
   }
   // Forwards data to server
   onSubmit(event) {
     event.preventDefault();
-    this.props.signupRequest(this.state);
+    if(this.isValid) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.signupRequest(this.state)
+        .then(
+          () => {},
+          (error) => this.setState({ errors: error.response.data, isLoading: false })
+        );  
+    }   
   }
   // Renders object to the DOM
   render() {
+    const { errors } = this.state;
     return (
       <div className="container sign-up-form">
         <form className="col s12" onSubmit={this.onSubmit} method="post">
@@ -73,7 +92,7 @@ class SignUpForm extends React.Component {
               onChange={this.onChange}
               type="email" 
               name="email" 
-              className="" 
+              className="validate" 
             />
           </div>
 
@@ -84,7 +103,7 @@ class SignUpForm extends React.Component {
               onChange={this.onChange}
               type="password" 
               name="password" 
-              className="" 
+              className="validate" 
             />
           </div>
 
@@ -99,7 +118,7 @@ class SignUpForm extends React.Component {
             />
           </div>
           <div>
-            <button className="btn blue">
+            <button className="btn waves-effect blue darken-4">
               Sign Up
             </button>
           </div>
@@ -112,5 +131,10 @@ class SignUpForm extends React.Component {
 SignUpForm.propTypes = {
   signupRequest: React.PropTypes.func.isRequired
 }
+
+SignUpForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 
 export default SignUpForm;

@@ -13,7 +13,7 @@ const SearchBox = ({ onChange }) =>
     ><Icon style={{ color: 'white' }}>search</Icon></Input>
   </div>;
 
-Search.propTypes = {
+SearchBox.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
