@@ -1,14 +1,69 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import validateInput from '../../../server/shared/validateInput';
+import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      error: {}
+    };
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+    if (!isValid) this.setState({ errors });
+    return isValid;
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {} });
+      this.props.login(this.state)
+        .then(
+          () => {
+            this.context.router.push('/');
+          },
+          ({ data }) => {
+            const errors = {};
+            errors.form = data.message;
+            this.setState({ errors });
+          });
+    }
+  }
+
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
   render() {
+    const { errors } = this.state;
     return (
-      <LoginForm />
+      <div>
+        <LoginForm 
+          errors={errors}
+          onChange={this.onChange}
+          loginProps={this.state}
+          onSubmit={this.onSubmit}
+        />
+      </div>
     );
   }
 }
+LoginPage.propTypes = {
+  login: React.PropTypes.func.isRequired
+};
 
-export default LoginPage;
+LoginPage.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default connect(null, { login })(LoginPage);

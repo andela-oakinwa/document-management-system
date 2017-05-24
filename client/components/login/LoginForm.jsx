@@ -4,51 +4,59 @@ import { Link } from 'react-router';
 
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
-    <main className="container">
+    <form className="container col s12" onSubmit={onSubmit} method="post">
+      <h5 className="center">Please login into your account</h5>
       <center>
-        <h5 className="blue-text darken-3">Please, login into your account</h5>
-        <div className="container">
-          <div className="z-depth-1 grey lighten-4 row card-panel" >
-            <form className="col s12" method="post">
-              <div className='row'>
-                <div className='col s12'>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='input-field col s12'>
-                  <input className='validate' type='email' name='email' id='email' /><i className="small material-icons">email</i>
-                  <label htmlFor='email'>Enter your email</label>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className="input-field col s12">
-                  <input className='validate' type='password' name='password' /><i className="small material-icons">lock</i>
-                  <label htmlFor='password'>Enter your password</label>
-                </div>
-                <label style={{float:'right'}}>
-                <Link className='pink-text' to='#' style={{fontWeight:"bold"}}>Forgot Password?</Link>
-                </label>
-              </div>
-              <br />
-              <center>
-                <div className='row'>
-                  <button type='submit' name='btn_login' className='col s12 btn btn-large waves-effect white-text' style={{backgroundColor: '#496AE2'}}>Login</button>
-                </div>
-              </center>
-            </form>
+        <Row className="container">
+          <div className="z-depth-1 grey lighten-4 row card-panel">
+            <Input 
+              label="Enter your email"
+              s={12}
+              onChange={onChange}
+              value={loginProps.email}
+              name="email"
+              id="email"
+              className="validate"
+            />
+            <i className="small material-icons">email</i>
+            <br />
+            <br />
+            <Input 
+              label="Enter your password"
+              s={12}
+              onChange={onChange}
+              value={loginProps.password}
+              name="password"
+              type="password"
+              id="password"
+              className="validate"
+            />
+            <i className="small material-icons">lock</i>
+            <div className="center">
+              <Button 
+                type="submit"
+                className="col s12 btn btn-large waves-effect"
+                style={{backgroundColor: '#496AE2'}}
+              >
+                Login
+              </Button>
+            </div>
           </div>
-        </div>
+        </Row>
         <span class="signup-login-form__switch-copy">
           Don’t have an account?
         </span>
         <Link to="/signup"> Create Account</Link>
       </center>
-      <div class="section"></div>
-      <div class="section"></div>
-    </main>
+    </form>
   );
+};
+
+LoginForm.propTypes = {
+  errors: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  loginProps: React.PropTypes.object.isRequired,
+  onSubmit: React.PropTypes.func.isRequired
 };
 
 export default LoginForm;
