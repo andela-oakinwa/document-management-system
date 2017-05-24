@@ -41,10 +41,3 @@ userRouter.route('/:id/documents')
 
 
 export default userRouter;
-
-/**
- * goes into a search route and controller
- */
-searchRouter('/users')
-  .get(Authentication.verifyToken, Authentication.checkAdminRights,
-    SearchController.searchUser);

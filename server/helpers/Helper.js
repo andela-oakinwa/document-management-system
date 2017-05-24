@@ -1,4 +1,7 @@
-
+/**
+ * Handles data retrival and presentation
+ * @type {Object}
+ */
 const Helper = {
   userProfile(user) {
     const attributes = {
@@ -36,10 +39,7 @@ const Helper = {
       pageSize: Number(pageSize),
       totalCount: constraint.count
     };
-  },
-  userInstance() {},
-  
-
+  }
 };
 
 export default Helper;

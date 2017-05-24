@@ -4,9 +4,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import validator from 'validator';
-
 import db from '../models/Index';
-import Helper from '../helpers/Helper';
 
 dotenv.config();
 // jwt secret key
