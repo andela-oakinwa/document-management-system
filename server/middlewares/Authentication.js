@@ -3,14 +3,13 @@
  */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import isEmpty from 'lodash/isEmpty';
 import validator from 'validator';
 
 import db from '../models/Index';
-// import Helper from '../helpers/Helper';
+import Helper from '../helpers/Helper';
 
 dotenv.config();
-
+// jwt secret key
 const secretKey = process.env.SECRET;
 
 const Authentication = {
@@ -28,7 +27,7 @@ const Authentication = {
         if (error) {
           return response.status(401)
             .send({
-              message: 'Token supplied has expired.'
+              message: 'Token supplied is invalid.'
             });
         }
         db.User.findById(decoded.userId)
@@ -53,7 +52,7 @@ const Authentication = {
     } else {
       response.status(400)
         .send({
-          message: 'Please sign in or register to get a token.'
+          message: 'Unauthorized Access.'
         });
     }
   },
@@ -78,49 +77,14 @@ const Authentication = {
       });
   },
   /**
-   * Checks login details
-   * @param  {[type]} data [description]
-   * @return {[type]}      [description]
-   */
-  validateInput(data) {
-    const errors = {};
-    if (validator.isEmpty(data.firstname)) {
-      errors.firstname = 'This field is required';
-    }
-    if (validator.isEmpty(data.lastname)) {
-      errors.lastname = 'This field is required';
-    }
-    if (validator.isEmpty(data.username)) {
-      errors.username = 'This field is required';
-    }
-    if (validator.isEmpty(data.email)) {
-      errors.email = 'This field is required';
-    }
-    if (!validator.isEmail(data.email)) {
-      errors.email = 'Email is invalid';
-    }
-    if (validator.isEmpty(data.password)) {
-      errors.password = 'This field is required';
-    }
-    if (validator.isEmpty(data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'This field is required';
-    }
-    if (!validator.equals(data.password, data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'Passwords must match';
-    }
-    return {
-      errors,
-      isValid: isEmpty(errors)
-    };
-  },
-  /**
    * Gets user jwt token
    * @param  {user} user Users' object
    * @return {[type]}      [description]
    */
   getToken(user) {
     const userToken = jwt.sign({
-      userId: user.id
+      userId: user.id,
+      roleId: user.roleId
     },
       secretKey, { expiresIn: '3d' });
     return userToken;
@@ -135,13 +99,12 @@ const Authentication = {
     if (!request.body.password || !request.body.email) {
       return response.status(400)
         .send({
-          message: 'Please provide your email and password to login'
+          message: 'Please provide your email and password to login.'
         });
     }
 
-    const email = validator.isEmail(request.body.email),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    const email = /\S+@\S+\.\S+/.test(request.body.email),
+      password = /\w+/g.test(request.body.password);
     if (!email || !password) {
       return response.status(400)
         .send({
@@ -149,12 +112,6 @@ const Authentication = {
         });
     }
     next();
-  },
-  checkInput(request, response) {
-    const { errors, isValid } = verifyUserInput(request.body);
-    if (!isValid) {
-      response.status(400).json(errors);
-    }
   },
   /**
    * Checks users' input
@@ -164,18 +121,11 @@ const Authentication = {
    * @return {Object}          Return object
    */
   verifyUserInput(request, response, next) {
-    if (request.body.roleId === 2) { // Not admin
-      return response.status(403)
-        .send({
-          message: 'Permission denied. You can not signup as admin'
-        });
-    }
-    let email = validator.isEmail(request.body.email),
-      firstName = validator.isAlphanumeric(request.body.firstName),
-      lastName = validator.isAlphanumeric(request.body.lastName),
-      userName = validator.isAlphanumeric(request.body.userName),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    let email = /\S+@\S+\.\S+/.test(request.body.email),
+      firstName = /\w+/g.test(request.body.firstName),
+      lastName = /\w+/g.test(request.body.lastName),
+      userName = /\w+/g.test(request.body.userName),
+      password = /\w+/g.test(request.body.password);
 
     if (!email) {
       return response.status(400)
@@ -204,10 +154,15 @@ const Authentication = {
     if (!password) {
       return response.status(400)
         .send({
+          message: 'Password field cannot be empty. Please enter a password.'
+        });
+    }
+    if (request.body.password.length < 8) {
+      return response.status(400)
+        .send({
           message: 'Password cannot be less than 8 characters. Try again.'
         });
     }
-
     db.User.findOne({ where: { email: request.body.email } })
       .then((user) => {
         if (user) {
@@ -230,13 +185,14 @@ const Authentication = {
             email = validator.trim(request.body.email);
             password = request.body.password;
 
-            const roleId = request.body.roleId || 1;
+            const roleId = request.body.roleId || 2;
             request.userInput = { userName,
               firstName,
               lastName,
               email,
               password,
-              roleId };
+              roleId
+            };
             next();
           });
       });

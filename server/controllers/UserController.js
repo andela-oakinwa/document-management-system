@@ -1,6 +1,7 @@
 /**
  * Dependencies declared
  */
+import bcrypt from 'bcrypt';
 import db from '../models';
 import Helper from '../helpers/Helper';
 import Authentication from '../middlewares/Authentication';
@@ -30,9 +31,10 @@ const UserController = {
           });
       })
       .catch((error) => {
-        response.status(400)
+        response.status(500)
           .send({
-            errorType: Helper.errorType(error)
+            message: 'An error has occured. Account was not created',
+            error
           });
       });
   },
@@ -44,10 +46,11 @@ const UserController = {
    * @return {Object}          Returned object
    */
   login(request, response) {
+    const { email, password } = request.body;
     db.User
-      .findOne({ where: { email: request.body.email } })
+      .findOne({ where: { email, } })
       .then((user) => {
-        if (user && user.validPassword(request.body.password)) {
+        if (user && bcrypt.compareSync(password, user.password)) {
           user.update({ active: true });
           const token = Authentication.getToken(user);
           user = Helper.getUserProfile(user);
@@ -85,18 +88,28 @@ const UserController = {
       });
   },
   /**
-   * Get a user by Id
+   * Get a particular user
    * Route: GET: /users/:id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @return {Object}          Returned object
    */
   getUser(request, response) {
-    return response.status(200)
-      .send({
-        message: 'You have successfully retrieved this user.',
-        user: Helper.getUserProfile(request.getUser)
-      });
+    db.User
+    .findById(request.params.id)
+    .then((user) => {
+      response.status(200)
+        .send({
+          message: 'You have successfully retrieved this user.',
+          user: Helper.userProfile(user)
+        });
+    })
+    .catch((error) => {
+      response.status(400)
+          .send({
+            message: error.message
+          });
+    });
   },
   /**
    * Get all users
@@ -106,14 +119,24 @@ const UserController = {
    * @return {Object}          Returned object
    */
   getAllUsers(request, response) {
+    const query = {
+      attributes: Helper.getUserAttribute(),
+      include: [{
+        model: Role,
+        as: 'Role'
+      }],
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
     db.User
-      .findAndCountAll(request.doqmanFilter)
+      .findAndCountAll(query)
       .then((users) => {
         if (users) {
           const constraint = {
             count: users.count,
-            limit: request.doqmanFilter.limit,
-            offset: request.doqmanFilter.offset
+            limit: query.limit,
+            offset: query.offset
           };
           delete users.count;
           const paging = Helper.paging(constraint);
@@ -127,14 +150,14 @@ const UserController = {
       });
   },
   /**
-   * Update a user attribute
+   * Update a particular user
    * Route: PUT: /users/:id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @return {Object}          Returned object
    */
   updateUser(request, response) {
-    request.userInstance.update(request.body)
+    db.User.findById(request.params.id)
       .then((updatedUser) => {
         response.status(200)
           .send({
@@ -145,19 +168,20 @@ const UserController = {
       .catch((error) => {
         response.status(400)
           .send({
-            message: error.errors
+            message: error.message
           });
       });
   },
   /**
-   * Delete a user by id
+   * Delete a user with specific id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @return {Object}          Return object
    */
   deleteUser(request, response) {
-    request.userInstance.destroy()
-      .then(() => {
+    db.User.findById(request.params.id)
+      .then((user) => {
+        user.destroy();
         response.status(200)
           .send({
             message: 'This account has been successfully deleted.'
@@ -165,45 +189,25 @@ const UserController = {
       })
       .catch((error) => {
         response.status(500)
-          .send(error.errors);
+          .send(error.message);
       });
   },
   /**
-   * Get all documents for user
+   * Get all documents owned by a particular user
    * Route: GET: /users/:id/documents
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @return {Object}          Return object
    */
   getUserDocuments(request, response) {
-    const userDocuments = {};
-    db.User.findById(request.params.id)
-      .then((user) => {
-        if (!user) {
-          return response.status(404)
-            .send({
-              message: 'This user does not exist.'
-            });
-        }
-        userDocuments.user = Helper.getUserProfile(user);
-        request.doqmanFilter.where.ownerId = request.params.id;
-        request.doqmanFilter.attributes = Helper.getDocumentAttr();
-        db.Document.findAndCountAll(request.doqmanFilter)
-          .then((files) => {
-            const constraint = {
-              count: files.count,
-              limit: request.doqmanFilter.limit,
-              offset: request.doqmanFilter.offset
-            };
-            delete files.count;
-            const paging = Helper.paging(constraint);
-            userDocuments.documents = files;
-            return response.status(200)
-              .send({
-                message: 'User\'s documents was retrieved successfully.',
-                userDocuments,
-                paging
-              });
+    db.Document.findAll({ where: { ownerId: request.params.id } })
+      .then((allDocs) => {
+        response.send(allDocs);
+      })
+      .catch((error) => {
+        response.status(404)
+          .send({
+            message: error.message
           });
       });
   }

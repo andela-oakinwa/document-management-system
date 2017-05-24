@@ -4,25 +4,17 @@
 import express from 'express';
 import UserController from '../controllers/UserController';
 import Authentication from '../middlewares/Authentication';
-import validateInput from '../shared/ValidateInput';
 /**
  * Routes for user
  * @type {Object}
  */
 const userRouter = express.Router();
 /**
- * Create user route
+ * Create and retrieve user(s) route
  */
-userRouter.post('/', (request, response) => {
-  const { errors, isValid } = validateInput(request.body);
-  if (!isValid) {
-    response.status(400).json(errors);
-  }
-});
 userRouter.route('/')
-  .post(Authentication.validateInput)
-  .get(Authentication.verifyToken, UserController.getAllUsers)
-  .post(Authentication.verifyUserInput, UserController.createUser);
+  .post(Authentication.verifyUserInput, UserController.createUser)
+  .get(Authentication.verifyToken, UserController.getAllUsers);
 /**
  * Login route
  */
@@ -32,7 +24,7 @@ userRouter.route('/login')
  * Logout route
  */
 userRouter.route('/logout')
-  .post(Authentication.verifyToken, UserController.logout);
+  .post(UserController.logout);
 /**
  * Route for retrieving, modification and deletion of user
  */
@@ -47,4 +39,12 @@ userRouter.route('/:id')
 userRouter.route('/:id/documents')
   .get(Authentication.verifyToken, UserController.getUserDocuments);
 
+
 export default userRouter;
+
+/**
+ * goes into a search route and controller
+ */
+searchRouter('/users')
+  .get(Authentication.verifyToken, Authentication.checkAdminRights,
+    SearchController.searchUser);
