@@ -27,7 +27,7 @@ const RoleController = {
       .catch((error) => {
         response.status(400)
           .send({
-            errorType: Helper.errorType(error)
+            error: error.message
           });
       });
   },
@@ -39,7 +39,7 @@ const RoleController = {
    * @returns {Object} Response object
    */
   updateRole(request, response) {
-    request.roleInstance.update(request.body)
+    db.Role.findById(request.params.id)
       .then((updatedRole) => {
         response.status(200)
           .send({
@@ -47,10 +47,10 @@ const RoleController = {
             updatedRole
           });
       })
-      .catch((error) => {
-        response.status(400)
+      .catch(() => {
+        response.status(404)
           .send({
-            errorType: Helper.errorType(error)
+            message: `Role with id: ${request.params.id} not found`
           });
       });
   },
@@ -62,14 +62,25 @@ const RoleController = {
    * @returns {Object} Response object
    */
   deleteRole(request, response) {
-    request.roleInstance.destroy()
-      .then(() => {
-        response.status(200)
-          .send({ message: 'This role has been deleted.' });
+    db.Role.findById(request.params.id)
+      .then((role) => {
+        if (!role) {
+          return response.status(404)
+            .send({
+              message: `Role with id: ${request.params.id} not found`
+            });
+        }
+        role.destroy()
+          .then(() => {
+            response.status(200)
+              .send({
+                message: 'Role was deleted successfully.'
+              });
+          });
       });
   },
   /**
-   * Get role by id
+   * Get a particular role
    * Route: GET: /roles/:id
    * @param {Object} request Request object
    * @param {Object} response Response object

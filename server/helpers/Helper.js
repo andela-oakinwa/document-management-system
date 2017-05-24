@@ -3,6 +3,11 @@
  * @type {Object}
  */
 const Helper = {
+  /**
+   * Gets user profile
+   * @param  {Object} user User object
+   * @return {Object}
+   */
   userProfile(user) {
     const attributes = {
       id: user.id,
@@ -16,6 +21,10 @@ const Helper = {
     };
     return attributes;
   },
+  /**
+   * Gets user profile properties
+   * @return {Array}
+   */
   getUserAttribute() {
     return [
       'id',
@@ -28,6 +37,11 @@ const Helper = {
       'updatedAt'
     ];
   },
+  /**
+   * Handles paging of output data
+   * @param  {Object} constraint
+   * @return {Object}
+   */
   paging(constraint) {
     const nextPage = Math.ceil(constraint.count / constraint.limit),
       currentPage = Math.floor((constraint.offset / constraint.limit) + 1),
@@ -39,6 +53,14 @@ const Helper = {
       pageSize: Number(pageSize),
       totalCount: constraint.count
     };
+  },
+  /**
+   * Gets document
+   * @param  {Object} createdDoc
+   * @return {Object}
+   */
+  getDocument(createdDoc) {
+
   }
 };
 

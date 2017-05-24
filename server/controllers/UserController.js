@@ -1,7 +1,7 @@
 /**
  * Dependencies declared
  */
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 import db from '../models';
 import Helper from '../helpers/Helper';
 import Authentication from '../middlewares/Authentication';

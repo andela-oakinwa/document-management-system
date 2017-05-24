@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: shared/CheckDocument.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,44 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: shared/CheckDocument.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import isEmpty from 'lodash/isEmpty';
 
+/**
+ * Validates client side document details
+ * @param  {Object} values Details describing document
+ * @return {Object}
+ */
+const CheckDocument = (values) => {
+  const errors = {};
 
-    <h3> </h3>
+  if (!values.title || values.title.trim() === '') {
+    errors.title = 'Enter a Title';
+  }
+  if (!values.content || values.content.trim() === '') {
+    errors.content = 'Enter some content';
+  }
+  if (!values.access) {
+    errors.access = 'Select Document access';
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+};
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default CheckDocument;
+</code></pre>
+        </article>
+    </section>
 
 
 

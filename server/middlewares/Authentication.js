@@ -194,6 +194,32 @@ const Authentication = {
             next();
           });
       });
+  },
+  /**
+   * Checks the owner of a file before any action
+   * @param  {Object}   request  [description]
+   * @param  {Object}   response [description]
+   * @param  {Function} next     [description]
+   * @return {Object}            [description]
+   */
+  verifyOwner(request, response, next) {
+    db.Document.findById(request.params.id)
+      .then((document) => {
+        if (document.ownerId === request.decoded.userId) {
+          next();
+        } else {
+          return response.status(401)
+            .send({
+              message: 'You do not have the rights to perform this action.'
+            });
+        }
+      })
+      .catch(() => {
+        return response.status(404)
+          .send({
+            message: `Document with ${request.params.id} not found`
+          });
+      });
   }
 };
 

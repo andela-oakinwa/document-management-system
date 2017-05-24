@@ -7,7 +7,6 @@ import Helper from '../helpers/Helper';
  * Document Controller
  */
 const DocumentController = {
-
   /**
    * Create a new document
    * Route: POST /documents/
@@ -16,18 +15,22 @@ const DocumentController = {
    * @returns {Object} Response object
    */
   createDocument(request, response) {
+    const { title, content, access } = request.body,
+      ownerId = request.decoded.userId;
     db.Document
-      .create(request.documentInput)
-        .then((content) => {
-          content = Helper.getDocument(content);
+      .create({ title, content, access, ownerId })
+        .then((createdDoc) => {
+          createdDoc = Helper.getDocument(createdDoc);
           response.status(201)
             .send({
               message: 'Your document was created succesfully.',
-              content
+              createdDoc
             });
         })
-        .catch(error => response.status(500)
-          .send(error.errors));
+        .catch((error) => {
+          response.status(500)
+            .send(error.message);
+        });
   },
   /**
    * Get a document by Id
@@ -79,7 +82,7 @@ const DocumentController = {
    * @return {Object} Response object
    */
   updateDocument(request, response) {
-    request.documentInstance.update(request.body)
+    db.Document.findById(request.params.id)
       .then((updatedDocument) => {
         response.status(200)
           .send({
@@ -88,7 +91,8 @@ const DocumentController = {
           });
       })
       .catch((error) => {
-        response.status(500).send(error.errors);
+        response.status(500)
+          .send(error);
       });
   },
   /**
@@ -103,7 +107,12 @@ const DocumentController = {
       .then(() => {
         response.status(200)
         .send({
-          message: `Document with id:${request.params.id} has been deleted` });
+          message: 'Document deleted succesfully'
+        });
+      })
+      .catch((error) => {
+        response.status(404)
+          .send(error);
       });
   }
 };

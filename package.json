@@ -5,9 +5,10 @@
   "main": "client/Index.jsx",
   "scripts": {
     "start": "npm-run-all clean webpack",
-    "start:dev": "npm-run-all clean webpack-dev-server",
+    "start:dev": "NODE_ENV=development npm run server",
     "cover": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- server/tests/**/**/*.js",
     "clean": "rimraf ./client/public/build && mkdir client/public/build",
+    "client:test": "mocha --reporter progress testSetup.js server/tests/client/**/*.test.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/server/**/*.js",
     "babel": "babel",
     "server": "nodemon --watch server --exec babel-node  -- server/Server.js",
@@ -15,7 +16,10 @@
     "jsdoc": "jsdoc server/ -r -c conf.json -d docs",
     "build": "webpack --config ./webpack.config.js --progress",
     "webpack-dev-server": "webpack-dev-server --progress --inline --open",
-    "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls"
+    "coverage": "`npm bin`/jasmine-node cover server/tests/**/**/*.js",
+    "coveralls": "npm run-script coverage && node bin/coveralls.js < coverage/lcov.info",
+    "server:test": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/server/**/*.js"
+
   },
   "author": "Oluwafemi Akinwa",
   "repository": {

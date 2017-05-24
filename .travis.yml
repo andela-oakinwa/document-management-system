@@ -8,7 +8,7 @@ install:
 
 script:
   - npm test
-  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
+  - npm run cover && cat ./coverage/lcov.info | coveralls
 
 after_success: 
   - npm run coveralls
