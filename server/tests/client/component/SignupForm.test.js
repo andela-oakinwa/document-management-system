@@ -1,9 +1,9 @@
 import expect from 'expect';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import SignupForm from '../../components/signup/SignupForm';
+import SignUpForm from '../../../../components/signup/SignUpForm';
 
-function setup() {
+const setup = () => {
   const props = {
     errors: {},
     userProps: {},
@@ -11,10 +11,10 @@ function setup() {
     onChange: () => {}
   };
 
-  return mount(<SignupForm {...props} />);
-}
+  return mount(<SignUpForm {...props} />);
+};
 
-describe('LoginForm', () => {
+describe('Component: LoginForm', () => {
   it('should render self', () => {
     const wrapper = setup();
     expect(wrapper.length).toEqual(1);

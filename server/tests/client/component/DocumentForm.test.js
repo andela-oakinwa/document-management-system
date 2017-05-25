@@ -1,9 +1,9 @@
 import expect from 'expect';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import DocumentForm from '../../components/documents/DocumentForm';
+import DocumentForm from '../../../../client/components/document/DocumentForm';
 
-function setup(saving) {
+const setup = (saving) => {
   const props = {
     document: { title: 'title', content: 'content', access: 'public' },
     saving,
@@ -13,9 +13,9 @@ function setup(saving) {
   };
 
   return shallow(<DocumentForm {...props} />);
-}
+};
 
-describe('DocumentForm', () => {
+describe('Component: DocumentForm', () => {
   it('renders form and h5', () => {
     const wrapper = setup(false);
     expect(wrapper.find('form').length).toBe(1);
