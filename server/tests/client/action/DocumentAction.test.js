@@ -2,8 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
-import * as actions from '../../actions/documentActions';
-import * as types from '../../actions/types';
+import * as actions from '../../../../client/actions/DocumentAction';
+import * as types from '../../../../client/actions/ActionType';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -13,7 +13,8 @@ describe('Document Actions', () => {
     nock.cleanAll();
   });
 
-  it('creates SET_DOCUMENTS and SET_PAGINATION when fetching documents has been done',
+  it(`creates SET_DOCUMENTS and SET_PAGINATION when 
+    fetching documents has been done`,
   () => {
     nock('http://localhost.com/')
       .get('/documents')
@@ -41,7 +42,7 @@ describe('Document Actions', () => {
     const store = mockStore({ documents: [], paginate: {} });
 
     store.dispatch(actions.fetchDocuments())
-      .then((res) => {
+      .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
@@ -51,7 +52,9 @@ describe('Document Actions', () => {
     nock('http://localhost.com/')
       .post('/documents', document)
       .reply(200, {
-        body: { document: { title: 'title', content: 'content', access: 'public' } } });
+        body: { document: { title: 'title',
+          content: 'content',
+          access: 'public' } } });
 
     const expectedActions = [{ type: types.ADD_DOCUMENT,
       document: { title: 'title', content: 'content', access: 'public' } }];
@@ -61,7 +64,7 @@ describe('Document Actions', () => {
     const store = mockStore({ documents: [] });
 
     store.dispatch(actions.saveDocument())
-      .then((res) => {
+      .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });

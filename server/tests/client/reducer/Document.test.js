@@ -1,10 +1,10 @@
 import expect from 'expect';
-import documents from '../../reducers/documents';
-import * as actions from '../../actions/documentActions';
-import * as types from '../../actions/types';
+import documents from '../../../../client/reducers/DocumentReducer';
+import * as actions from '../../../../client/actions/DocumentAction';
+import * as types from '../../../../client/actions/ActionType';
 
 describe('Document Reducer', () => {
-  it('should add document when passed ADD_DOCUMENT', () => {
+  it('should add document when passed CREATE_DOCUMENT', () => {
     // arrange
     const initialState = [
       { title: 'A' },
@@ -13,7 +13,7 @@ describe('Document Reducer', () => {
 
     const newDocument = { title: 'C' };
 
-    const action = { type: types.ADD_DOCUMENT, document: newDocument };
+    const action = { type: types.CREATE_DOCUMENT, document: newDocument };
 
     // act
     const newState = documents(initialState, action);
@@ -25,7 +25,7 @@ describe('Document Reducer', () => {
     expect(newState[2].title).toEqual('C');
   });
 
-  it('should update document when passed DOCUMENT_UPDATED', () => {
+  it('should update document when passed UPDATE_DOCUMENT', () => {
     // arrange
     const initialState = [
       { id: '1', title: 'A' },
@@ -34,7 +34,7 @@ describe('Document Reducer', () => {
     ];
 
     const document = { id: '2', title: 'New Title' };
-    const action = { type: types.DOCUMENT_UPDATED, document };
+    const action = { type: types.UPDATE_DOCUMENT, document };
 
     // act
     const newState = documents(initialState, action);
@@ -47,7 +47,7 @@ describe('Document Reducer', () => {
     expect(newState.length).toEqual(initialState.length);
   });
 
-  it('should return document when passed DOCUMENT_FETCHED', () => {
+  it('should return document when passed LOAD_DOCUMENT', () => {
     // arrange
     const initialState = [
       { id: '1', title: 'A' },
@@ -56,14 +56,14 @@ describe('Document Reducer', () => {
     ];
 
     const document = { id: '4', title: 'Document Fetched' };
-    const action = { type: types.DOCUMENT_FETCHED, document };
+    const action = { type: types.LOAD_DOCUMENT, document };
 
     // act
     const newState = documents(initialState, action);
 
     expect(newState.length).toEqual(initialState.length + 1);
   });
-  it('should delete document when passed DOCUMENT_DELETED', () => {
+  it('should delete document when passed DELETE_DOCUMENT', () => {
     // arrange
     const initialState = [
       { id: '1', title: 'A' },
@@ -71,7 +71,7 @@ describe('Document Reducer', () => {
       { id: '3', title: 'C' }
     ];
 
-    const action = { type: types.DOCUMENT_DELETED, documentId: '2' };
+    const action = { type: types.DELETE_DOCUMENT, documentId: '2' };
     // act
     const newState = documents(initialState, action);
 

@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import DocumentCard from '../../components/documents/DocumentCard';
+import DocumentCard from '../../../../client/components/document/DocumentCard';
 
 function setup() {
   const props = {

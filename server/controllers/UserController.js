@@ -15,7 +15,6 @@ const UserController = {
    * Route: POST: /users
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Return an object or void
    */
   createUser(request, response) {
     db.User
@@ -43,7 +42,6 @@ const UserController = {
    * Route:  POST: /users/login
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Returned object
    */
   login(request, response) {
     const { email, password } = request.body;
@@ -72,7 +70,6 @@ const UserController = {
    * Route: POST: /users/logout
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Returned object
    */
   logout(request, response) {
     db.User
@@ -92,7 +89,6 @@ const UserController = {
    * Route: GET: /users/:id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Returned object
    */
   getUser(request, response) {
     db.User
@@ -116,7 +112,6 @@ const UserController = {
    * Route: GET: /users
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Returned object
    */
   getAllUsers(request, response) {
     const query = {
@@ -154,7 +149,6 @@ const UserController = {
    * Route: PUT: /users/:id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Returned object
    */
   updateUser(request, response) {
     db.User.findById(request.params.id)
@@ -176,7 +170,6 @@ const UserController = {
    * Delete a user with specific id
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Return object
    */
   deleteUser(request, response) {
     db.User.findById(request.params.id)
@@ -197,7 +190,6 @@ const UserController = {
    * Route: GET: /users/:id/documents
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
-   * @return {Object}          Return object
    */
   getUserDocuments(request, response) {
     db.Document.findAll({ where: { ownerId: request.params.id } })

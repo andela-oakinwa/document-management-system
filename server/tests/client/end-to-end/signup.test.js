@@ -6,7 +6,7 @@ module.exports = {
   'Sign up': (browser) => {
     browser
         .url(config.url)
-        .assert.containsText('.brand-logo', 'DMS')
+        .assert.containsText('.brand-logo', 'doqMan')
         .element('css selector', '#signup')
         .click('#signup')
         .moveToElement('#signup', 0, 0)
@@ -19,7 +19,7 @@ module.exports = {
         .setValue('Input[type="password"]', 'passwordpassword')
         .click('Input[type="submit"]')
         .pause(10000)
-        .assert.urlEquals('http://localhost:3000/signup')
+        .assert.urlEquals('http://localhost:4000/signup')
         .end();
   }
 };

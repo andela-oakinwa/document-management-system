@@ -2,10 +2,10 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
-import * as actions from '../../actions/userActions';
-import userSignupRequest from '../../actions/signupActions';
-import * as auth from '../../actions/authActions';
-import * as types from '../../actions/types';
+import * as actions from '../../../../client/actions/UserAction';
+import userSignupRequest from '../../../../client/actions/SignUpAction';
+import * as auth from '../../../../client/actions/Authentication';
+import * as types from '../../../../client/actions/ActionType';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -27,15 +27,20 @@ describe('User Actions', () => {
               currentPage: 1,
               pageCount: 6 },
             rows: [{
-              username: 'awa',
-              firstName: 'awa',
-              lastName: 'awa',
-              email: 'awa',
-              password: 'awa' }]
+              username: 'phemi',
+              firstName: 'oluwafemi',
+              lastName: 'akinwa',
+              email: 'oluwafemi.akinwa@andela.com',
+              password: 'oluwafemi' }]
           } });
 
       const expectedActions = [{ type: types.SET_USERS,
-        users: [{ username: '', firstName: '', lastName: '', email: '', password: '' }] },
+        users: [{
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '' }] },
 
       { type: types.SET_PAGINATION,
         pagination: {
@@ -50,18 +55,18 @@ describe('User Actions', () => {
       const store = mockStore({ users: [], paginate: {} });
 
       store.dispatch(actions.fetchUsers())
-        .then((res) => {
+        .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
   it('creates ADD_USER when sign up has been done',
     () => {
       const user = {
-        username: 'awa',
-        firstName: 'awa',
-        lastName: 'awa',
-        email: 'awa',
-        password: 'awa' };
+        username: 'phemi',
+        firstName: 'oluwafemi',
+        lastName: 'akinwa',
+        email: 'oluwafemi.akinwa@andela.com',
+        password: 'oluwafemi' };
       nock('http://localhost.com/')
         .post('/users', user)
         .reply(200, {
@@ -74,17 +79,17 @@ describe('User Actions', () => {
       const store = mockStore({ users: [] });
 
       store.dispatch(userSignupRequest(user))
-        .then((res) => {
+        .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
   it('creates SET_CURRENT_USER when login has been done',
     () => {
-      const user = { username: 'awa', password: 'awa' };
+      const user = { username: 'phemi', password: 'oluwafemi' };
       nock('http://localhost.com/')
         .post('/users/login', user)
         .reply(200, {
-          body: { token: 'fdsffsfsdfsd', user: { userId: 2, roleId: 2 } } });
+          body: { token: 'kaiserphemi', user: { userId: 2, roleId: 2 } } });
 
       const expectedActions = [{ type: types.SET_CURRENT_USER,
         user }];
@@ -94,7 +99,7 @@ describe('User Actions', () => {
       const store = mockStore({ auth: {} });
 
       store.dispatch(auth.login(user))
-        .then((res) => {
+        .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });

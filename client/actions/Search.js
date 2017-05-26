@@ -14,16 +14,16 @@ const documentSearched = (searchResult) => {
 /**
  * Dispatch action to search a document
  * @param {Object} queryString
- * @returns {Object} function
+ * @returns {Object}
  */
   searchDocument = (queryString) => {
     return (dispatch) => {
       return axios.get(`/search/documents?q=${queryString}`)
-        .then((res) => {
-          dispatch(documentsSearched(res.data.rows));
+        .then((response) => {
+          dispatch(documentSearched(response.data.rows));
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: res.data.pagination
+            pagination: response.data.pagination
           });
         });
     };

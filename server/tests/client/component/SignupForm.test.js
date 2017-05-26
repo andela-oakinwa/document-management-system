@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import SignUpForm from '../../../../components/signup/SignUpForm';
+import SignUpForm from '../../../../client/components/signup/SignUpForm';
 
 const setup = () => {
   const props = {
@@ -14,12 +14,12 @@ const setup = () => {
   return mount(<SignUpForm {...props} />);
 };
 
-describe('Component: LoginForm', () => {
+describe('Component: SignUpForm', () => {
   it('should render self', () => {
     const wrapper = setup();
     expect(wrapper.length).toEqual(1);
-    expect(wrapper.find('Input').length).toEqual(7);
-    expect(wrapper.find('h4').text()).toEqual('Register');
+    expect(wrapper.find('Input').length).toEqual(6);
+    expect(wrapper.find('h5').text()).toEqual('Create Account');
   });
   it('should take props', () => {
     const wrapper = setup();

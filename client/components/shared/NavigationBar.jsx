@@ -3,26 +3,43 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { logout } from '../../actions/Authentication';
-
+/**
+ * Class component defined as this is a root component
+ */
 class NavigationBar extends React.Component {
+  /**
+   * Component properties
+   * @param {Object} props Component properties
+   */
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
   }
+  /**
+   * Handles logout events
+   * @param {Object} event Event trigered
+   */
   logout(event) {
     event.preventDefault();
     this.props.logout();
     this.context.router.push('/');
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const { isAuthenticated, user } = this.props.auth;
     return (
       <header>
         <nav role="navigation" className="nav-bar blue darken-4">
           <div className="nav-wrapper">
-            <Link to="/" className="brand-logo"><img src='../../assets/images/dms-logo.png' /></Link>
-            <Link to="#" data-activates="mobile-menu" className="button-collapse"><i className="material-icons">menu</i></Link>
+            <Link to="/" className="brand-logo">
+              <img src="../../assets/images/dms-logo.png" />
+            </Link>
+            <Link to="#" data-activates="mobile-menu"
+            className="button-collapse">
+            <i className="material-icons">menu</i></Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>
                 <Link to="/">
@@ -87,7 +104,10 @@ NavigationBar.propTypes = {
 NavigationBar.contextTypes = {
   router: React.PropTypes.object.isRequired,
 };
-
+/**
+ * Maps component state to properties
+ * @param {*} state State of component
+ */
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,

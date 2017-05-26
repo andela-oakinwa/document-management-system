@@ -1,7 +1,7 @@
 import expect from 'expect';
-import users from '../../reducers/auth';
-import * as actions from '../../actions/authActions';
-import * as types from '../../actions/types';
+import users from '../../../../client/reducers/AuthenticationReducer';
+import * as actions from '../../../../client/actions/Authentication';
+import * as types from '../../../../client/actions/ActionType';
 
 describe('Auth Reducer', () => {
   it('should set user when passed SET_CURRENT_USER', () => {

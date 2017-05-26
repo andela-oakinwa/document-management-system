@@ -120,9 +120,9 @@ const Authentication = {
    */
   verifyUserInput(request, response, next) {
     let email = /\S+@\S+\.\S+/.test(request.body.email),
-      firstName = /\w+/g.test(request.body.firstName),
-      lastName = /\w+/g.test(request.body.lastName),
-      userName = /\w+/g.test(request.body.userName),
+      firstName = /\w+/g.test(request.body.firstname),
+      lastName = /\w+/g.test(request.body.lastname),
+      userName = /\w+/g.test(request.body.username),
       password = /\w+/g.test(request.body.password);
 
     if (!email) {
@@ -169,7 +169,7 @@ const Authentication = {
               message: 'Email address already exist.'
             });
         }
-        db.User.findOne({ where: { userName: request.body.userName } })
+        db.User.findOne({ where: { username: request.body.username } })
           .then((newUser) => {
             if (newUser) {
               return response.status(409)
@@ -177,10 +177,10 @@ const Authentication = {
                   message: 'Username already exist.'
                 });
             }
-            userName = validator.trim(request.body.userName);
-            firstName = validator.trim(request.body.firstName);
-            lastName = validator.trim(request.body.lastName);
-            email = validator.trim(request.body.email);
+            userName = request.body.username;
+            firstName = request.body.firstname;
+            lastName = request.body.lastname;
+            email = request.body.email;
             password = request.body.password;
 
             const roleId = request.body.roleId || 2;
@@ -197,10 +197,10 @@ const Authentication = {
   },
   /**
    * Checks the owner of a file before any action
-   * @param  {Object}   request  [description]
-   * @param  {Object}   response [description]
-   * @param  {Function} next     [description]
-   * @return {Object}            [description]
+   * @param  {Object}   request  Request object
+   * @param  {Object}   response Response object
+   * @param  {Function} next     Calls the next function in route
+   * @return {Object}            Response object
    */
   verifyOwner(request, response, next) {
     db.Document.findById(request.params.id)

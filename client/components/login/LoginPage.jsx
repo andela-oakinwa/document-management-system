@@ -4,7 +4,14 @@ import validateInput from '../../../server/shared/validateInput';
 import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 
+/**
+ * Class component defined as this is a root component
+ */
 class LoginPage extends React.Component {
+  /**
+   * Component properties
+   * @param {Object} props Component properties
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +23,19 @@ class LoginPage extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
-
+  /**
+   * Checks client side input
+   * @return {Boolean}
+   */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
-
+  /**
+   * Handles submit event
+   * @param {Object} event Event triggered
+   */
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -39,16 +52,22 @@ class LoginPage extends React.Component {
           });
     }
   }
-
+  /**
+   * Handles change of state event as a result of user input
+   * @param {Object} event Event triggered
+   */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const { errors } = this.state;
     return (
       <div>
-        <LoginForm 
+        <LoginForm
           errors={errors}
           onChange={this.onChange}
           loginProps={this.state}

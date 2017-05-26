@@ -2,7 +2,7 @@
  * Import dependencies
  */
 import db from '../../../models';
-import helper from '../helper/test.helper';
+import helper from '../helper/Test.helper';
 import chai from 'chai';
 
 

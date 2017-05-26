@@ -27,7 +27,9 @@ if (localStorage.jwtToken) {
     user: jwt.decode(localStorage.jwtToken)
   });
 }
-
+/**
+ * Renders to the DOM
+ */
 render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />

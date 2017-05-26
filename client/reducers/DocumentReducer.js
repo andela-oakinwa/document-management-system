@@ -1,10 +1,5 @@
 import * as types from '../actions/ActionType';
-/**
- * Reducer Defined
- * @param  {Array}  state  [description]
- * @param  {Object} action [description]
- * @return {[type]}        [description]
- */
+
 const documents = (state = [], action = {}) => {
   switch (action.type) {
   case types.CREATE_DOCUMENT:

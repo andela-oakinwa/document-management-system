@@ -35,7 +35,7 @@ app.disable('x-powered-by');
  */
 app.use(logger('dev'));
 /**
- * Hot reload
+ * Hot reloading
  */
 app.use(webpackMiddleware(compiler));
 app.use(webpackHotMiddleware(compiler, {

@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
-
+/**
+ * Class component. This is a root component
+ */
 class Footer extends React.Component {
+  /**
+   * Renders to the DOM
+   * @param {String} url Link to twitter page
+   * @return {Object}
+   */
   render() {
     const url = 'https://twitter.com/Kaiser_Phemi';
     return (

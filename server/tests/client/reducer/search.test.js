@@ -1,21 +1,20 @@
 import expect from 'expect';
-import search from '../../reducers/search';
-import * as actions from '../../actions/searchActions';
+import search from '../../../../client/reducers/SearchReducer';
+import * as actions from '../../../../client/actions/Search';
 
 describe('Search Reducer', () => {
-  it('should add document SEARCH_RESULTS', () => {
+  it('should return document when passed SEARCH_RESULTS', () => {
     const initialState = [];
-    const documentsSearched = [
-      { id: '1', title: 'A' },
-      { id: '2', title: 'AA' },
-      { id: '3', title: 'AAC' }
+    const documentSearched = [
+      { id: '1', title: 'Andal' },
+      { id: '2', title: 'TIA' },
+      { id: '3', title: 'EPIC' }
     ];
 
-    const action = actions.documentsSearched(documentsSearched);
+    const action = actions.documentSearched(documentSearched);
 
-    // act
     const newState = search(initialState, action);
 
-    expect(newState.length).toEqual(documentsSearched.length);
+    expect(newState.length).toEqual(documentSearched.length);
   });
 });

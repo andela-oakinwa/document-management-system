@@ -6,11 +6,11 @@ module.exports = {
       .url(config.url)
       .waitForElementVisible('body')
       .click('#login')
-      .setValue('Input[name=identifier]', 'awa@awa.com')
-      .setValue('Input[name=password]', 'awa')
+      .setValue('Input[name=identifier]', 'oluwafemi@gmail.com')
+      .setValue('Input[name=password]', 'phemi')
       .click('Input[type=submit]')
       .pause(1000)
-      .assert.urlEquals('http://localhost:3000/')
+      .assert.urlEquals('http://localhost:4000/')
       .end();
   },
   'Invalid user': (browser) => {
@@ -18,8 +18,8 @@ module.exports = {
       .url(config.url)
       .waitForElementVisible('body')
       .click('#login')
-      .setValue('Input[name=identifier]', 'sese@gmail.com')
-      .setValue('Input[name=password]', 'password')
+      .setValue('Input[name=identifier]', 'kaiser@gmail.com')
+      .setValue('Input[name=password]', 'kaiser')
       .click('Input[type=submit]')
       .pause(1000)
       .assert.urlContains('login')
