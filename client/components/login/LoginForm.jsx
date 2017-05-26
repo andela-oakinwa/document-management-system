@@ -1,7 +1,9 @@
 import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
 import { Link } from 'react-router';
-
+/**
+ * Functional component since it's a chile of LoginPage component
+ */
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
     <form className="container col s12" onSubmit={onSubmit} method="post">
