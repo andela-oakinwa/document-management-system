@@ -1,5 +1,5 @@
 /**
- * Document model
+ * Document Model
  * @return {Object} Document
  */
 module.exports = (sequelize, DataTypes) => {
@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: { notEmpty: true }
+      validate: { notEmpty: true },
     },
     ownerId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true,
     },
     access: {
       type: DataTypes.STRING,
@@ -19,29 +19,28 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'public',
       validate: {
         isIn: [['private', 'public', 'role']]
-      }
+      },
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
     },
     owner: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     ownerRoleId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     }
   }, {
     classMethods: {
       associate: (models) => {
         Document.belongsTo(models.User, {
           foreignKey: 'ownerId',
-          onDelete: 'CASCADE',
+          onDelete: 'SET NULL',
         });
       }
     }
   });
   return Document;
 };
-

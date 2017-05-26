@@ -1,7 +1,7 @@
 /**
- * User model
+ * Model for User
  */
-const bcrypt =  require('bcrypt-nodejs');
+import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -25,15 +25,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: { notEmpty: true }
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 2
     },
     active: {
@@ -43,11 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-      associate(models) {
+      associate: (models) => {
         User.hasMany(models.Document, { foreignKey: 'ownerId' });
         User.belongsTo(models.Role, {
           foreignKey: 'roleId',
-          onDelete: 'CASCADE'
+          onDelete: 'SET NULL'
         });
       }
     },

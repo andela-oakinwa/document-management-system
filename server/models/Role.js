@@ -1,5 +1,5 @@
 /**
- * Roles model
+ * Model for Roles
  * @return {Object} Role
  */
 module.exports = (sequelize, DataTypes) => {
@@ -8,13 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: { notEmpty: true }
+      validate: { notEmpty: true },
     }
   }, {
     classMethods: {
       associate: (models) => {
         Role.hasMany(models.User, {
-          foreignKey: 'roleId' });
+          foreignKey: 'roleId'
+        });
       }
     }
   });
