@@ -1,27 +1,28 @@
+
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Documents', {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Documents', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       ownerId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         references: {
           model: 'Users',
-          key: 'id'
+          kei: 'id'
         }
-      },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
       },
       content: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
       },
       ownerRoleId: {
         type: Sequelize.INTEGER
@@ -39,6 +40,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }),
-  down: queryInterface => queryInterface.dropTable('Documents')
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Documents');
+  }
 };
