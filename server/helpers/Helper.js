@@ -57,7 +57,6 @@ const Helper = {
   /**
    * Gets document
    * @param  {Object} createdDoc
-   * @return {Object}
    */
   getDocument(createdDoc) {
 

@@ -3,11 +3,13 @@
  */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import validator from 'validator';
-import db from '../models/Index';
+import db from '../models';
 
 dotenv.config();
-// jwt secret key
+/**
+ * Gets the jwt secret key
+ * @type {Object}
+ */
 const secretKey = process.env.SECRET;
 
 const Authentication = {
@@ -16,7 +18,6 @@ const Authentication = {
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @param  {Object} next Next process handler
-   * @return {Object}          Return object
    */
   verifyToken(request, response, next) {
     const token = request.headers['x-access-token'];
@@ -59,7 +60,6 @@ const Authentication = {
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @param  {Object} next Next process handler
-   * @return {Object}        Return object
    */
   checkAdminRights(request, response, next) {
     db.Role
@@ -77,7 +77,7 @@ const Authentication = {
   /**
    * Gets user jwt token
    * @param  {user} user Users' object
-   * @return {[type]}      [description]
+   * @return {Object} userToken
    */
   getToken(user) {
     const userToken = jwt.sign({
@@ -89,9 +89,10 @@ const Authentication = {
   },
   /**
    * Verifies user login details
-   * @param  {[type]} request  [description]
-   * @param  {[type]} response [description]
-   * @return {[type]}          [description]
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @param {Object} next Next process handler
+   * @return {Object}
    */
   verifyLogin(request, response, next) {
     if (!request.body.password || !request.body.email) {
@@ -114,9 +115,9 @@ const Authentication = {
   /**
    * Checks users' input
    * @param  {Object} request  Request object
-   * @param  {Object} request  Response object
-   * @param  {Object} response Next process handler
-   * @return {Object}          Return object
+   * @param  {Object} response  Response object
+   * @param  {Object} next Next process handler
+   * @return {Object}
    */
   verifyUserInput(request, response, next) {
     let email = /\S+@\S+\.\S+/.test(request.body.email),
@@ -184,7 +185,8 @@ const Authentication = {
             password = request.body.password;
 
             const roleId = request.body.roleId || 2;
-            request.userInput = { userName,
+            request.userInput = {
+              userName,
               firstName,
               lastName,
               email,
@@ -200,7 +202,6 @@ const Authentication = {
    * @param  {Object}   request  Request object
    * @param  {Object}   response Response object
    * @param  {Function} next     Calls the next function in route
-   * @return {Object}            Response object
    */
   verifyOwner(request, response, next) {
     db.Document.findById(request.params.id)

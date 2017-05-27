@@ -16,7 +16,7 @@ describe('Document Actions', () => {
   it(`creates SET_DOCUMENTS and SET_PAGINATION when 
     fetching documents has been done`,
   () => {
-    nock('http://localhost.com/')
+    nock('http://localhost:4000')
       .get('/documents')
       .reply(200, {
         body: { pagination:
@@ -37,8 +37,6 @@ describe('Document Actions', () => {
         currentPage: 1,
         pageCount: 6 } }];
 
-    // const store = mockStore({ auth: {}, documents: [],
-    // users: [], search: [], paginate: {}, user: [] });
     const store = mockStore({ documents: [], paginate: {} });
 
     store.dispatch(actions.fetchDocuments())
@@ -59,8 +57,6 @@ describe('Document Actions', () => {
     const expectedActions = [{ type: types.ADD_DOCUMENT,
       document: { title: 'title', content: 'content', access: 'public' } }];
 
-    // const store = mockStore({ auth: {}, documents: [],
-    // users: [], search: [], paginate: {}, user: [] });
     const store = mockStore({ documents: [] });
 
     store.dispatch(actions.saveDocument())

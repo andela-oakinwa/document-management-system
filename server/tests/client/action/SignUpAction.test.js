@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
-import userSignupRequest from '../../../../client/actions/SignUpAction';
+import signupRequest from '../../../../client/actions/SignUpAction';
 import * as types from '../../../../client/actions/ActionType';
 
 const middlewares = [thunk];
@@ -20,7 +20,7 @@ describe('User Actions', () => {
         lastName: 'Akinwa',
         email: 'kaiser.phemi@gamil.com',
         password: 'andelatia' };
-      nock('http://localhost.com/')
+      nock('http://localhost:4000')
         .post('/users', user)
         .reply(200, {
           body: { user } });
@@ -28,11 +28,9 @@ describe('User Actions', () => {
       const expectedActions = [{ type: types.ADD_USER,
         user }];
 
-      // const store = mockStore({ auth: {}, users: [],
-      // users: [], search: [], paginate: {}, user: [] });
       const store = mockStore({ users: [] });
 
-      store.dispatch(userSignupRequest(user))
+      store.dispatch(signupRequest(user))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });

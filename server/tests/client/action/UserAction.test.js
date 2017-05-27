@@ -49,9 +49,6 @@ describe('User Actions', () => {
           currentPage: 1,
           pageCount: 6 }
       }];
-
-      // const store = mockStore({ auth: {}, users: [],
-      // users: [], search: [], paginate: {}, user: [] });
       const store = mockStore({ users: [], paginate: {} });
 
       store.dispatch(actions.fetchUsers())
@@ -73,9 +70,6 @@ describe('User Actions', () => {
           body: { user } });
 
       const expectedActions = [{ type: types.ADD_USER, user }];
-
-      // const store = mockStore({ auth: {}, users: [],
-      // users: [], search: [], paginate: {}, user: [] });
       const store = mockStore({ users: [] });
 
       store.dispatch(userSignupRequest(user))
@@ -93,9 +87,6 @@ describe('User Actions', () => {
 
       const expectedActions = [{ type: types.SET_CURRENT_USER,
         user }];
-
-      // const store = mockStore({ auth: {}, users: [],
-      // users: [], search: [], paginate: {}, user: [] });
       const store = mockStore({ auth: {} });
 
       store.dispatch(auth.login(user))

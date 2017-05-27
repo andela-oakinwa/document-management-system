@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { Button, Row, Input, Pagination } from 'react-materialize';
-
+import React from 'react';
+import { Button, Row, Input } from 'react-materialize';
+/**
+ * Functional component as this is a child of ProfilePage component
+ */
 const ProfileForm = ({ userProps, onChange, onSubmit }) => {
   return (
     <div>
       <form className="col s12" method="post" onSubmit={onSubmit}>
-        <h5 className="center" style={{ margin: 40 }}>Edit Profile</h5>
+        <h5 className="center">Edit Profile</h5>
         <Row>
           <Input
             label="First Name"
@@ -35,6 +37,7 @@ const ProfileForm = ({ userProps, onChange, onSubmit }) => {
           label="Email"
             s={6}
             name="email"
+            type="email"
             value={userProps.email}
             onChange={onChange}
             required
@@ -49,8 +52,11 @@ const ProfileForm = ({ userProps, onChange, onSubmit }) => {
             required
           />
         </Row>
-        <Button waves="light" type="submit">
-          UPDATE
+        <Button
+          type="submit"
+          className="btn blue darken-4 waves-effect"
+        >
+          Update
         </Button>
       </form>
     </div>

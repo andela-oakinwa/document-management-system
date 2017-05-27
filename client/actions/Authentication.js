@@ -5,8 +5,8 @@ import * as types from './ActionType';
 
 
 /**
- * Dispatch action to logout a user
- * @returns {Object} function
+ * Forwards logout actions
+ * @returns {Object}
  */
 const logout = () => {
   return (dispatch) => {
@@ -24,9 +24,9 @@ const logout = () => {
 };
 
 /**
- * Dispatch action to login a user
- * @param {any} data
- * @returns {Object} function
+ * Forwards login actions
+ * @param {Object} data User details
+ * @returns {Object}
  */
 const login = (data) => {
   return dispatch =>

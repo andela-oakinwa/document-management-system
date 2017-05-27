@@ -3,9 +3,8 @@ import * as types from './ActionType';
 
 /**
  * Dispatched action to create a new document
- * @export
- * @param {any} data
- * @returns {object} object
+ * @param {Object} data
+ * @returns {Object}
  */
 const saveDocument = (data) => {
     return (dispatch) => {
@@ -20,68 +19,62 @@ const saveDocument = (data) => {
   },
   /**
    * Dispatches action to fetch all documents
-   * @export
-   * @param {*} offset
-   * @returns {Array} documents
+   * @param {Object} offset Paging offset
+   * @returns {Object}
    */
   fetchDocuments = (offset) => {
     const pageOffset = offset || 0;
     const limit = 6;
     return (dispatch) => {
       return axios.get(`/documents?offset=${pageOffset}&limit=${limit}`)
-        .then((res) => {
+        .then((response) => {
           dispatch({
             type: types.SET_DOCUMENTS,
-            documents: res.data.rows,
+            documents: response.data.rows,
           });
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: res.data.pagination
+            pagination: response.data.pagination
           });
         });
     };
   },
-
-
   /**
-   * Dispatch action to fetch a particular document
-   * @export
-   * @param {any} id
-   * @returns {object} document
+   * Action to fetch a specific document
+   * @param {Object} id Document Id
+   * @returns {Object}
    */
   fetchDocument = (id) => {
     return (dispatch) => {
       return axios.get(`/documents/${id}`)
-        .then((res) => {
+        .then((response) => {
           dispatch({
             type: types.LOAD_DOCUMENT,
-            document: res.data,
+            document: response.data,
           });
         });
     };
   },
   /**
-   * Dispatch action to edit a document
-   * @export
-   * @param {any} data
-   * @returns {object} document
+   * Action to edit a specific document
+   * @param {Object} data Document data
+   * @returns {Object}
    */
   updateDocument = (data) => {
     return (dispatch) => {
       return axios.put(`/documents/${data.id}`, data)
-        .then((res) => {
+        .then((response) => {
           dispatch({
             type: types.UPDATE_DOCUMENT,
-            document: res.data,
+            document: response.data,
           });
         });
     };
   },
   /**
-   * Dispatch action to delete a document
-   * @export
-   * @param {any} id
-   * @returns {object} document id
+   * Action to delete a specific document
+   * @param {Object} id Document Id
+   * @returns {Object}
    */
   deleteDocument = (id) => {
     return (dispatch) => {

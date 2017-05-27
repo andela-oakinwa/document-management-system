@@ -1,7 +1,7 @@
 /**
  * Dependencies declared
  */
-import db from '../models/Index';
+import db from '../models';
 import Helper from '../helpers/Helper';
 /**
  * Document Controller
@@ -12,7 +12,6 @@ const DocumentController = {
    * Route: POST /documents/
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @returns {Object} Response object
    */
   createDocument(request, response) {
     const { title, content, access } = request.body,
@@ -52,7 +51,6 @@ const DocumentController = {
    * Route: GET /documents/
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   getAllDocuments(request, response) {
     request.doqmanFilter.attributes = Helper.getDocumentAttr();
@@ -79,7 +77,6 @@ const DocumentController = {
    * Route: PUT /documents/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   updateDocument(request, response) {
     db.Document.findById(request.params.id)

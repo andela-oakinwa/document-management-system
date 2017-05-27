@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Button } from 'react-materialize';
 
-export default function DocumentCard({ document, deleteDocument, currentUser }) {
+const DocumentCard = ({ document, deleteDocument, currentUser }) => {
   return (
     <div className="col s4">
-      <div className="card qBox">
+      <div className="card">
         <div className="card-content white-text">
           <span className="card-title">{document.title}</span>
           <p>Access: &nbsp; <span>{(document.access).toUpperCase()}</span></p><br />
@@ -37,3 +37,5 @@ DocumentCard.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };
+
+export default DocumentCard;

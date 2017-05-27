@@ -7,8 +7,14 @@ import DocumentsList from './DocumentList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
 import { searchDocuments } from '../../actions/Search';
 import Search from '../shared/SearchBox';
-
+/**
+ * Defined as class component.
+ */
 class DocumentsPage extends React.Component {
+  /**
+   * Component properties
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +36,7 @@ class DocumentsPage extends React.Component {
 
   deleteDocument(id) {
     this.props.deleteDocument(id)
-      .then(respons => toastr.success('Document deleted successfully!'));
+      .then(() => toastr.success('Document deleted successfully!'));
   }
 
   handleSearch(event) {

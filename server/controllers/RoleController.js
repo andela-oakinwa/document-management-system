@@ -2,7 +2,7 @@
  * Dependencies declared
  */
 import db from '../models';
-import Helper from '../helpers/Helper';
+
 /**
  * Role Controller
  */
@@ -11,8 +11,7 @@ const RoleController = {
    * Creates a new role
    * Route: POST: /roles/
    * @param {Object} request Request object
-   * @param {Object} reponse Response object
-   * @returns {Object} Response object
+   * @param {Object} response Response object
    */
   createRole(request, response) {
     db.Role
@@ -36,7 +35,6 @@ const RoleController = {
    * Route: PUT: /roles/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @returns {Object} Response object
    */
   updateRole(request, response) {
     db.Role.findById(request.params.id)
@@ -59,7 +57,6 @@ const RoleController = {
    * Route: DELETE: /roles/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @returns {Object} Response object
    */
   deleteRole(request, response) {
     db.Role.findById(request.params.id)
@@ -84,7 +81,6 @@ const RoleController = {
    * Route: GET: /roles/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @returns {Object} Response object
    */
   getRole(request, response) {
     db.Role
@@ -108,7 +104,6 @@ const RoleController = {
    * Route: GET: /roles/
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @returns {Object} Response object
    */
   getAllRole(request, response) {
     db.Role

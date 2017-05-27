@@ -15,7 +15,7 @@ describe('Login Action', () => {
   it('creates SET_CURRENT_USER when login has been done',
     () => {
       const user = { username: 'phemi', password: 'oluwafemi' };
-      nock('http://localhost.com/')
+      nock('http://localhost:4000')
         .post('/users/login', user)
         .reply(200, {
           body: { token: 'kaiserphemi', user: { userId: 2, roleId: 2 } } });
@@ -23,8 +23,6 @@ describe('Login Action', () => {
       const expectedActions = [{ type: types.SET_CURRENT_USER,
         user }];
 
-      // const store = mockStore({ auth: {}, users: [],
-      // users: [], search: [], paginate: {}, user: [] });
       const store = mockStore({ auth: {} });
 
       store.dispatch(auth.login(user))
