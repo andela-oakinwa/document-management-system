@@ -18,7 +18,7 @@ const UserController = {
    */
   createUser(request, response) {
     db.User
-      .create(request.userInput)
+      .create(request.body)
       .then((user) => {
         const token = Authentication.getToken(user);
         user = Helper.userProfile(user);
@@ -51,7 +51,7 @@ const UserController = {
         if (user && bcrypt.compareSync(password, user.password)) {
           user.update({ active: true });
           const token = Authentication.getToken(user);
-          user = Helper.getUserProfile(user);
+          user = Helper.userProfile(user);
           return response.status(200)
             .send({
               message: 'You have successfully logged in.',
@@ -73,7 +73,7 @@ const UserController = {
    */
   logout(request, response) {
     db.User
-      .findById(request.tokenDecode.userId)
+      .findById(request.decoded.user.id)
       .then((user) => {
         user.update({ active: false })
           .then(() => {

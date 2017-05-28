@@ -15,9 +15,11 @@ const DocumentController = {
    */
   createDocument(request, response) {
     const { title, content, access } = request.body,
-      ownerId = request.decoded.userId;
+      ownerId = request.tokenDecode.userId;
+      ownerRoleId = request.tokenDecode.roleId;
+      console.log(request.tokenDecode);
     db.Document
-      .create({ title, content, access, ownerId })
+      .create({ title, content, access, ownerId, ownerRoleId })
         .then((createdDoc) => {
           createdDoc = Helper.getDocument(createdDoc);
           response.status(201)
@@ -53,14 +55,26 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   getAllDocuments(request, response) {
-    request.doqmanFilter.attributes = Helper.getDocumentAttr();
+    console.log(request.body);
+    const dbQuery = {
+      where: {
+        $or: [
+          { access: 'public' },
+          { ownerId: request.tokenDecode.userId }
+        ]
+      },
+      include: Helper.ownerDetails,
+      limit: request.dbQuery.limit || 10,
+      offset: request.dbQuery.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
     db.Document
-      .findAndCountAll(request.doqmanFilter)
+      .findAndCountAll(dbQuery)
       .then((documents) => {
         const constraint = {
           count: documents.count,
-          limit: request.doqmanFilter.limit,
-          offset: request.doqmanFilter.offset
+          limit: dbQuery.limit,
+          offset: dbQuery.offset
         };
         delete documents.count;
         const paging = Helper.paging(constraint);
