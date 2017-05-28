@@ -55,11 +55,19 @@ const Helper = {
     };
   },
   /**
-   * Gets document
+   * Gets document attributes
    * @param  {Object} createdDoc
    */
   getDocument(createdDoc) {
-
+    return {
+      id: createdDoc.id,
+      title: createdDoc.title,
+      content: createdDoc.content,
+      access: createdDoc.access,
+      ownerId: createdDoc.ownerId,
+      createdAt: createdDoc.createdAt,
+      updatedAt: createdDoc.updatedAt
+    };
   }
 };
 
