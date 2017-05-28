@@ -17,7 +17,7 @@ class LoginPage extends React.Component {
     this.state = {
       email: '',
       password: '',
-      error: {}
+      errors: {}
     };
 
     this.onSubmit = this.onSubmit.bind(this);

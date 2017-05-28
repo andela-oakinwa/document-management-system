@@ -28,17 +28,25 @@ class DocumentsPage extends React.Component {
     this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
     this.filterRoleDocs = this.filterRoleDocs.bind(this);
   }
-
+  /**
+   * Checks for rendered document
+   */
   componentWillMount() {
     this.props.fetchDocuments();
     this.setState({ renderedDocuments: this.props.documents });
   }
-
+  /**
+   * Handles document deletion and notification
+   * @param  {Number} id Specific document Id
+   */
   deleteDocument(id) {
     this.props.deleteDocument(id)
       .then(() => toastr.success('Document deleted successfully!'));
   }
-
+  /**
+   * Handles search feature
+   * @param  {Object} event Events from user input
+   */
   handleSearch(event) {
     event.preventDefault();
     const query = event.target.value;
@@ -48,32 +56,46 @@ class DocumentsPage extends React.Component {
       this.setState({ renderedDocuments: documentSearchResult });
     }
   }
-
+  /**
+   * Displays lit of document
+   * @param  {Number} pageNumber
+   */
   displayDocuments(pageNumber) {
     const offset = (pageNumber - 1)
       * this.props.metadata.pageSize;
     this.props.fetchDocuments(offset);
   }
-
+  /**
+   * Returns list of documents with public access
+   */
   filterPublicDocs() {
     const renderedDocuments =
     this.props.documents
       .filter(document => document.access === 'public');
     this.setState({ renderedDocuments, filtered: true });
   }
+  /**
+   * Returns list of documents with private access
+   */
   filterPrivateDocs() {
     const renderedDocuments =
     this.props.documents
       .filter(document => document.access === 'private');
     this.setState({ renderedDocuments, filtered: true });
   }
+  /**
+   * Returns list of documents with role access
+   */
   filterRoleDocs() {
     const renderedDocuments =
     this.props.documents
       .filter(document => document.access === 'role');
     this.setState({ renderedDocuments, filtered: true });
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const {
       totalCount,
@@ -81,8 +103,8 @@ class DocumentsPage extends React.Component {
       currentPage,
       pageCount } = this.props.metadata;
     return (
-      <div>
-        <h1>Available Documents</h1>
+      <div className="container">
+        <h4 className="center">Available Documents</h4>
         <div className="row">
           <div className="col s7 push-s4">
             <Search onChange={this.handleSearch} />
@@ -100,17 +122,28 @@ class DocumentsPage extends React.Component {
             <ul>
               <li className="tab col s4">
                 <Button
+                  className="blue"
                   onClick={this.filterPublicDocs}
-                >Public Documents</Button></li>
-              <li className="tab col s4">
-                <Button
-                onClick={this.filterPrivateDocs}>
-                Private Documents</Button>
+                >
+                  Public Documents
+                </Button>
               </li>
               <li className="tab col s4">
                 <Button
-                onClick={this.filterRoleDocs}
-                >Role Documents</Button></li>
+                  className="blue"
+                  onClick={this.filterPrivateDocs}
+                >
+                  Private Documents
+                </Button>
+              </li>
+              <li className="tab col s4">
+                <Button
+                  className="blue"
+                  onClick={this.filterRoleDocs}
+                >
+                  Role Documents
+                </Button>
+              </li>
             </ul>
           </div>
         </div>
@@ -142,7 +175,11 @@ DocumentsPage.propTypes = {
   documents: React.PropTypes.array.isRequired,
   metadata: React.PropTypes.object
 };
-
+/**
+ * Maps state to properties
+ * @param  {Object} state
+ * @return {object}
+ */
 const mapStateToProps = (state) => {
   let documents = [];
   documents = state.documents;

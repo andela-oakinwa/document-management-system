@@ -2,10 +2,11 @@ import React from 'react';
 import { Button, Row, Input } from 'react-materialize';
 /**
  * Functional component as this is a child of ProfilePage component
+ * @return {Object}
  */
 const ProfileForm = ({ userProps, onChange, onSubmit }) => {
   return (
-    <div>
+    <div className="container profile-form">
       <form className="col s12" method="post" onSubmit={onSubmit}>
         <h5 className="center">Edit Profile</h5>
         <Row>
@@ -41,6 +42,7 @@ const ProfileForm = ({ userProps, onChange, onSubmit }) => {
             value={userProps.email}
             onChange={onChange}
             required
+            validate
           />
           <Input
             label="Password"

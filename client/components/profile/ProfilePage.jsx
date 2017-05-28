@@ -59,6 +59,7 @@ class ProfilePage extends Component {
   }
   /**
    * Render to the DOM
+   * @return {Object}
    */
   render() {
     return (
@@ -82,7 +83,11 @@ ProfilePage.propTypes = {
 ProfilePage.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
-
+/**
+ * Maps state to properties
+ * @param  {Object} state
+ * @return {Object}
+ */
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.user.userId,

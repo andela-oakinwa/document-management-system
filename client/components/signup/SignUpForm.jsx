@@ -13,23 +13,23 @@ const SignUpForm = ({ onChange, userProps, onSubmit, errors }) => {
             s={6}
             validate
             errors={errors.firstName}
-            value={userProps.firstname}
+            value={userProps.firstName}
             onChange={onChange}
             type="text"
-            name="firstname"
+            name="firstName"
           />
           <Input
             label="Last Name"
             s={6}
             validate
             errors={errors.lastName}
-            value={userProps.lastname}
+            value={userProps.lastName}
             onChange={onChange}
             type="text"
-            name="lastname"
+            name="lastName"
           />
           <Input
-            label="UserName"
+            label="Username"
             s={12}
             validate
             errors={errors.username}

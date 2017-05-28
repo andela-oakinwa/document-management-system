@@ -4,21 +4,35 @@ import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
 import UsersList from './UsersList';
 import { fetchUsers, deleteUser } from '../../actions/UserAction';
-
+/**
+ * Defined as class components as this is a root component
+ */
 class UsersPage extends React.Component {
+  /**
+   * Instantiates the class with default properties
+   */
   constructor() {
     super();
     this.displayUsers = this.displayUsers.bind(this);
   }
+  /**
+   * Checks for returned list of users
+   */
   componentDidMount() {
     this.props.fetchUsers();
   }
-
+  /**
+   * Handles list of all users
+   * @param  {Number} pageNumber
+   */
   displayUsers(pageNumber) {
     const offset = (pageNumber - 1) * this.props.metadata.pageSize;
     this.props.fetchUsers(offset);
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const { totalCount, pageSize, currentPage, pageCount } = this.props.metadata;
     return (
@@ -47,7 +61,11 @@ UsersPage.propTypes = {
   auth: React.PropTypes.object.isRequired,
   metadata: React.PropTypes.object.isRequired
 };
-
+/**
+ * Maps state to properties
+ * @param  {Object} state
+ * @return {Object}
+ */
 const mapStateToProps = (state) => {
   return {
     users: state.users,

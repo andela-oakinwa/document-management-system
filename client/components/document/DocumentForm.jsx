@@ -4,20 +4,19 @@ import TinyMCE from 'react-tinymce';
 
 const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
   return (
-    <form>
+    <form className="container">
       <h5 className="center" style={{ margin: 20 }}>Create/Update a Document</h5>
       <Row>
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
           <Input
             label="Title"
-            placeholder="Title"
             validate
             name="title"
             onChange={onChange}
             value={document.title}
             id="title"
           />
-          {errors.title && <div className="red-text">Enter Title</div>}
+          {errors.title && <span className="red-text">Enter Title</span>}
         </div>
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
           <TinyMCE
@@ -41,8 +40,8 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           >
             <option defaultValue>Select Access</option>
             <option value="public">Public</option>
-            <option value="private" >Private</option>
-            <option value="role" >Role</option>
+            <option value="private">Private</option>
+            <option value="role">Role</option>
           </select>
         </div>
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
