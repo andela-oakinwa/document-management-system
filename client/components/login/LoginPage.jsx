@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import validateInput from '../../../server/shared/validateInput';
+import validateInput from '../../../server/shared/ValidateInput';
 import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 
@@ -28,7 +28,8 @@ class LoginPage extends React.Component {
    * @return {Boolean}
    */
   isValid() {
-    const { errors, isValid } = validateInput(this.state);
+    console.log(this.state);
+    const { errors, isValid } = ValidateInput.loginInput(this.state);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
