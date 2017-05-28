@@ -2,6 +2,7 @@ $font-stack:'Lato', sans-serif;
 $primary-color: rgb(233, 250, 251);
 $primary-bg-color: rgb(255,255,255); 
 $button-color: rgb(73, 106, 226);
+$shadow-color: rgb(51,51,51);
 
 body {
   display: flex;
@@ -17,6 +18,12 @@ main {
 
 .get-started-btn {
   background-color: $button-color;
+}
+
+.profile-form {
+  padding: 20px;
+  box-shadow: 3px 3px 5px $shadow-color;
+  margin: 5% 10%;
 }
 
 .landing-page {
