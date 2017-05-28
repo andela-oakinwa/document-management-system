@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     ownerRoleId: {
       type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     classMethods: {
