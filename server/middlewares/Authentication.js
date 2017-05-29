@@ -101,7 +101,6 @@ const Authentication = {
           message: 'Please provide your email and password to login.'
         });
     }
-
     const email = /\S+@\S+\.\S+/.test(request.body.email),
       password = /\w+/g.test(request.body.password);
     if (!email || !password) {
@@ -218,7 +217,7 @@ const Authentication = {
       .catch(() => {
         return response.status(404)
           .send({
-            message: `Document with ${request.params.id} not found.`
+            message: `Document with id:${request.params.id} not found.`
           });
       });
   }
