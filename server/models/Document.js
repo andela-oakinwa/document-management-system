@@ -25,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    owner: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     ownerRoleId: {
       type: DataTypes.INTEGER,
       allowNull: false
