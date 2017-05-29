@@ -64,10 +64,29 @@ const Helper = {
       title: createdDoc.title,
       content: createdDoc.content,
       access: createdDoc.access,
+      owner: createdDoc.owner,
       ownerId: createdDoc.ownerId,
       createdAt: createdDoc.createdAt,
       updatedAt: createdDoc.updatedAt
     };
+  },
+  /**
+   * Gets document owner detials
+   * @return {Array} Array of objects
+   */
+  ownerDetails() {
+    return [
+      {
+        model: User,
+        as: 'Owner',
+        attributes: [
+          'username',
+          'firstName',
+          'lastName',
+          'email'
+        ]
+      }
+    ];
   }
 };
 
