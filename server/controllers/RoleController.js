@@ -115,11 +115,16 @@ const RoleController = {
     db.Role
       .findAll()
       .then((roles) => {
-        if (request.tokenDecode.roleId == 1 || )
         response.status(200)
           .send({
             message: 'You have successfully retrieved all roles.',
             roles
+          });
+      })
+      .catch((error) => {
+        response.status(500)
+          .send({
+            message: error.message
           });
       });
   }

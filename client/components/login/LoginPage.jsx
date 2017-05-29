@@ -28,7 +28,6 @@ class LoginPage extends React.Component {
    * @return {Boolean}
    */
   isValid() {
-    console.log(this.state);
     const { errors, isValid } = ValidateInput.loginInput(this.state);
     if (!isValid) this.setState({ errors });
     return isValid;
