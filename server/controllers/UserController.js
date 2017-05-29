@@ -73,7 +73,11 @@ const UserController = {
    */
   logout(request, response) {
     db.User
-      .findById(request.decoded.user.id)
+      .findOne({
+        where: {
+          id: request.body.id
+        }
+      })
       .then((user) => {
         user.update({ active: false })
           .then(() => {
