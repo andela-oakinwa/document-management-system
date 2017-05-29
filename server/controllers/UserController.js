@@ -121,12 +121,12 @@ const UserController = {
     const query = {
       attributes: Helper.getUserAttribute(),
       include: [{
-        model: Role,
+        model: db.Role,
         as: 'Role'
       }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     };
     db.User
       .findAndCountAll(query)
@@ -156,11 +156,21 @@ const UserController = {
    */
   updateUser(request, response) {
     db.User.findById(request.params.id)
-      .then((updatedUser) => {
-        response.status(200)
-          .send({
-            message: 'Profile has been updated.',
-            updatedUser
+      .then((user) => {
+        if (!user) {
+          return response.status(404)
+            .send({
+              message: 'User not found'
+            });
+        }
+        db.User.update(request.body)
+          .then((updatedUser) => {
+            updatedUser = Helper.userProfile(updatedUser);
+            response.status(200)
+              .send({
+                message: 'Profile has been updated successfully.',
+                updatedUser
+              });
           });
       })
       .catch((error) => {
@@ -198,7 +208,10 @@ const UserController = {
   getUserDocuments(request, response) {
     db.Document.findAll({ where: { ownerId: request.params.id } })
       .then((allDocs) => {
-        response.send(allDocs);
+        response.send({
+          message: 'Documents for user retrieved successfully.',
+          allDocs
+        });
       })
       .catch((error) => {
         response.status(404)
