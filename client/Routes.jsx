@@ -25,4 +25,3 @@ export default (
     <Route path="/editprofile" component={ProfilePage} />
   </Route>
 );
-
