@@ -1,5 +1,4 @@
 import isEmpty from 'lodash/isEmpty';
-
 /**
  * Validates client side document details
  * @param  {Object} values Details describing document

@@ -15,11 +15,11 @@ const DocumentController = {
    */
   createDocument(request, response) {
     const { title, content, access } = request.body,
-      ownerId = request.tokenDecode.userId;
-      ownerRoleId = request.tokenDecode.roleId;
-      console.log(request.tokenDecode);
+      ownerId = request.tokenDecode.userId,
+      ownerRoleId = request.tokenDecode.roleId,
+      owner = request.tokenDecode.username;
     db.Document
-      .create({ title, content, access, ownerId, ownerRoleId })
+      .create({ title, content, access, ownerId, ownerRoleId, owner })
         .then((createdDoc) => {
           createdDoc = Helper.getDocument(createdDoc);
           response.status(201)
@@ -30,7 +30,9 @@ const DocumentController = {
         })
         .catch((error) => {
           response.status(500)
-            .send(error.message);
+            .send({
+              message: error.message
+            });
         });
   },
   /**
@@ -55,7 +57,6 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   getAllDocuments(request, response) {
-    console.log(request.body);
     const dbQuery = {
       where: {
         $or: [
@@ -103,7 +104,9 @@ const DocumentController = {
       })
       .catch((error) => {
         response.status(500)
-          .send(error);
+          .send({
+            message: error.message
+          });
       });
   },
   /**
@@ -114,16 +117,35 @@ const DocumentController = {
    * @return {Object} Response object
    */
   deleteDocument(request, response) {
-    return request.body.document.destroy()
-      .then(() => {
-        response.status(200)
-        .send({
-          message: 'Document deleted succesfully'
-        });
+    db.Documents.findById(request.params.id)
+      .then((document) => {
+        if (!document) {
+          return response.status(404)
+            .send({
+              message: `Document with id:${params.id} does not exist`
+            });
+        }
+        if (document.ownerId === request.tokenDecode.userId ||
+          request.tokenDecode.roleId === 1) {
+          document.destroy()
+            .then(() => {
+              response.status(200)
+                .send({
+                  message: 'Document deleted succesfully',
+                });
+            });
+        } else {
+          return response.status(403)
+            .send({
+              message: 'Document does not belong to you. You cannot delete it.'
+            });
+        }
       })
       .catch((error) => {
-        response.status(404)
-          .send(error);
+        response.status(500)
+          .send({
+            message: error.message
+          });
       });
   }
 };

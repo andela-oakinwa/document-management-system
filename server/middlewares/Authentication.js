@@ -75,7 +75,7 @@ const Authentication = {
       });
   },
   /**
-   * Gets user jwt token
+   * Gets user session jwt token
    * @param  {user} user Users' object
    * @return {Object} userToken
    */
@@ -132,25 +132,25 @@ const Authentication = {
           message: 'Please enter a valid email address.'
         });
     }
-    if (!firstName) {
+    if (!firstName || firstName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid firstname.'
         });
     }
-    if (!lastName) {
+    if (!lastName || lastName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid lastname.'
         });
     }
-    if (!userName) {
+    if (!userName || userName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid username.'
         });
     }
-    if (!password) {
+    if (!password || password === 'undefined') {
       return response.status(400)
         .send({
           message: 'Password field cannot be empty. Please enter a password.'
@@ -206,7 +206,7 @@ const Authentication = {
   verifyOwner(request, response, next) {
     db.Document.findById(request.params.id)
       .then((document) => {
-        if (document.ownerId === request.decoded.userId) {
+        if (document.ownerId === request.tokenDecode.userId) {
           next();
         } else {
           return response.status(401)
@@ -218,7 +218,7 @@ const Authentication = {
       .catch(() => {
         return response.status(404)
           .send({
-            message: `Document with ${request.params.id} not found`
+            message: `Document with ${request.params.id} not found.`
           });
       });
   }

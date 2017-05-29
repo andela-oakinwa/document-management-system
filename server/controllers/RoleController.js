@@ -94,8 +94,14 @@ const RoleController = {
         }
         response.status(200)
           .send({
-            message: 'This role was retrieved successfully.',
+            message: 'Role was retrieved successfully.',
             role
+          });
+      })
+      .catch(() => {
+        response.status(500)
+          .send({
+            message: error.message
           });
       });
   },
@@ -109,6 +115,7 @@ const RoleController = {
     db.Role
       .findAll()
       .then((roles) => {
+        if (request.tokenDecode.roleId == 1 || )
         response.status(200)
           .send({
             message: 'You have successfully retrieved all roles.',
