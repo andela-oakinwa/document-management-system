@@ -26,6 +26,7 @@ documentRouter.route('/:id')
   .get(Authentication.verifyToken, DocumentController.getDocument)
   .put(Authentication.verifyToken, Authentication.verifyOwner,
     DocumentController.updateDocument)
-  .delete(Authentication.verifyToken, DocumentController.deleteDocument);
+  .delete(Authentication.verifyToken, Authentication.verifyOwner,
+    DocumentController.deleteDocument);
 
 export default documentRouter;
