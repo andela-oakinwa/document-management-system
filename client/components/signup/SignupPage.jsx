@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import SignUpForm from './SignUpForm';
 import signupRequest from '../../actions/SignUpAction';
-import validateInput from '../../../server/shared/validateInput';
+import validateInput from '../../../server/shared/ValidateInput';
 
 class SignUpPage extends React.Component {
   // States and events decalred here
