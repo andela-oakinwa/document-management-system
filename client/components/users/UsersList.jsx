@@ -1,10 +1,17 @@
 import React from 'react';
 import ListRow from './ListRow';
-
+/**
+ * Functional component as this is chile component of UsersPage
+ */
 const UsersList = () => {
   const usersRow = users.map((user) => {
-    <UserRow user={user} key={user.id} deleteUser={deleteUser} authenticate={auth} />
-    });
+    return <ListRow
+      user={user}
+      key={user.id}
+      deleteUser={deleteUser}
+      authenticate={auth}
+      />;
+  });
   return (
     <table className="responsive-table striped">
       <thead>
@@ -20,8 +27,9 @@ const UsersList = () => {
         {usersRow}
       </tbody>
     </table>
-  )
+  );
 };
+
 UsersList.propTypes = {
   users: React.PropTypes.array.isRequired,
   deleteUser: React.PropTypes.func.isRequired,

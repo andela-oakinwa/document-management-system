@@ -1,11 +1,13 @@
 import React from 'react';
-import { Input } from 'react-materialize';
-
+/**
+ * Functional component defined
+ * @param {Object}
+ */
 const EditUserRole = ({ value, onChange }) => {
   return (
     <div className="input-field col s4">
       <select
-       style={{ display: 'block' }}
+        style={{ display: 'block' }}
         value={value}
         onChange={onChange}
         name="roleId"
