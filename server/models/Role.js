@@ -1,5 +1,5 @@
 /**
- * Roles model
+ * Model for Roles
  * @return {Object} Role
  */
 module.exports = (sequelize, DataTypes) => {
@@ -7,24 +7,15 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        args: true,
-        msg: 'Role already exist.'
-      },
-      validate: {
-        is: {
-          args: /\w+/g,
-          msg: 'Input a valid title.'
-        },
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        }
-      }
+      unique: true,
+      validate: { notEmpty: true },
     }
   }, {
     classMethods: {
       associate: (models) => {
-        Role.hasMany(models.User, { foreignKey: 'roleId' });
+        Role.hasMany(models.User, {
+          foreignKey: 'roleId'
+        });
       }
     }
   });

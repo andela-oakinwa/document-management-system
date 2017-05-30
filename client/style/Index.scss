@@ -1,40 +1,53 @@
 $font-stack:'Lato', sans-serif; 
 $primary-color: rgb(233, 250, 251);
-$primary-bg-color: rgb(255,255,255); 
+$primary-bg-color: rgb(255, 255, 255); 
 $button-color: rgb(73, 106, 226);
+$shadow-color: rgb(51, 51, 51);
+$bg-shade-color: 20, 20, 20;
+$alpha: 0.5;
+$bg-shade: rgba($bg-shade-color, $alpha);
 
 body {
-  background-color: $primary-color;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: $primary-bg-color;
   font-family: $font-stack;  
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .get-started-btn {
   background-color: $button-color;
 }
 
- 
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
+.profile-form {
+  padding: 20px;
+  box-shadow: 3px 3px 5px $shadow-color;
+  margin: 5% 10%;
+}
 
-    main {
-      flex: 1 0 auto;
-    }
+.landing-page {
+  background:
+    -webkit-linear-gradient($bg-shade, $bg-shade),
+     url("../assets/images/dms-blue.png");
+  background:
+    -moz-linear-gradient($bg-shade, $bg-shade),
+     url("../assets/images/dms-blue.png");
+  background:
+    -o-linear-gradient($bg-shade, $bg-shade),
+     url("../assets/images/dms-blue.png");
+  background:
+    linear-gradient($bg-shade, $bg-shade),
+     url("../assets/images/dms-blue.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
 
-    .input-field input[type=date]:focus + label,
-    .input-field input[type=text]:focus + label,
-    .input-field input[type=email]:focus + label,
-    .input-field input[type=password]:focus + label {
-      color: #e91e63;
-    }
-
-    .input-field input[type=date]:focus,
-    .input-field input[type=text]:focus,
-    .input-field input[type=email]:focus,
-    .input-field input[type=password]:focus {
-      border-bottom: 2px solid #e91e63;
-      box-shadow: none;
-    }
-
+.banner {
+  margin: 0;
+  margin-top: -25px;
+}

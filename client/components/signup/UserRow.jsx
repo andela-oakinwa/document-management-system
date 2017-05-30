@@ -4,8 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EditUserRole from './EditUserRole';
 import * as userActions from '../../actions/userActions';
-
+/**
+ * 
+ */
 class UserRow extends React.Component {
+  /**
+   * [constructor description]
+   * @param  {[type]} props [description]
+   * @return {[type]}       [description]
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +21,11 @@ class UserRow extends React.Component {
 
     this.onChange = this.onChange.bind(this);
   }
-
+  /**
+   * [onChange description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   onChange(event) {
     event.preventDefault();
     const field = event.target.name;
@@ -23,7 +34,10 @@ class UserRow extends React.Component {
     this.setState({ user });
     this.props.actions.updateUser(user);
   }
-
+  /**
+   * [render description]
+   * @return {[type]} [description]
+   */
   render() {
     const { user, deleteUser, auth } = this.props;
     return (

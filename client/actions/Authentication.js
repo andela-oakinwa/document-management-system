@@ -1,14 +1,14 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import setAuthorizationToken from '../utils/setAuthorizationToken';
-import * as types from './types';
+import setAuthorizationToken from '../utilities/SetAuthorizationToken';
+import * as types from './ActionType';
 
 
 /**
- * Dispatch action to logout a user
- * @returns {Object} function
+ * Forwards logout actions
+ * @returns {Object}
  */
-export const logout = () => {
+const logout = () => {
   return (dispatch) => {
     localStorage.removeItem('jwtToken');
     setAuthorizationToken(false);
@@ -24,15 +24,15 @@ export const logout = () => {
 };
 
 /**
- * Dispatch action to login a user
- * @param {any} data
- * @returns {Object} function
+ * Forwards login actions
+ * @param {Object} data User details
+ * @returns {Object}
  */
-export const login = (data) => {
+const login = (data) => {
   return dispatch =>
      axios.post('/users/login', data)
-      .then((res) => {
-        const token = res.data.token;
+      .then((response) => {
+        const token = response.data.token;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
         dispatch({
@@ -41,3 +41,5 @@ export const login = (data) => {
         });
       });
 };
+
+export { logout, login };

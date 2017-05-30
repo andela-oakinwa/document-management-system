@@ -3,8 +3,8 @@ import * as types from './ActionType';
 
 /**
  * Dispatch action to fetch users
- * @param {number} offset
- * @returns {Array} users
+ * @param {number} offset Output paging offset
+ * @returns {Object}
  */
 const fetchUsers = (offset) => {
     const pageOffset = offset || 0,
@@ -18,50 +18,50 @@ const fetchUsers = (offset) => {
           });
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: res.data.pagination
+            pagination: response.data.pagination
           });
         });
     };
   },
 /**
  * Dispatch action to fetch a user
- * @param {Object} id
- * @returns {Object} function
+ * @param {Object} id Specific user ID
+ * @returns {Object}
  */
   fetchUser = (id) => {
     return (dispatch) => {
       return axios.get(`/users/${id}`)
         .then(response => dispatch({
-          type: types.USER_FETCHED,
+          type: types.LOAD_USER,
           user: response.data,
         }));
     };
   },
 /**
  * Dispatch action to update a user
- * @param {Object} user
- * @param {Object} userId
- * @returns {Object} function
+ * @param {Object} user User object
+ * @param {Object} userId User's userId
+ * @returns {Object}
  */
   updateUser = (user, userId) => {
     return (dispatch) => {
       return axios.put(`/users/${userId}`, user)
         .then(response => dispatch({
-          type: types.USER_UPDATED,
+          type: types.UPDATE_USER,
           user: response.data,
         }));
     };
   },
 /**
  * Dispatches action for delete
- * @param {Object} id
- * @returns {Object} function
+ * @param {Object} id User ID
+ * @returns {Object}
  */
   deleteUser = (id) => {
     return (dispatch) => {
       return axios.delete(`/users/${id}`)
         .then(() => dispatch({
-          type: types.USER_DELETED,
+          type: types.DELETE_USER,
           userId: id,
         }));
     };

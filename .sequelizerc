@@ -1,7 +1,4 @@
-/**
- * Sequelize configuration file
- * @type {Object}
- */
+
 const path = require('path');
 
 module.exports = {

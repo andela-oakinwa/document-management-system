@@ -1,10 +1,15 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ProfileForm from './ProfileForm';
-import getUser, { updateUser } from '../../actions/profileActions';
-
+import getUser, { updateUser } from '../../actions/Profile';
+/**
+ * Class component as this is a root component
+ */
 class ProfilePage extends Component {
-
+  /**
+   * Constructor containing component states
+   * @param {Object} props Property object
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -17,23 +22,32 @@ class ProfilePage extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
-  componentDidMount() {
-    this.props.getUser(this.props.userId).then((res) => {
-      this.setState({
-        firstName: res.data.firstName,
-        lastName: res.data.lastName,
-        username: res.data.username,
-        email: res.data.email,
-        password: res.data.password
+  /**
+   * Checks for mounted details
+   */
+  checkMount() {
+    this.props.getUser(this.props.userId)
+      .then((response) => {
+        this.setState({
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          username: response.data.username,
+          email: response.data.email,
+          password: response.data.password
+        });
       });
-    });
   }
-
+  /**
+   * Handles change of state as a result of user input
+   * @param {Object} event Event object trigered by user
+   */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-
+  /**
+   * Handles submit events
+   * @param {Object} event Event trigered by user
+   */
   onSubmit(event) {
     event.preventDefault();
     this.props.updateUser(this.state, this.props.userId)
@@ -43,7 +57,10 @@ class ProfilePage extends Component {
         }
       );
   }
-
+  /**
+   * Render to the DOM
+   * @return {Object}
+   */
   render() {
     return (
       <div>
@@ -66,11 +83,15 @@ ProfilePage.propTypes = {
 ProfilePage.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
-
-function mapStateToProps(state) {
+/**
+ * Maps state to properties
+ * @param  {Object} state
+ * @return {Object}
+ */
+const mapStateToProps = (state) => {
   return {
     userId: state.auth.user.userId,
   };
-}
+};
 
 export default connect(mapStateToProps, { getUser, updateUser })(ProfilePage);

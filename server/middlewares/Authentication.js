@@ -3,12 +3,13 @@
  */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import validator from 'validator';
-import db from '../models/Index';
-import Helper from '../helpers/Helper';
+import db from '../models';
 
 dotenv.config();
-
+/**
+ * Gets the jwt secret key
+ * @type {Object}
+ */
 const secretKey = process.env.SECRET;
 
 const Authentication = {
@@ -17,7 +18,6 @@ const Authentication = {
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @param  {Object} next Next process handler
-   * @return {Object}          Return object
    */
   verifyToken(request, response, next) {
     const token = request.headers['x-access-token'];
@@ -26,7 +26,7 @@ const Authentication = {
         if (error) {
           return response.status(401)
             .send({
-              message: 'Token supplied has expired.'
+              message: 'Token supplied is invalid.'
             });
         }
         db.User.findById(decoded.userId)
@@ -51,7 +51,7 @@ const Authentication = {
     } else {
       response.status(400)
         .send({
-          message: 'Please sign in or register to get a token.'
+          message: 'Unauthorized Access.'
         });
     }
   },
@@ -60,7 +60,6 @@ const Authentication = {
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    * @param  {Object} next Next process handler
-   * @return {Object}        Return object
    */
   checkAdminRights(request, response, next) {
     db.Role
@@ -75,56 +74,35 @@ const Authentication = {
           });
       });
   },
-  checkSignUpDetails(data) {
-    const errors = {};
-    if (validator.isNull(data.email)) {
-      errors.email = 'This field is required';
-    }
-    if (!validator.isEmail(data.email)) {
-      errors.email = 'Email is invalid';
-    }
-    if (validator.isNull(data.password)) {
-      errors.email = 'This field is required';
-    }
-    if (validator.isNull(data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'This field is required';
-    }
-    if (!validator.equals(data.password, data.passwordConfirmation)) {
-      errors.passwordConfirmation = 'Passwords must match';
-    }
-    return {
-      errors,
-    };
-  },
   /**
-   * Gets user jwt token
+   * Gets user session jwt token
    * @param  {user} user Users' object
-   * @return {[type]}      [description]
+   * @return {Object} userToken
    */
   getToken(user) {
     const userToken = jwt.sign({
-      userId: user.id
+      userId: user.id,
+      roleId: user.roleId
     },
       secretKey, { expiresIn: '3d' });
     return userToken;
   },
   /**
    * Verifies user login details
-   * @param  {[type]} request  [description]
-   * @param  {[type]} response [description]
-   * @return {[type]}          [description]
+   * @param  {Object} request  Request object
+   * @param  {Object} response Response object
+   * @param {Object} next Next process handler
+   * @return {Object}
    */
   verifyLogin(request, response, next) {
     if (!request.body.password || !request.body.email) {
       return response.status(400)
         .send({
-          message: 'Please provide your email and password to login'
+          message: 'Please provide your email and password to login.'
         });
     }
-
-    const email = validator.isEmail(request.body.email),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    const email = /\S+@\S+\.\S+/.test(request.body.email),
+      password = /\w+/g.test(request.body.password);
     if (!email || !password) {
       return response.status(400)
         .send({
@@ -133,32 +111,19 @@ const Authentication = {
     }
     next();
   },
-  checkInput(request, response) {
-    const { errors, isValid } = verifyUserInput(request.body);
-    if (!isValid) {
-      response.status(400).json(errors);
-    }
-  },
   /**
    * Checks users' input
    * @param  {Object} request  Request object
-   * @param  {Object} request  Response object
-   * @param  {Object} response Next process handler
-   * @return {Object}          Return object
+   * @param  {Object} response  Response object
+   * @param  {Object} next Next process handler
+   * @return {Object}
    */
   verifyUserInput(request, response, next) {
-    if (request.body.roleId === 2) { // Not admin
-      return response.status(403)
-        .send({
-          message: 'Permission denied. You can not signup as admin'
-        });
-    }
-    let email = validator.isEmail(request.body.email),
-      firstName = validator.isAlphanumeric(request.body.firstName),
-      lastName = validator.isAlphanumeric(request.body.lastName),
-      userName = validator.isAlphanumeric(request.body.userName),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    let email = /\S+@\S+\.\S+/.test(request.body.email),
+      firstName = /\w+/g.test(request.body.firstname),
+      lastName = /\w+/g.test(request.body.lastname),
+      userName = /\w+/g.test(request.body.username),
+      password = /\w+/g.test(request.body.password);
 
     if (!email) {
       return response.status(400)
@@ -166,31 +131,36 @@ const Authentication = {
           message: 'Please enter a valid email address.'
         });
     }
-    if (!firstName) {
+    if (!firstName || firstName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid firstname.'
         });
     }
-    if (!lastName) {
+    if (!lastName || lastName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid lastname.'
         });
     }
-    if (!userName) {
+    if (!userName || userName === 'undefined') {
       return response.status(400)
         .send({
           message: 'Please enter a valid username.'
         });
     }
-    if (!password) {
+    if (!password || password === 'undefined') {
+      return response.status(400)
+        .send({
+          message: 'Password field cannot be empty. Please enter a password.'
+        });
+    }
+    if (request.body.password.length < 8) {
       return response.status(400)
         .send({
           message: 'Password cannot be less than 8 characters. Try again.'
         });
     }
-
     db.User.findOne({ where: { email: request.body.email } })
       .then((user) => {
         if (user) {
@@ -199,7 +169,7 @@ const Authentication = {
               message: 'Email address already exist.'
             });
         }
-        db.User.findOne({ where: { userName: request.body.userName } })
+        db.User.findOne({ where: { username: request.body.username } })
           .then((newUser) => {
             if (newUser) {
               return response.status(409)
@@ -207,20 +177,47 @@ const Authentication = {
                   message: 'Username already exist.'
                 });
             }
-            userName = validator.trim(request.body.userName);
-            firstName = validator.trim(request.body.firstName);
-            lastName = validator.trim(request.body.lastName);
-            email = validator.trim(request.body.email);
+            userName = request.body.username;
+            firstName = request.body.firstname;
+            lastName = request.body.lastname;
+            email = request.body.email;
             password = request.body.password;
 
-            const roleId = request.body.roleId || 1;
-            request.userInput = { userName,
+            const roleId = request.body.roleId || 2;
+            request.userInput = {
+              userName,
               firstName,
               lastName,
               email,
               password,
-              roleId };
+              roleId
+            };
             next();
+          });
+      });
+  },
+  /**
+   * Checks the owner of a file before any action
+   * @param  {Object}   request  Request object
+   * @param  {Object}   response Response object
+   * @param  {Function} next     Calls the next function in route
+   */
+  verifyOwner(request, response, next) {
+    db.Document.findById(request.params.id)
+      .then((document) => {
+        if (document.ownerId === request.tokenDecode.userId) {
+          next();
+        } else {
+          return response.status(401)
+            .send({
+              message: 'You do not have the rights to perform this action.'
+            });
+        }
+      })
+      .catch(() => {
+        return response.status(404)
+          .send({
+            message: `Document with id:${request.params.id} not found.`
           });
       });
   }

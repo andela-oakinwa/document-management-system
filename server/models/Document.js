@@ -1,5 +1,5 @@
 /**
- * Document model
+ * Document Model
  * @return {Object} Document
  */
 module.exports = (sequelize, DataTypes) => {
@@ -7,48 +7,34 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        }
-      }
+      validate: { notEmpty: true },
     },
     ownerId: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     access: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'public',
       validate: {
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        },
-        isIn: {
-          args: [['public', 'private', 'role']],
-          msg: 'public, private or role required.'
-        },
-      }
+        isIn: [['private', 'public', 'role']]
+      },
     },
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        }
-      }
     },
     ownerRoleId: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     classMethods: {
       associate: (models) => {
         Document.belongsTo(models.User, {
           foreignKey: 'ownerId',
-          onDelete: 'CASCADE',
+          onDelete: 'SET NULL',
         });
       }
     }

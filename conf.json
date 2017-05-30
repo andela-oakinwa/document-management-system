@@ -1,7 +1,7 @@
 {
     "tags": {
         "include": ["client/", "server/"],
-        "exclude": [],
+        "exclude": ["server/middlewares"],
         "allowUnknownTags": true,
         "dictionaries": ["jsdoc","closure"]
     },

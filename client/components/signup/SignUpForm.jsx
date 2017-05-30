@@ -1,116 +1,87 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import map from 'lodash/map';
+import { Row, Input, Button } from 'react-materialize';
 
-class SignUpForm extends React.Component {
-  // States and events decalred here
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstname: '',
-      lastname: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: ''
-    }
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-  // watches evens triggered from the form
-  onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-  // Forwards data to server
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.signupRequest(this.state);
-  }
-  // Renders object to the DOM
-  render() {
-    return (
-      <div className="container sign-up-form">
-        <form className="col s12" onSubmit={this.onSubmit} method="post">
-          <h5 className="center">Create Account</h5>
-          <div className="row">
-            <div className="input-field col s6">
-              <label>First Name</label>
-              <input
-                value={this.state.firstname}
-                onChange={this.onChange}
-                type="text"
-                name="firstname"
-                className="validate"
-              />  
-            </div>
-            <div className="input-field col s6">
-              <label>Last Name</label>
-              <input 
-                value={this.state.lastname}
-                onChange={this.onChange}
-                type="text"
-                name="lastname"
-                class="validate" 
-              />
-            </div>
-          </div>
-          
-          <div className="input-field">
-            <label>Username</label>
-            <input
-              value={this.state.username}
-              onChange={this.onChange}
-              type="text" 
-              name="username" 
-              className="validate" 
-            />
-          </div>
-
-          <div className="input-field">
-            <label>Email</label>
-            <input
-              value={this.state.email}
-              onChange={this.onChange}
-              type="email" 
-              name="email" 
-              className="" 
-            />
-          </div>
-
-          <div className="input-field">
-            <label>Password</label>
-            <input
-              value={this.state.password}
-              onChange={this.onChange}
-              type="password" 
-              name="password" 
-              className="" 
-            />
-          </div>
-
-          <div className="input-field">
-            <label>Re-type Password</label>
-            <input
-              value={this.state.passwordConfirmation}
-              onChange={this.onChange}
-              type="password" 
-              name="passwordConfirmation" 
-              className="validate" 
-            />
-          </div>
-          <div>
-            <button className="btn blue">
+const SignUpForm = ({ onChange, userProps, onSubmit, errors }) => {
+  return (
+    <div className="container sign-up-form">
+      <form className="col s12" onSubmit={onSubmit} method="post">
+        <h5 className="center">Create Account</h5>
+        <Row>
+          {errors.form && <div style={{ color: '#f43636' }}>{errors.form}</div>}
+          <Input
+            label="First Name"
+            s={6}
+            validate
+            errors={errors.firstName}
+            value={userProps.firstName}
+            onChange={onChange}
+            type="text"
+            name="firstName"
+          />
+          <Input
+            label="Last Name"
+            s={6}
+            validate
+            errors={errors.lastName}
+            value={userProps.lastName}
+            onChange={onChange}
+            type="text"
+            name="lastName"
+          />
+          <Input
+            label="Username"
+            s={12}
+            validate
+            errors={errors.username}
+            value={userProps.username}
+            onChange={onChange}
+            name="username"
+          />
+          <Input
+            label="Email"
+            s={12}
+            validate
+            errors={errors.email}
+            value={userProps.email}
+            onChange={onChange}
+            type="email"
+            name="email"
+          />
+          <Input
+            label="Password"
+            s={12}
+            validate
+            value={userProps.password}
+            onChange={onChange}
+            type="password"
+            name="password"
+          />
+          <Input
+            label="Re-type Password"
+            s={12}
+            validate
+            value={userProps.passwordConfirmation}
+            onChange={onChange}
+            type="password"
+            name="passwordConfirmation"
+          />
+          <Button
+              type="submit"
+              className="btn blue darken-4 waves-effect"
+            >
               Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+          </Button>
+        </Row>
+      </form>
+    </div>
+  );
+};
 
 SignUpForm.propTypes = {
-  signupRequest: React.PropTypes.func.isRequired
-}
+  onChange: React.PropTypes.func.isRequired,
+  userProps: React.PropTypes.object.isRequired,
+  onSubmit: React.PropTypes.func.isRequired,
+  errors: React.PropTypes.object.isRequired
+};
 
 export default SignUpForm;

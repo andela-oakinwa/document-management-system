@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
-import * as documentActions from '../../actions/documentActions';
+import * as documentActions from '../../actions/DocumentAction';
 import DocumentDetails from './DocumentDetails';
 
 class DocumentDetailsPage extends React.Component {
@@ -37,31 +37,29 @@ DocumentDetailsPage.propTypes = {
   auth: React.PropTypes.object.isRequired,
 };
 
-function getDocumentById(documents, id) {
+const getDocumentById = (documents, id) => {
   const document = documents.filter(item => item.id === id);
   if (document) return document[0];
   return null;
-}
+},
+  mapStateToProps = (state, ownProps) => {
+    const documentId = ownProps.params.id; // from the path `/document/:id`
 
-function mapStateToProps(state, ownProps) {
-  const documentId = ownProps.params.id; // from the path `/document/:id`
+    let document;
 
-  let document;
+    if (documentId && state.documents.length > 0) {
+      document = getDocumentById(state.documents, parseInt(documentId, 10));
+    }
 
-  if (documentId && state.documents.length > 0) {
-    document = getDocumentById(state.documents, parseInt(documentId, 10));
-  }
-
-  return {
-    document,
-    auth: state.auth,
+    return {
+      document,
+      auth: state.auth,
+    };
+  },
+  mapDispatchToProps = (dispatch) => {
+    return {
+      actions: bindActionCreators(documentActions, dispatch),
+    };
   };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(documentActions, dispatch),
-  };
-}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentDetailsPage);

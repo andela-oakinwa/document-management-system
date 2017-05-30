@@ -33,10 +33,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import validator from 'validator';
 import db from '../models/Index';
-import Helper from '../helpers/Helper';
 
 dotenv.config();
-
+// jwt secret key
 const secretKey = process.env.SECRET;
 
 const Authentication = {
@@ -54,7 +53,7 @@ const Authentication = {
         if (error) {
           return response.status(401)
             .send({
-              message: 'Token supplied has expired.'
+              message: 'Token supplied is invalid.'
             });
         }
         db.User.findById(decoded.userId)
@@ -79,7 +78,7 @@ const Authentication = {
     } else {
       response.status(400)
         .send({
-          message: 'Please sign in or register to get a token.'
+          message: 'Unauthorized Access.'
         });
     }
   },
@@ -110,7 +109,8 @@ const Authentication = {
    */
   getToken(user) {
     const userToken = jwt.sign({
-      userId: user.id
+      userId: user.id,
+      roleId: user.roleId
     },
       secretKey, { expiresIn: '3d' });
     return userToken;
@@ -125,13 +125,12 @@ const Authentication = {
     if (!request.body.password || !request.body.email) {
       return response.status(400)
         .send({
-          message: 'Please provide your email and password to login'
+          message: 'Please provide your email and password to login.'
         });
     }
 
-    const email = validator.isEmail(request.body.email),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    const email = /\S+@\S+\.\S+/.test(request.body.email),
+      password = /\w+/g.test(request.body.password);
     if (!email || !password) {
       return response.status(400)
         .send({
@@ -148,18 +147,11 @@ const Authentication = {
    * @return {Object}          Return object
    */
   verifyUserInput(request, response, next) {
-    if (request.body.roleId === 2) { // Not admin
-      return response.status(403)
-        .send({
-          message: 'Permission denied. You can not signup as admin'
-        });
-    }
-    let email = validator.isEmail(request.body.email),
-      firstName = validator.isAlphanumeric(request.body.firstName),
-      lastName = validator.isAlphanumeric(request.body.lastName),
-      userName = validator.isAlphanumeric(request.body.userName),
-      password = validator.isLength(request.body.password,
-        { min: 8, max: undefined });
+    let email = /\S+@\S+\.\S+/.test(request.body.email),
+      firstName = /\w+/g.test(request.body.firstName),
+      lastName = /\w+/g.test(request.body.lastName),
+      userName = /\w+/g.test(request.body.userName),
+      password = /\w+/g.test(request.body.password);
 
     if (!email) {
       return response.status(400)
@@ -188,10 +180,15 @@ const Authentication = {
     if (!password) {
       return response.status(400)
         .send({
+          message: 'Password field cannot be empty. Please enter a password.'
+        });
+    }
+    if (request.body.password.length &lt; 8) {
+      return response.status(400)
+        .send({
           message: 'Password cannot be less than 8 characters. Try again.'
         });
     }
-
     db.User.findOne({ where: { email: request.body.email } })
       .then((user) => {
         if (user) {
@@ -214,14 +211,41 @@ const Authentication = {
             email = validator.trim(request.body.email);
             password = request.body.password;
 
-            const roleId = request.body.roleId || 1;
+            const roleId = request.body.roleId || 2;
             request.userInput = { userName,
               firstName,
               lastName,
               email,
               password,
-              roleId };
+              roleId
+            };
             next();
+          });
+      });
+  },
+  /**
+   * Checks the owner of a file before any action
+   * @param  {Object}   request  [description]
+   * @param  {Object}   response [description]
+   * @param  {Function} next     [description]
+   * @return {Object}            [description]
+   */
+  verifyOwner(request, response, next) {
+    db.Document.findById(request.params.id)
+      .then((document) => {
+        if (document.ownerId === request.decoded.userId) {
+          next();
+        } else {
+          return response.status(401)
+            .send({
+              message: 'You do not have the rights to perform this action.'
+            });
+        }
+      })
+      .catch(() => {
+        return response.status(404)
+          .send({
+            message: `Document with ${request.params.id} not found`
           });
       });
   }
@@ -238,13 +262,13 @@ export default Authentication;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#CheckDocument">CheckDocument</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#searchRoute">searchRoute</a></li><li><a href="global.html#server">server</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li><li><a href="global.html#validateInput">validateInput</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue May 16 2017 12:14:20 GMT+0100 (WAT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 24 2017 12:32:30 GMT+0100 (WAT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,71 +1,41 @@
 /**
- * User model
+ * Model for User
  */
-import bcrypt from 'bcrypt-nodejs';
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    userName: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        args: true,
-        msg: 'Username already exist.'
-      },
-      validate: {
-        is: {
-          args: /\w+/g,
-          msg: 'Input a valid username.'
-        }
-      }
+      unique: true,
+      validate: { notEmpty: true }
     },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        },
-        is: {
-          args: /\w+/g,
-          msg: 'Input a valid firstname.'
-        }
-      }
+      validate: { notEmpty: true }
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'This field cannot be empty.'
-        },
-        is: {
-          args: /\w+/g,
-          msg: 'Input a valid firstname.'
-        }
-      }
+      validate: { notEmpty: true }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        value: true,
-        msg: 'Email already exist.'
-      },
+      unique: true,
       validate: {
-        isEmail: {
-          value: true,
-          msg: 'Input a valid email address.'
-        }
+        isEmail: true
       }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 2
     },
     active: {
@@ -74,26 +44,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
-    validate: {
-      validatePassword() {
-        if (this.password.length !== null && (!(/\w+/g.test(this.password))
-          || (this.password.length < 8))) {
-          throw new Error('Minimum of 8 characters is required');
-        }
-      }
-    },
     classMethods: {
-      associate(models) {
+      associate: (models) => {
         User.hasMany(models.Document, { foreignKey: 'ownerId' });
         User.belongsTo(models.Role, {
           foreignKey: 'roleId',
-          onDelete: 'CASCADE'
+          onDelete: 'SET NULL'
         });
       }
     },
     instanceMethods: {
       generateHash() {
-        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8));
+        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
       },
       validPassword(password) {
         return bcrypt.compareSync(password, this.password);
@@ -104,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
         user.generateHash();
       },
       beforeUpdate(user) {
-        if (user._changed.password) {
+        if (user.changed.password) {
           user.generateHash();
         }
       }
