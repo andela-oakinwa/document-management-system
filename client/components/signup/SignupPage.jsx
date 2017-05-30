@@ -5,7 +5,7 @@ import SignUpForm from './SignUpForm';
 import signupRequest from '../../actions/SignUpAction';
 import validateInput from '../../../server/shared/ValidateInput';
 /**
- * Component declared as a class since it's a root component 
+ * Component declared as a class since it's a root component
  */
 class SignUpPage extends React.Component {
   /**
@@ -22,7 +22,7 @@ class SignUpPage extends React.Component {
       password: '',
       passwordConfirmation: '',
       errors: {}
-    }
+    };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -50,19 +50,19 @@ class SignUpPage extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    if(this.isValid()) {
+    if (this.isValid()) {
       this.setState({ errors: {} });
       this.props.signupRequest(this.state)
         .then(
           () => {
-            this.context.router.push('/')
+            this.context.router.push('/');
           },
           ({ data }) => {
             const errors = {};
             errors.form = data.message;
-            this.setState({ errors });  
-          });  
-    }   
+            this.setState({ errors });
+          });
+    }
   }
   /**
    * DOM rendering
@@ -73,7 +73,7 @@ class SignUpPage extends React.Component {
     return (
       <div className="row">
         <div className="col s8 offset-s2">
-          <SignUpForm 
+          <SignUpForm
             onChange={this.onChange}
             userProps={this.state}
             onSubmit={this.onSubmit}
