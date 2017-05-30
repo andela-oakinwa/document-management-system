@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/users/UsersList.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,57 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/users/UsersList.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import ListRow from './ListRow';
+/**
+ * Functional component as this is chile component of UsersPage
+ */
+const UsersList = () => {
+  const usersRow = users.map((user) => {
+    return &lt;ListRow
+      user={user}
+      key={user.id}
+      deleteUser={deleteUser}
+      authenticate={auth}
+      />;
+  });
+  return (
+    &lt;table className="responsive-table striped">
+      &lt;thead>
+        &lt;th>UserName&lt;/th>
+        &lt;th>First Name&lt;/th>
+        &lt;th>Last Name&lt;/th>
+        &lt;th>Email&lt;/th>
+        &lt;th>Role&lt;/th>
+        &lt;th>Date Joined&lt;/th>
+        &lt;th>Delete&lt;/th>
+      &lt;/thead>
+      &lt;tbody>
+        {usersRow}
+      &lt;/tbody>
+    &lt;/table>
+  );
+};
 
+UsersList.propTypes = {
+  users: React.PropTypes.array.isRequired,
+  deleteUser: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
+};
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default UsersList;
+</code></pre>
+        </article>
+    </section>
 
 
 

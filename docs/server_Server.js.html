@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/Server.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,47 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/Server.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Entry point for Document Manangement System
+ */
+import http from 'http';
+import logger from 'js-logger';
+import * as dotenv from 'dotenv';
 
+import app from './config/App';
 
-    <h3> </h3>
+/**
+ * Disables logging error
+ * @type {Object}
+ */
+dotenv.config({
+  silent: true
+});
+/**
+ * Define server port
+ */
+const port = process.env.PORT || 4000;
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+logger.useDefaults();
+app.set('port', port);
+/**
+ * Creates server from import
+ */
+const server = http.createServer(app);
+server.listen(port);
+logger.info(`App is running at: ${port}/`);
+</code></pre>
+        </article>
+    </section>
 
 
 

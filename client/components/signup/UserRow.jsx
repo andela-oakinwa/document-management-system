@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import EditUserRole from './EditUserRole';
 import * as userActions from '../../actions/userActions';
 /**
- * 
+ * UserRow component defined as class component
  */
 class UserRow extends React.Component {
   /**
-   * [constructor description]
-   * @param  {[type]} props [description]
-   * @return {[type]}       [description]
+   * Instance properties
+   * @param  {Object} props
    */
   constructor(props) {
     super(props);
@@ -22,9 +21,8 @@ class UserRow extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
   /**
-   * [onChange description]
-   * @param  {[type]} event [description]
-   * @return {[type]}       [description]
+   * Handles input field events
+   * @param  {Object} event
    */
   onChange(event) {
     event.preventDefault();
@@ -35,8 +33,8 @@ class UserRow extends React.Component {
     this.props.actions.updateUser(user);
   }
   /**
-   * [render description]
-   * @return {[type]} [description]
+   * Renders to the DOM
+   * @return {Object}
    */
   render() {
     const { user, deleteUser, auth } = this.props;
@@ -65,11 +63,14 @@ UserRow.propTypes = {
   auth: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired,
 };
-
-function mapDispatchToProps(dispatch) {
+/**
+ * Maps dispatch to component properties
+ * @param {Object} dispatch
+ */
+const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(userActions, dispatch),
   };
-}
+};
 
 export default connect(null, mapDispatchToProps)(UserRow);

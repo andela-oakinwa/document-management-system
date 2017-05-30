@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/routes/DocumentRouter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,50 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/routes/DocumentRouter.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Dependencies declared
+ */
+import express from 'express';
+import DocumentController from '../controllers/DocumentController';
+import Authentication from '../middlewares/Authentication';
+/**
+ * Document router object
+ * @type {Object}
+ */
+const documentRouter = express.Router();
+/**
+ * Default routes for creating document
+ */
+documentRouter.route('/')
+  .post(Authentication.verifyToken, DocumentController.createDocument)
+  .get(Authentication.verifyToken, DocumentController.getAllDocuments);
+/**
+ * Routes to retrieve document
+ */
+documentRouter.get('./search', Authentication.verifyToken);
+/**
+ * Routes for retrieving, updating and deleting document
+ */
+documentRouter.route('/:id')
+  .get(Authentication.verifyToken, DocumentController.getDocument)
+  .put(Authentication.verifyToken, Authentication.verifyOwner,
+    DocumentController.updateDocument)
+  .delete(Authentication.verifyToken, Authentication.verifyOwner,
+    DocumentController.deleteDocument);
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default documentRouter;
+</code></pre>
+        </article>
+    </section>
 
 
 

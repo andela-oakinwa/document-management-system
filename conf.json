@@ -1,11 +1,11 @@
 {
     "tags": {
-        "include": ["client/", "server/"],
-        "exclude": ["server/middlewares"],
         "allowUnknownTags": true,
         "dictionaries": ["jsdoc","closure"]
     },
     "source": {
+        "include": ["client/", "server/"],
+        "exclude": ["server/tests"],
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
@@ -13,5 +13,10 @@
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false
+    },
+    "opts": {
+        "destination": "docs",
+        "recurse": true,
+        "verbose": true
     }
 }
