@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import SignUpForm from './SignUpForm';
 import signupRequest from '../../actions/SignUpAction';
 import validateInput from '../../../server/shared/ValidateInput';
-
+/**
+ * Component declared as a class since it's a root component 
+ */
 class SignUpPage extends React.Component {
-  // States and events decalred here
+  /**
+   * Instance properties
+   * @param  {Object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,11 +26,17 @@ class SignUpPage extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  // Watches events triggered from the form
+  /**
+   * Checks events triggered from the form
+   * @param  {Object} event
+   */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-  // Validates inputs
+  /**
+   * Validates user inputs
+   * @return {Boolean}
+   */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
     if (!isValid) {
@@ -33,7 +44,10 @@ class SignUpPage extends React.Component {
     }
     return isValid;
   }
-  // Forwards data to server
+  /**
+   * Forwards data to server
+   * @param  {Object} event
+   */
   onSubmit(event) {
     event.preventDefault();
     if(this.isValid()) {
@@ -50,7 +64,10 @@ class SignUpPage extends React.Component {
           });  
     }   
   }
-  // Renders to the DOM
+  /**
+   * DOM rendering
+   * @return {Object}
+   */
   render() {
     const { errors } = this.state;
     return (
