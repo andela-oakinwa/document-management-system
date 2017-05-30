@@ -16,10 +16,9 @@ const DocumentController = {
   createDocument(request, response) {
     const { title, content, access } = request.body,
       ownerId = request.tokenDecode.userId,
-      ownerRoleId = request.tokenDecode.roleId,
-      owner = request.tokenDecode.username;
+      ownerRoleId = request.tokenDecode.roleId;
     db.Document
-      .create({ title, content, access, ownerId, ownerRoleId, owner })
+      .create({ title, content, access, ownerId, ownerRoleId })
         .then((createdDoc) => {
           createdDoc = Helper.getDocument(createdDoc);
           response.status(201)
@@ -43,11 +42,32 @@ const DocumentController = {
    * @return {Object} Response object
    */
   getDocument(request, response) {
-    const content = Helper.getDocument(request.singleDocument);
-    return response.status(200)
-      .send({
-        message: 'This document was retrieved succesfully.',
-        content
+    db.Document.findById(request.params.id)
+      .then((searchedDoc) => {
+        if (!searchedDoc) {
+          return response.status(404)
+            .send({
+              message: `Document with id:${request.params.id} does not exist.`
+            });
+        }
+        if (searchedDoc.access === 'public' ||
+          searchedDoc.ownerId === request.decoded.userId) {
+          return response.status(200)
+            .send({
+              message: 'Document retrieved succesfully.',
+              searchedDoc,
+            });
+        }
+        response.status(500)
+          .send({
+            message: 'Document is private'
+          });
+      })
+      .catch((error) => {
+        response.status(500)
+          .send({
+            message: error.message
+          });
       });
   },
   /**
@@ -67,7 +87,7 @@ const DocumentController = {
       include: Helper.ownerDetails,
       limit: request.dbQuery.limit || 10,
       offset: request.dbQuery.offset || 0,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     };
     db.Document
       .findAndCountAll(dbQuery)

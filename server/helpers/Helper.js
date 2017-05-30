@@ -64,11 +64,25 @@ const Helper = {
       title: createdDoc.title,
       content: createdDoc.content,
       access: createdDoc.access,
-      owner: createdDoc.owner,
       ownerId: createdDoc.ownerId,
       createdAt: createdDoc.createdAt,
       updatedAt: createdDoc.updatedAt
     };
+  },
+  /**
+   * Get document properties
+   * @return {Array}
+   */
+  getDocumentAttr() {
+    return [
+      'id',
+      'title',
+      'content',
+      'access',
+      'ownerId',
+      'createdAt',
+      'updatedAt'
+    ];
   },
   /**
    * Gets document owner detials
