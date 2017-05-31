@@ -27,15 +27,15 @@ const helper = {
   },
   adminUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   adminUser1: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -48,15 +48,15 @@ const helper = {
   },
   regularUser2: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   firstUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -69,8 +69,8 @@ const helper = {
   },
   thirdUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -78,9 +78,9 @@ const helper = {
     const users = [];
     for (let i = 0; i <= 10; i += 1) {
       users.push({
-        username: faker.internet.userName(),
-        firstname: faker.name.firstName(),
-        lastname: faker.name.lastName(),
+        username: faker.internet.username(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: faker.internet.password()
       });
@@ -89,15 +89,15 @@ const helper = {
   },
   invalidEmailUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: 'kkkkk',
     password: faker.internet.password()
   },
   invalidPasswordUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: 'ola'
   },

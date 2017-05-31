@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as types from './ActionType';
 
 /**
- * Dispatched action to create a new document
+ * Dispatches action to create a new document
  * @param {Object} data
  * @returns {Object}
  */

@@ -16,6 +16,7 @@
     "jsdoc": "jsdoc -c conf.json",
     "lint:client": "eslint client/",
     "lint:server": "eslint server/",
+    "linting": "npm-run-all lint:server lint:client",
     "main-server-test": "npm run 'drop:db' && npm run 'create:db' && npm run 'migrate:db' && npm run test:server",
     "build": "webpack --config ./webpack.config.js --progress",
     "webpack-dev-server": "webpack-dev-server --progress --inline --open",

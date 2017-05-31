@@ -3,6 +3,7 @@ import { Row, Input, Button } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 
 const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
+
   return (
     <form className="container">
       <h5 className="center" style={{ margin: 20 }}>Create/Update a Document</h5>
@@ -13,7 +14,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
             validate
             name="title"
             onChange={onChange}
-            value={document.title}
+            value={document.title || ''}
             id="title"
           />
           {errors.title && <span className="red-text">Enter Title</span>}
@@ -21,7 +22,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
           <TinyMCE
             id="content"
-            content={document.content}
+            content={document.content || ''}
             config={{
               plugins: 'autolink link image lists print preview',
               toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
@@ -34,7 +35,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
           <select
             style={{ display: 'block' }}
             id="access"
-            value={document.access}
+            value={document.access || ''}
             onChange={onChange}
             name="access"
           >

@@ -57,7 +57,7 @@ describe('ROLE', () => {
         .then()
         .catch((error) => {
           expect(error.errors[0].message).to.equal('Input a valid title');
-          expect(error.errors[0].type).to.equal('Validation error');
+          expect(error.errors[0].type).to.equal(error.message);
           expect(error.errors[1].message)
             .to.equal('This field cannot be empty');
           done();

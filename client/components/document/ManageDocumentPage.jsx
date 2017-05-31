@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
 import validateInput from '../../../server/shared/CheckDocument';

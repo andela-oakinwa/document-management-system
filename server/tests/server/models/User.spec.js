@@ -114,8 +114,8 @@ describe('User Model', () => {
           .then()
           .catch((error) => {
             expect(error.errors[0].message)
-              .to.equal('This field cannot be empty');
-            expect(error.errors[0].type).to.equal('Validation error');
+              .to.equal('firstName cannot be null');
+            expect(error.errors[0].type).to.equal('notNull Violation');
             expect(error.errors[0].path).to.equal(field);
             done();
           });
