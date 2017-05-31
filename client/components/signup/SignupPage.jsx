@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import SignUpForm from './SignUpForm';
@@ -7,7 +7,7 @@ import validateInput from '../../../server/shared/ValidateInput';
 /**
  * Component declared as a class since it's a root component
  */
-class SignUpPage extends React.Component {
+class SignUpPage extends Component {
   /**
    * Instance properties
    * @param  {Object} props

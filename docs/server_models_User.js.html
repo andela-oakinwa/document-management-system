@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/models/User.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,94 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/models/User.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Model for User
+ */
+const bcrypt = require('bcrypt-nodejs');
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: { notEmpty: true }
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: { notEmpty: true }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: { notEmpty: true }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 2
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
+    }
+  }, {
+    classMethods: {
+      associate: (models) => {
+        User.hasMany(models.Document, { foreignKey: 'ownerId' });
+        User.belongsTo(models.Role, {
+          foreignKey: 'roleId',
+          onDelete: 'SET NULL'
+        });
+      }
+    },
+    instanceMethods: {
+      generateHash() {
+        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
+      },
+      validPassword(password) {
+        return bcrypt.compareSync(password, this.password);
+      },
+    },
+    hooks: {
+      beforeCreate(user) {
+        user.generateHash();
+      },
+      beforeUpdate(user) {
+        if (user.changed.password) {
+          user.generateHash();
+        }
+      }
+    }
+  });
+  return User;
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

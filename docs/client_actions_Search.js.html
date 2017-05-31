@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/actions/Search.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,50 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/actions/Search.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import * as types from './ActionType';
+/**
+ * Dispatch action for search result
+ * @param  {Object} searchResult
+ * @return {Object}
+ */
+const documentSearched = (searchResult) => {
+    return {
+      type: types.SEARCH_RESULTS,
+      searchResult,
+    };
+  },
+/**
+ * Dispatch action to search a document
+ * @param {Object} queryString
+ * @returns {Object}
+ */
+  searchDocument = (queryString) => {
+    return (dispatch) => {
+      return axios.get(`/search/documents?q=${queryString}`)
+        .then((response) => {
+          dispatch(documentSearched(response.data.rows));
+          dispatch({
+            type: types.SET_PAGINATION,
+            pagination: response.data.pagination
+          });
+        });
+    };
+  };
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export { documentSearched, searchDocument };
+</code></pre>
+        </article>
+    </section>
 
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/actions/Authentication.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/actions/Authentication.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import setAuthorizationToken from '../utilities/SetAuthorizationToken';
+import * as types from './ActionType';
 
 
-    <h3> </h3>
+/**
+ * Forwards logout actions
+ * @returns {Object}
+ */
+const logout = () => {
+  return (dispatch) => {
+    localStorage.removeItem('jwtToken');
+    setAuthorizationToken(false);
+    dispatch({
+      type: types.SET_CURRENT_USER,
+      user: {}
+    });
+    dispatch({
+      type: types.SET_DOCUMENTS,
+      documents: [],
+    });
+  };
+};
 
+/**
+ * Forwards login actions
+ * @param {Object} data User details
+ * @returns {Object}
+ */
+const login = (data) => {
+  return dispatch =>
+     axios.post('/users/login', data)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem('jwtToken', token);
+        setAuthorizationToken(token);
+        dispatch({
+          type: types.SET_CURRENT_USER,
+          user: jwt.decode(token),
+        });
+      });
+};
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export { logout, login };
+</code></pre>
+        </article>
+    </section>
 
 
 
