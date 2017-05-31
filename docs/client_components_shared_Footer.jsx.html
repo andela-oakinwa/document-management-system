@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/shared/Footer.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/shared/Footer.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Link } from 'react-router';
+/**
+ * Class component. This is a root component
+ */
+class Footer extends React.Component {
+  /**
+   * Renders to the DOM
+   * @param {String} url Link to twitter page
+   * @return {Object}
+   */
+  render() {
+    const url = 'https://twitter.com/Kaiser_Phemi';
+    return (
+      &lt;footer className="page-footer blue darken-4">
+        &lt;div className="container">
+            &lt;div className="row">
+              &lt;div className="col l6 s12">
+                &lt;h5 className="white-text">doqMan DMS&lt;/h5>
+                &lt;p className="white-text">Create and store everything online.&lt;/p>
+              &lt;/div>
+              &lt;div className="col l4 offset-l2 s12">
+                &lt;h5 className="white-text">Navigation&lt;/h5>
+                &lt;ul>
+                  &lt;li>&lt;Link className="white-text" to="/">Home&lt;/Link>&lt;/li>
+                  &lt;li>&lt;Link className="white-text" to="/about">About&lt;/Link>&lt;/li>
+                  &lt;li>&lt;Link className="white-text" to="#!">FAQ&lt;/Link>&lt;/li>
+                &lt;/ul>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+          &lt;div className="footer-copyright">
+            &lt;div className="container">
+            © 2017 Oluwafemi Akinwa
+            &lt;a className="white-text right" href={url} target="_blank">
+              Follow on Twitter
+            &lt;/a>
+            &lt;/div>
+          &lt;/div>
+      &lt;/footer>
+    );
+  }
+}
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default Footer;
+</code></pre>
+        </article>
+    </section>
 
 
 

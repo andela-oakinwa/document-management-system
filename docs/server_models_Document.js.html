@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/models/Document.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,61 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/models/Document.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Document Model
+ * @return {Object} Document
+ */
+module.exports = (sequelize, DataTypes) => {
+  const Document = sequelize.define('Document', {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: { notEmpty: true },
+    },
+    ownerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    access: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'public',
+      validate: {
+        isIn: [['private', 'public', 'role']]
+      },
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    ownerRoleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    classMethods: {
+      associate: (models) => {
+        Document.belongsTo(models.User, {
+          foreignKey: 'ownerId',
+          onDelete: 'SET NULL',
+        });
+      }
+    }
+  });
+  return Document;
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

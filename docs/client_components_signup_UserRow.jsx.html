@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/signup/UserRow.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,94 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/signup/UserRow.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import EditUserRole from './EditUserRole';
+import * as userActions from '../../actions/userActions';
+/**
+ * UserRow component defined as class component
+ */
+class UserRow extends React.Component {
+  /**
+   * Instance properties
+   * @param  {Object} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: Object.assign({}, props.user),
+    };
 
+    this.onChange = this.onChange.bind(this);
+  }
+  /**
+   * Handles input field events
+   * @param  {Object} event
+   */
+  onChange(event) {
+    event.preventDefault();
+    const field = event.target.name;
+    const user = this.state.user;
+    user[field] = event.target.value;
+    this.setState({ user });
+    this.props.actions.updateUser(user);
+  }
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
+  render() {
+    const { user, deleteUser, auth } = this.props;
+    return (
+      &lt;tr>
+        &lt;td>{user.username}&lt;/td>
+        &lt;td>{user.firstName}&lt;/td>
+        &lt;td>{user.lastName}&lt;/td>
+        &lt;td>{user.email}&lt;/td>
+        &lt;td>{auth.user.roleId !== user.roleId ? &lt;EditUserRole
+            value={parseInt(this.state.user.roleId, 10)}
+            onChange={this.onChange} /> : &lt;span>{user.Role.title}&lt;/span>
+          }
+        &lt;/td>
+        &lt;td>{user.createdAt.substr(0, 10)}&lt;/td>
+        &lt;td>{auth.user.userId !== user.id &amp;&amp;
+          &lt;Link to="/users" onClick={() => deleteUser(user.id)}>Delete&lt;/Link>}&lt;/td>
+      &lt;/tr>
+    );
+  }
+}
 
-    <h3> </h3>
+UserRow.propTypes = {
+  user: React.PropTypes.object.isRequired,
+  deleteUser: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
+  actions: React.PropTypes.object.isRequired,
+};
+/**
+ * Maps dispatch to component properties
+ * @param {Object} dispatch
+ */
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(userActions, dispatch),
+  };
+};
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default connect(null, mapDispatchToProps)(UserRow);
+</code></pre>
+        </article>
+    </section>
 
 
 

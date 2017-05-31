@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/profile/ProfileForm.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,92 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/profile/ProfileForm.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Button, Row, Input } from 'react-materialize';
+/**
+ * Functional component as this is a child of ProfilePage component
+ * @return {Object}
+ */
+const ProfileForm = ({ userProps, onChange, onSubmit }) => {
+  return (
+    &lt;div className="container profile-form">
+      &lt;form className="col s12" method="post" onSubmit={onSubmit}>
+        &lt;h5 className="center">Edit Profile&lt;/h5>
+        &lt;Row>
+          &lt;Input
+            label="First Name"
+            s={6}
+            name="firstName"
+            value={userProps.firstName}
+            onChange={onChange}
+            required
+          />
+          &lt;Input
+            label="Last Name"
+            s={6}
+            name="lastName"
+            value={userProps.lastName}
+            onChange={onChange}
+            required
+          />
+          &lt;Input
+            label="Username"
+            s={6}
+            name="username"
+            value={userProps.username}
+            onChange={onChange}
+            required
+          />
+          &lt;Input
+          label="Email"
+            s={6}
+            name="email"
+            type="email"
+            value={userProps.email}
+            onChange={onChange}
+            required
+            validate
+          />
+          &lt;Input
+            label="Password"
+            s={6}
+            name="password"
+            type="password"
+            value={userProps.password}
+            onChange={onChange}
+            required
+          />
+        &lt;/Row>
+        &lt;Button
+          type="submit"
+          className="btn blue darken-4 waves-effect"
+        >
+          Update
+        &lt;/Button>
+      &lt;/form>
+    &lt;/div>
+  );
+};
 
+ProfileForm.propTypes = {
+  userProps: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  onSubmit: React.PropTypes.func.isRequired
+};
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default ProfileForm;
+</code></pre>
+        </article>
+    </section>
 
 
 

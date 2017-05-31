@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/users/EditUserRole.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,46 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/users/EditUserRole.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+/**
+ * Functional component defined
+ * @param {Object}
+ */
+const EditUserRole = ({ value, onChange }) => {
+  return (
+    &lt;div className="input-field col s4">
+      &lt;select
+        style={{ display: 'block' }}
+        value={value}
+        onChange={onChange}
+        name="roleId"
+        id="access"
+      >
+        &lt;option value="1">admin&lt;/option>
+        &lt;option value="2">regular&lt;/option>
+      &lt;/select>
+    &lt;/div>
+  );
+};
 
+EditUserRole.propTypes = {
+  value: React.PropTypes.number.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+};
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default EditUserRole;
+</code></pre>
+        </article>
+    </section>
 
 
 

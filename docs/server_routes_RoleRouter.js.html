@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/routes/RoleRouter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,49 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/routes/RoleRouter.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Dependencies declared
+ */
+import express from 'express';
+import RoleController from '../controllers/RoleController';
+import Authentication from '../middlewares/Authentication';
+/**
+ * Router for roles
+ * @type {Object}
+ */
+const roleRouter = express.Router();
+/**
+ *Routes to create and retrieve roles
+ */
+roleRouter.route('/')
+  .post(Authentication.verifyToken, Authentication.checkAdminRights,
+    RoleController.createRole)
+  .get(Authentication.verifyToken, Authentication.checkAdminRights,
+    RoleController.getAllRole);
+/**
+ * Routes for accessing, creating and deleting role
+ */
+roleRouter.route('/:id')
+  .put(Authentication.verifyToken, Authentication.checkAdminRights,
+    RoleController.updateRole)
+  .get(Authentication.verifyToken, Authentication.checkAdminRights,
+    RoleController.getRole)
+  .delete(Authentication.verifyToken, Authentication.checkAdminRights,
+    RoleController.deleteRole);
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default roleRouter;
+</code></pre>
+        </article>
+    </section>
 
 
 

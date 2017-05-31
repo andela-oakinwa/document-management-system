@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/document/DocumentList.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,53 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/document/DocumentList.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Pagination } from 'react-materialize';
+import DocumentCard from './DocumentCard';
+/**
+ * Component defined as a function.
+ */
+const DocumentsList = ({ documents,
+  deleteDocument, currentUser, filtered, notFiltered }) => {
+  const emptyMessage = (&lt;p>No documents Found&lt;/p>),
+    isFiltered = filtered ? documents : notFiltered,
+    documentsList = (
+      &lt;div>
+        {isFiltered.map(document => &lt;DocumentCard
+        document={document} key={document.id}
+        deleteDocument={deleteDocument}
+        currentUser={currentUser} />)}
+      &lt;/div>
+    );
 
+  return (
+    &lt;div className="row">
+      {isFiltered.length > 0 ? documentsList : emptyMessage}
+    &lt;/div>
+  );
+};
 
-    <h3> </h3>
+DocumentsList.propTypes = {
+  documents: React.PropTypes.array,
+  deleteDocument: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
+  filtered: React.PropTypes.bool,
+  notFiltered: React.PropTypes.array
+};
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default DocumentsList;
+</code></pre>
+        </article>
+    </section>
 
 
 

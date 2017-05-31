@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: client/components/login/LoginForm.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,83 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: client/components/login/LoginForm.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Row, Input, Button } from 'react-materialize';
+import { Link } from 'react-router';
+/**
+ * Functional component since it's a chile of LoginPage component
+ */
+const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
+  return (
+    &lt;form className="container col s12" onSubmit={onSubmit} method="post">
+      &lt;h5 className="center">Please login into your account&lt;/h5>
+      &lt;center>
+        &lt;Row className="container">
+          {errors.form &amp;&amp; &lt;div style={{ color: '#f43636' }}>{errors.form}&lt;/div>}
+          &lt;div className="z-depth-1 grey lighten-4 row card-panel">
+            &lt;Input
+              label="Enter your email"
+              s={12}
+              onChange={onChange}
+              value={loginProps.email}
+              name="email"
+              id="email"
+              className="validate"
+            />
+            &lt;i className="small material-icons">email&lt;/i>
+            &lt;br />
+            &lt;br />
+            &lt;Input
+              label="Enter your password"
+              s={12}
+              onChange={onChange}
+              value={loginProps.password}
+              name="password"
+              type="password"
+              id="password"
+              className="validate"
+            />
+            &lt;i className="small material-icons">lock&lt;/i>
+            &lt;div className="center">
+              &lt;Button
+                type="submit"
+                className="col s12 btn btn-large waves-effect"
+                style={{ backgroundColor: '#496AE2' }}
+              >
+                Login
+              &lt;/Button>
+            &lt;/div>
+          &lt;/div>
+        &lt;/Row>
+        &lt;span className="signup-login-form__switch-copy">
+          Don’t have an account?
+        &lt;/span>
+        &lt;Link to="/signup"> Create Account&lt;/Link>
+      &lt;/center>
+    &lt;/form>
+  );
+};
 
+LoginForm.propTypes = {
+  errors: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  loginProps: React.PropTypes.object.isRequired,
+  onSubmit: React.PropTypes.func.isRequired
+};
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default LoginForm;
+</code></pre>
+        </article>
+    </section>
 
 
 

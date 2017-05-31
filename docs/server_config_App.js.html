@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: server/config/App.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,76 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: server/config/App.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Dependencies declared
+ */
+import path from 'path';
+import express from 'express';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 
+import webpackConfig from '../../webpack.config';
+import userRouter from '../routes/UserRouter';
+import roleRouter from '../routes/RoleRouter';
+import documentRouter from '../routes/DocumentRouter';
+// import searchRouter from '../routes/SearchRouter';
+/**
+ * Create an instance of the express app
+ * @type {Object}
+ */
+const app = express(),
+  compiler = webpack(webpackConfig);
+app.use(express.static(path.join(__dirname, '../../client/')));
+/**
+ * Parse incoming requests data, this will happen on every request
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+/**
+ * Disables logging server information
+ */
+app.disable('x-powered-by');
+/**
+ * log request to the console
+ */
+app.use(logger('dev'));
+/**
+ * Hot reloading
+ */
+app.use(webpackMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler, {
+  hot: true,
+  publicPath: webpackConfig.output.publicPath,
+  noInfo: true
+}));
+/**
+ * Routes
+ */
+app.use('/users', userRouter);
+app.use('/documents', documentRouter);
+app.use('/roles', roleRouter);
+// app.use('/search', searchRouter);
+app.get('*', (request, response) => {
+  response.status(200)
+    .sendFile(path.join(__dirname, '../../client/Index.html'));
+});
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default app;
+</code></pre>
+        </article>
+    </section>
 
 
 
