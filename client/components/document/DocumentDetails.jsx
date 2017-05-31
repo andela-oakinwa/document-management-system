@@ -1,13 +1,17 @@
-/* eslint "react/no-danger": 0 */
 import React from 'react';
 import { Link } from 'react-router';
 import { Button } from 'react-materialize';
-
-export default
-function DocumentDetails({ document, deleteDocument, currentUser }) {
+/**
+ * Declared as functional components
+ * @param  {Object} options.document       Document details
+ * @param  {Object} options.deleteDocument Delete document
+ * @param  {Object} options.currentUser    Current user details
+ * @return {Object}
+ */
+const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
   return (
     <div className="col s12">
-      <div className="card qBox">
+      <div className="card">
         <div className="card-content white-text">
           <span className="card-title">{document.title}</span>
           <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
@@ -41,3 +45,5 @@ DocumentDetails.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };
+
+export default DocumentDetails;

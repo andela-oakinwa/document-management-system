@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import toastr from 'toastr';
@@ -6,9 +6,14 @@ import { bindActionCreators } from 'redux';
 import validateInput from '../../../server/shared/CheckDocument';
 import DocumentForm from './DocumentForm';
 import * as documentActions from '../../actions/DocumentAction';
-
-
-class ManageDocumentPage extends React.Component {
+/**
+ * Defined as class component.
+ */
+class ManageDocumentPage extends Component {
+  /**
+   * Component properties
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,13 +26,21 @@ class ManageDocumentPage extends React.Component {
     this.saveDocument = this.saveDocument.bind(this);
     this.redirect = this.redirect.bind(this);
   }
-
+  /**
+   * Checks for props
+   * @param  {Object} nextProps
+   */
   componentWillReceiveProps(nextProps) {
     if (this.props.document.id !== nextProps.document.id) {
-      // Necessary to populate form when existing document is loaded directly.
+
       this.setState({ document: Object.assign({}, nextProps.document) });
     }
   }
+  /**
+   * Updates document data
+   * @param  {Object} event
+   * @return {Object}
+   */
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
@@ -37,14 +50,23 @@ class ManageDocumentPage extends React.Component {
     document[field] = event.target.value;
     return this.setState({ document });
   }
-
+  /**
+   * Checks for a successfully document saving
+   * and redirects.
+   */
   saveSuccess() { this.redirect(); }
-
+  /**
+   * Displays error if saving wasn't succesfull
+   * @param  {Object} error
+   */
   saveFailure(error) {
     toastr.error(error);
     this.setState({ saving: false });
   }
-
+  /**
+   * Checks document details
+   * @return {Boolean} True or false
+   */
   isValid() {
     const data = {
       title: this.state.document.title,
@@ -57,7 +79,10 @@ class ManageDocumentPage extends React.Component {
     }
     return isValid;
   }
-
+  /**
+   * Handles saving document
+   * @param  {Object} event
+   */
   saveDocument(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -71,16 +96,20 @@ class ManageDocumentPage extends React.Component {
       }
     }
   }
-
+  /**
+   * Redirects after saving
+   */
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document saved');
     this.context.router.push('/');
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     const { errors } = this.state;
-
     return (
       <div className="container">
         <DocumentForm
@@ -100,18 +129,27 @@ ManageDocumentPage.propTypes = {
   actions: React.PropTypes.object.isRequired,
 };
 
- // Pull in the React Router context so router is available on this.context.router.
 ManageDocumentPage.contextTypes = {
   router: React.PropTypes.object,
 };
-
+/**
+ * Fetches document by Id
+ * @param  {Object} documents
+ * @param  {Number} id
+ * @return {Object}
+ */
 const getDocumentById = (documents, id) => {
   const document = documents.filter(item => item.id === id);
   if (document) return document[0];
   return null;
 },
+  /**
+   * Maps state to properties
+   * @param  {Object} state
+   * @return {Object}
+   */
   mapStateToProps = (state, ownProps) => {
-    const documentId = ownProps.params.id; // from the path `/document/:id`
+    const documentId = ownProps.params.id;
     let document;
     if (documentId && state.documents.length > 0) {
       document = getDocumentById(state.documents, parseInt(documentId, 10));
@@ -120,7 +158,11 @@ const getDocumentById = (documents, id) => {
       document,
     };
   },
-
+  /**
+   * Dispatches actions
+   * @param  {Object} dispatch
+   * @return {Object}
+   */
   mapDispatchToProps = (dispatch) => {
     return {
       actions: bindActionCreators(documentActions, dispatch),

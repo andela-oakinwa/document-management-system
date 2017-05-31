@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/components/shared/NavigationBar.jsx</title>
+    <title>JSDoc: Source: client/components/document/DocumentDetails.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/components/shared/NavigationBar.jsx</h1>
+    <h1 class="page-title">Source: client/components/document/DocumentDetails.jsx</h1>
 
     
 
@@ -27,122 +27,54 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
-import { logout } from '../../actions/Authentication';
+import { Button } from 'react-materialize';
 /**
- * Class component defined as this is a root component
+ * Declared as functional components
+ * @param  {Object} options.document       Document details
+ * @param  {Object} options.deleteDocument Delete document
+ * @param  {Object} options.currentUser    Current user details
+ * @return {Object}
  */
-class NavigationBar extends React.Component {
-  /**
-   * Component properties
-   * @param {Object} props Component properties
-   */
-  constructor(props) {
-    super(props);
-    this.logout = this.logout.bind(this);
-  }
-  /**
-   * Handles logout events
-   * @param {Object} event Event trigered
-   */
-  logout(event) {
-    event.preventDefault();
-    this.props.logout();
-    this.context.router.push('/');
-  }
-  /**
-   * Renders to the DOM
-   * @return {Object}
-   */
-  render() {
-    const { isAuthenticated, user } = this.props.auth;
-    return (
-      &lt;header>
-        &lt;nav role="navigation" className="nav-bar blue darken-4">
-          &lt;div className="nav-wrapper">
-            &lt;Link to="/" className="brand-logo">
-              &lt;img src="../../assets/images/dms-logo.png" />
-            &lt;/Link>
-            &lt;Link to="#" data-activates="mobile-menu"
-            className="button-collapse">
-            &lt;i className="material-icons">menu&lt;/i>&lt;/Link>
-            &lt;ul id="nav-mobile" className="right hide-on-med-and-down">
-              &lt;li>
-                &lt;Link to="/">
-                  {isAuthenticated ? &lt;span>Documents&lt;/span> : &lt;span>Home&lt;/span>}
-                &lt;/Link>
-              &lt;/li>
-              &lt;li>&lt;Link to="/about">About&lt;/Link>&lt;/li>
-              &lt;li>
-                {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login">Login&lt;/Link>}
-              &lt;/li>
-              {user.roleId === 1
-                &amp;&amp; &lt;li>&lt;Link to="/users">&lt;span>Users&lt;/span>&lt;/Link>&lt;/li>
-              }
-              {isAuthenticated
-                &amp;&amp; &lt;li>&lt;Link id="profile" to="/editprofile">Profile&lt;/Link>&lt;/li>
-              }
-              &lt;li>
-                {isAuthenticated
-                    ? &lt;Link to="/" onClick={this.logout}>Logout&lt;/Link>
-                    : &lt;Link to="/signup">Sign Up&lt;/Link>
-                }
-              &lt;/li>
-            &lt;/ul>
-            &lt;ul id="mobile-menu" className="blue side-nav">
-              &lt;li>
-                &lt;Link to="/">
-                  {isAuthenticated ? &lt;span>Documents&lt;/span> : &lt;span>Home&lt;/span>}
-                &lt;/Link>
-              &lt;/li>
-              &lt;li>&lt;Link to="/about">About&lt;/Link>&lt;/li>
-              &lt;li>
-                {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login">Login&lt;/Link>
-                }
-              &lt;/li>
-              {user.roleId === 1
-                &amp;&amp; &lt;li>&lt;Link to="/users">&lt;span>Users&lt;/span>&lt;/Link>&lt;/li>
-              }
-              {isAuthenticated
-                &amp;&amp; &lt;li>&lt;Link id="profile" to="/editprofile">Profile&lt;/Link>&lt;/li>
-              }
-              &lt;li>
-                {isAuthenticated
-                    ? &lt;Link to="/" onClick={this.logout}>Logout&lt;/Link>
-                    : &lt;Link to="/signup">Sign Up&lt;/Link>
-                }
-              &lt;/li>
-            &lt;/ul>
+const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
+  return (
+    &lt;div className="col s12">
+      &lt;div className="card">
+        &lt;div className="card-content white-text">
+          &lt;span className="card-title">{document.title}&lt;/span>
+          &lt;p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
+          &lt;br />
+          &lt;p>Access Type: &amp;nbsp;
+            &lt;span>{(document.access).toUpperCase()}&lt;/span>&lt;/p>&lt;br />
+          &lt;div>
+              Published Date :
+            &lt;p>{(document.createdAt) ?
+              document.createdAt.split('T')[0] : ''}&lt;/p>
+            &lt;p id="owner">Author:
+              {document.owner.firstName} {document.owner.lastName}&lt;/p>
           &lt;/div>
-        &lt;/nav>
-      &lt;/header>
-    );
-  }
+        &lt;/div>
+        &lt;div className="card-action">
+          &lt;Link to="/">back&lt;/Link>
+          {currentUser.userId === document.ownerId &amp;&amp;
+            &lt;div className="right">
+              &lt;Link to={`/document/${document.id}`}>Edit&lt;/Link>
+              &lt;Link to="/" onClick={() => deleteDocument(document.id)}> Delete &lt;/Link>
+            &lt;/div>
+          }
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
 }
 
-NavigationBar.propTypes = {
-  auth: React.PropTypes.object.isRequired,
-  logout: React.PropTypes.func.isRequired,
+DocumentDetails.propTypes = {
+  document: React.PropTypes.object.isRequired,
+  deleteDocument: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
 };
 
-NavigationBar.contextTypes = {
-  router: React.PropTypes.object.isRequired,
-};
-/**
- * Maps component state to properties
- * @param {*} state State of component
- */
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-export default connect(mapStateToProps, { logout })(NavigationBar);
+export default DocumentDetails;
 </code></pre>
         </article>
     </section>
