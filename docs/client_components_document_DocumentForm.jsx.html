@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/components/shared/NavigationBar.jsx</title>
+    <title>JSDoc: Source: client/components/document/DocumentForm.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/components/shared/NavigationBar.jsx</h1>
+    <h1 class="page-title">Source: client/components/document/DocumentForm.jsx</h1>
 
     
 
@@ -27,122 +27,83 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Row, Input, Button } from 'react-materialize';
+import TinyMCE from 'react-tinymce';
 
-import { logout } from '../../actions/Authentication';
 /**
- * Class component defined as this is a root component
+ * Form for creating new document
+ * @param  {Object} options.document Document details
+ * @param  {Function} options.onSave   Function that handles saving document
+ * @param  {Function} options.onChange
+ * @param  {Function} options.saving
+ * @param  {Object} options.errors
+ * @return {Object}
  */
-class NavigationBar extends React.Component {
-  /**
-   * Component properties
-   * @param {Object} props Component properties
-   */
-  constructor(props) {
-    super(props);
-    this.logout = this.logout.bind(this);
-  }
-  /**
-   * Handles logout events
-   * @param {Object} event Event trigered
-   */
-  logout(event) {
-    event.preventDefault();
-    this.props.logout();
-    this.context.router.push('/');
-  }
-  /**
-   * Renders to the DOM
-   * @return {Object}
-   */
-  render() {
-    const { isAuthenticated, user } = this.props.auth;
-    return (
-      &lt;header>
-        &lt;nav role="navigation" className="nav-bar blue darken-4">
-          &lt;div className="nav-wrapper">
-            &lt;Link to="/" className="brand-logo">
-              &lt;img src="../../assets/images/dms-logo.png" />
-            &lt;/Link>
-            &lt;Link to="#" data-activates="mobile-menu"
-            className="button-collapse">
-            &lt;i className="material-icons">menu&lt;/i>&lt;/Link>
-            &lt;ul id="nav-mobile" className="right hide-on-med-and-down">
-              &lt;li>
-                &lt;Link to="/">
-                  {isAuthenticated ? &lt;span>Documents&lt;/span> : &lt;span>Home&lt;/span>}
-                &lt;/Link>
-              &lt;/li>
-              &lt;li>&lt;Link to="/about">About&lt;/Link>&lt;/li>
-              &lt;li>
-                {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login">Login&lt;/Link>}
-              &lt;/li>
-              {user.roleId === 1
-                &amp;&amp; &lt;li>&lt;Link to="/users">&lt;span>Users&lt;/span>&lt;/Link>&lt;/li>
-              }
-              {isAuthenticated
-                &amp;&amp; &lt;li>&lt;Link id="profile" to="/editprofile">Profile&lt;/Link>&lt;/li>
-              }
-              &lt;li>
-                {isAuthenticated
-                    ? &lt;Link to="/" onClick={this.logout}>Logout&lt;/Link>
-                    : &lt;Link to="/signup">Sign Up&lt;/Link>
-                }
-              &lt;/li>
-            &lt;/ul>
-            &lt;ul id="mobile-menu" className="blue side-nav">
-              &lt;li>
-                &lt;Link to="/">
-                  {isAuthenticated ? &lt;span>Documents&lt;/span> : &lt;span>Home&lt;/span>}
-                &lt;/Link>
-              &lt;/li>
-              &lt;li>&lt;Link to="/about">About&lt;/Link>&lt;/li>
-              &lt;li>
-                {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login">Login&lt;/Link>
-                }
-              &lt;/li>
-              {user.roleId === 1
-                &amp;&amp; &lt;li>&lt;Link to="/users">&lt;span>Users&lt;/span>&lt;/Link>&lt;/li>
-              }
-              {isAuthenticated
-                &amp;&amp; &lt;li>&lt;Link id="profile" to="/editprofile">Profile&lt;/Link>&lt;/li>
-              }
-              &lt;li>
-                {isAuthenticated
-                    ? &lt;Link to="/" onClick={this.logout}>Logout&lt;/Link>
-                    : &lt;Link to="/signup">Sign Up&lt;/Link>
-                }
-              &lt;/li>
-            &lt;/ul>
-          &lt;/div>
-        &lt;/nav>
-      &lt;/header>
-    );
-  }
-}
-
-NavigationBar.propTypes = {
-  auth: React.PropTypes.object.isRequired,
-  logout: React.PropTypes.func.isRequired,
+const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
+  return (
+    &lt;form className="container">
+      &lt;h5 className="center" style={{ margin: 20 }}>Create/Update a Document&lt;/h5>
+      &lt;Row>
+        &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+          &lt;Input
+            label="Title"
+            validate
+            name="title"
+            onChange={onChange}
+            value={document.title}
+            id="title"
+          />
+          {errors.title &amp;&amp; &lt;span className="red-text">Enter Title&lt;/span>}
+        &lt;/div>
+        &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+          &lt;TinyMCE
+            id="content"
+            content={document.content}
+            config={{
+              plugins: 'autolink link image lists print preview',
+              toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+            }}
+            onChange={onChange}
+          />
+          {errors.content &amp;&amp; &lt;div className="red-text">Enter Content&lt;/div>}
+        &lt;/div>
+        &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+          &lt;select
+            style={{ display: 'block' }}
+            id="access"
+            value={document.access}
+            onChange={onChange}
+            name="access"
+          >
+            &lt;option defaultValue>Select Access&lt;/option>
+            &lt;option value="public">Public&lt;/option>
+            &lt;option value="private">Private&lt;/option>
+            &lt;option value="role">Role&lt;/option>
+          &lt;/select>
+        &lt;/div>
+        &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+          &lt;Input
+            type="submit"
+            disabled={saving}
+            value={saving ? 'Saving...' : 'Save'}
+            className="btn waves-effect waves-light blue"
+            onClick={onSave}
+          />
+        &lt;/div>
+      &lt;/Row>
+    &lt;/form>
+  );
 };
 
-NavigationBar.contextTypes = {
-  router: React.PropTypes.object.isRequired,
-};
-/**
- * Maps component state to properties
- * @param {*} state State of component
- */
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
+DocumentForm.propTypes = {
+  document: React.PropTypes.object,
+  onSave: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  saving: React.PropTypes.bool.isRequired,
+  errors: React.PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, { logout })(NavigationBar);
+export default DocumentForm;
 </code></pre>
         </article>
     </section>

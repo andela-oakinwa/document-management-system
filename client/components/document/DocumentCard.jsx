@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Button } from 'react-materialize';
-
+/**
+ * Document card
+ * @param  {Object} options.document       Document details
+ * @param  {Function} options.deleteDocument Delete document function
+ * @param  {Object} options.currentUser    Current User details
+ * @return {Object}
+ */
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
   return (
     <div className="col s4">

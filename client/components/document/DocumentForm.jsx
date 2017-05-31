@@ -2,6 +2,15 @@ import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 
+/**
+ * Form for creating new document
+ * @param  {Object} options.document Document details
+ * @param  {Function} options.onSave   Function that handles saving document
+ * @param  {Function} options.onChange
+ * @param  {Function} options.saving
+ * @param  {Object} options.errors
+ * @return {Object}
+ */
 const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
   return (
     <form className="container">
