@@ -1,0 +1,7 @@
+**/*{.,-}min.js
+webpack.config.js
+karma.conf.js
+out/
+coverage/
+server/tests
+TestSetup.js
