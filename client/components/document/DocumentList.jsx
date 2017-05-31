@@ -2,13 +2,7 @@ import React from 'react';
 import { Pagination } from 'react-materialize';
 import DocumentCard from './DocumentCard';
 /**
- * Lists documents in each category
- * @param  {Function} options.documents
- * @param  {Function} options.deleteDocument
- * @param  {Function} options.currentUser
- * @param  {Function} options.filtered
- * @param  {Function} options.notFiltered
- * @return {Object}
+ * Component defined as a function.
  */
 const DocumentsList = ({ documents,
   deleteDocument, currentUser, filtered, notFiltered }) => {
