@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
@@ -11,7 +12,10 @@ import setAuthorizationToken from './utilities/SetAuthorizationToken';
 import routes from './Routes';
 import * as types from './actions/ActionType';
 import rootReducer from './reducers/RootReducer';
-
+/**
+ * Creates the main store
+ * @param  {Object} f
+ */
 const store = createStore(
   rootReducer,
   compose(
