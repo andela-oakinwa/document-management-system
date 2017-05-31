@@ -1,10 +1,11 @@
 /**
  * Import dependencies
  */
-import db from '../../../models';
-import helper from '../helper/Test.helper';
 import chai from 'chai';
+import db from '../../../models';
+import helper from '../Test.Helper';
 
+const expect = chai.expect;
 
 describe('Document Model', () => {
   let userDocument;

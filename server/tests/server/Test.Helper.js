@@ -91,7 +91,7 @@ const helper = {
     username: faker.internet.userName(),
     firstname: faker.name.firstName(),
     lastname: faker.name.lastName(),
-    email: 'kaiser',
+    email: 'kkkkk',
     password: faker.internet.password()
   },
   invalidPasswordUser: {
