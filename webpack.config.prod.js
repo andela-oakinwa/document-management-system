@@ -1,49 +1,75 @@
-import path from 'path';
-import webpack from 'webpack';
+const webpack = require('webpack');
+const path = require('path');
 
-const GLOBALS = {
-    'process.env.NODE_ENV': JSON.stringify('production')
-};
-export default {
-  devtool: 'eval-source-map',
-  entry: '/client/Index.jsx',
+module.exports = {
+  context: `${__dirname}/client`,
+  entry: {
+    javascript: path.resolve(__dirname, 'client/Index.jsx'),
+    html: path.resolve(__dirname, 'client/Index.html'),
+  },
   output: {
-    path: '/',
-    filename: 'Bundle.js',
+    filename: '[name].js',
+    path: `${__dirname}/build/client`,
     publicPath: '/'
   },
-  externals: {
-  },
-  watch: true,
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin(GLOBALS),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
-  ],
   module: {
-    loaders:[
+    rules: [
       {
-        test: /\.jsx$/,
-        include: [ path.join(__dirname, 'client'), path.join(__dirname, 'server/shared') ], 
-        loaders: ['react-hot-loader', 'babel-loader']
+        test: /\.(jsx|js)$/,
+        include: [
+          path.resolve(__dirname, 'client')
+        ],
+        exclude: /node_modules/,
+        use: ['react-hot-loader', 'babel-loader'],
       },
       {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        test: /\.scss?$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(jpg|png)$/,
-        loader: 'file-loader'
+        test: /\.json$/,
+        loader: ['json-loader'],
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        loader: ['url-loader']
+      },
+      {
+        test: /\.html$/,
+        loader: 'file-loader?name=[name].[ext]',
       }
-    ]
+    ],
   },
   resolve: {
-    extensions: [' ', '.js', '.jsx']
+    extensions: ['.js', '.json', '.jsx', '.scss']
   },
+  devtool: 'cheap-source-map',
+  target: 'web',
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    // new webpack.optimize.UglifyJsPlugin({
+      // beautify: false,
+      // mangle: {
+      //   screw_ie8: true,
+      //   keep_fnames: true,
+      // },
+      // compress: {
+      //   screw_ie8: true,
+      //   warnings: false,
+      //   pure_funcs: ['console.log', 'window.console.log.apply']
+      // },
+      // comments: false
+    // })
+  ],
   node: {
     net: 'empty',
-    dns: 'empty'
-  }
+    dns: 'empty',
+  },
 };

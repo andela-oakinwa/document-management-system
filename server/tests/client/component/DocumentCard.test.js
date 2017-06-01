@@ -9,7 +9,7 @@ function setup() {
       title: 'title',
       content: 'content',
       access: 'public',
-      owner: { firstName: 'awa', lastName: 'awa' } },
+      owner: { firstName: 'oluwafemi', lastName: 'akinwa' } },
     deleteDocument: () => {},
     currentUser: {}
   };

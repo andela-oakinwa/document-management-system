@@ -12,7 +12,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.User.firstName} {document.User.lastName}</p>
+                {document.User ? `$(document.User.firstName) $(document.User.lastName)}</p>
           </div>
         </div>
         <div className="card-action">
@@ -21,7 +21,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
+              <Link className="edit" to={`/documents/${document.id}`}>Edit</Link>
               <Link className="deleteDoc" to="/" onClick={() => deleteDocument(document.id)}>
                 Delete
               </Link>
