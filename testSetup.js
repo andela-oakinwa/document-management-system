@@ -1,28 +1,14 @@
-// Tests are placed alongside files under test.
-// This file does the following:
-// 1. Registers babel for transpiling our code for testing
-// 2. Disables Webpack-specific features that Mocha doesn't understand.
-// 3. Requires jsdom so we can test via an in-memory DOM in Node
-// 4. Sets up global vars that mimic a browser.
 
 /* eslint-disable no-var */
 
-// This assures the .babelrc dev config (which includes
-// hot module reloading code) doesn't apply for tests.
 process.env.NODE_ENV = 'test';
 
-// Register babel so that it will transpile ES6 to ES5
-// before our tests run.
 require('babel-register')();
 
-// Disable webpack-specific features for tests since
-// Mocha doesn't know what to do with them.
 require.extensions['.css'] =  () => { return null; };
 require.extensions['.png'] =  () => { return null; };
 require.extensions['.jpg'] =  () => { return null; };
 
-// Configure JSDOM and set global variables
-// to simulate a browser environment for tests.
 const jsdom = require('jsdom').jsdom;
 
 const exposedProperties = ['window', 'navigator', 'document'];
