@@ -1,3 +1,4 @@
+// User
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_USERS = 'SET_USERS';
 export const ADD_USER = 'ADD_USER';
@@ -6,6 +7,8 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_USER_ID = 'SET_USER_ID';
+
+// Document
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
 export const CREATE_DOCUMENT = 'CREATE_DOCUMENT';
 export const LOAD_DOCUMENT = 'LOAD_DOCUMENT';

@@ -1,13 +1,12 @@
-
 /* eslint-disable no-var */
 
 process.env.NODE_ENV = 'test';
 
 require('babel-register')();
 
-require.extensions['.css'] =  () => { return null; };
-require.extensions['.png'] =  () => { return null; };
-require.extensions['.jpg'] =  () => { return null; };
+require.extensions['.css'] =  function() { return null; };
+require.extensions['.png'] =  function() { return null; };
+require.extensions['.jpg'] =  function() { return null; };
 
 const jsdom = require('jsdom').jsdom;
 
