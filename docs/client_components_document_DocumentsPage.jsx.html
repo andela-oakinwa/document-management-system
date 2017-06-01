@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/components/document/DocumentsPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/components/document/DocumentsPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import toastr from 'toastr';
+import { Pagination, Button } from 'react-materialize';
+import DocumentsList from './DocumentList';
+import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
+import { searchDocuments } from '../../actions/Search';
+import Search from '../shared/SearchBox';
+/**
+ * Defined as class component.
+ */
+class DocumentsPage extends React.Component {
+  /**
+   * Component properties
+   * @param {Object} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderedDocuments: props.documents,
+      filtered: false
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
+    this.displayDocuments = this.displayDocuments.bind(this);
+    this.filterPublicDocs = this.filterPublicDocs.bind(this);
+    this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
+    this.filterRoleDocs = this.filterRoleDocs.bind(this);
+  }
+  /**
+   * Checks for rendered document
+   */
+  componentWillMount() {
+    this.props.fetchDocuments();
+    this.setState({ renderedDocuments: this.props.documents });
+  }
+  /**
+   * Handles document deletion and notification
+   * @param  {Number} id Specific document Id
+   */
+  deleteDocument(id) {
+    this.props.deleteDocument(id)
+      .then(() => toastr.success('Document deleted successfully!'));
+  }
+  /**
+   * Handles search feature
+   * @param  {Object} event Events from user input
+   */
+  handleSearch(event) {
+    event.preventDefault();
+    const query = event.target.value;
+    this.props.searchDocuments(query);
+    const documentSearchResult = this.props.search;
+    if (query.trim().length > 0) {
+      this.setState({ renderedDocuments: documentSearchResult });
+    }
+  }
+  /**
+   * Displays lit of document
+   * @param  {Number} pageNumber
+   */
+  displayDocuments(pageNumber) {
+    const offset = (pageNumber - 1)
+      * this.props.metadata.pageSize;
+    this.props.fetchDocuments(offset);
+  }
+  /**
+   * Returns list of documents with public access
+   */
+  filterPublicDocs() {
+    const renderedDocuments =
+    this.props.documents
+      .filter(document => document.access === 'public');
+    this.setState({ renderedDocuments, filtered: true });
+  }
+  /**
+   * Returns list of documents with private access
+   */
+  filterPrivateDocs() {
+    const renderedDocuments =
+    this.props.documents
+      .filter(document => document.access === 'private');
+    this.setState({ renderedDocuments, filtered: true });
+  }
+  /**
+   * Returns list of documents with role access
+   */
+  filterRoleDocs() {
+    const renderedDocuments =
+    this.props.documents
+      .filter(document => document.access === 'role');
+    this.setState({ renderedDocuments, filtered: true });
+  }
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
+  render() {
+    const {
+      totalCount,
+      pageSize,
+      currentPage,
+      pageCount } = this.props.metadata;
+    return (
+      &lt;div className="container">
+        &lt;h4 className="center">Available Documents&lt;/h4>
+        &lt;div className="row">
+          &lt;div className="col s7 push-s4">
+            &lt;Search onChange={this.handleSearch} />
+          &lt;/div>
+          &lt;div className="col s5 pull-s7" id="createdocument">
+            &lt;Link
+            className="btn create-list-link blue darken-4"
+            to="document">
+              Add Document
+            &lt;/Link>
+          &lt;/div>
+        &lt;/div>
+        &lt;div className="row">
+          &lt;div className="col s12">
+            &lt;ul>
+              &lt;li className="tab col s4">
+                &lt;Button
+                  className="blue"
+                  onClick={this.filterPublicDocs}
+                >
+                  Public Documents
+                &lt;/Button>
+              &lt;/li>
+              &lt;li className="tab col s4">
+                &lt;Button
+                  className="blue"
+                  onClick={this.filterPrivateDocs}
+                >
+                  Private Documents
+                &lt;/Button>
+              &lt;/li>
+              &lt;li className="tab col s4">
+                &lt;Button
+                  className="blue"
+                  onClick={this.filterRoleDocs}
+                >
+                  Role Documents
+                &lt;/Button>
+              &lt;/li>
+            &lt;/ul>
+          &lt;/div>
+        &lt;/div>
+
+        &lt;DocumentsList
+          documents={this.state.renderedDocuments}
+          filtered={this.state.filtered}
+          notFiltered={this.props.documents}
+          deleteDocument={this.deleteDoc}
+          currentUser={this.props.auth.user}
+        />
+        &lt;Pagination
+          items={pageCount}
+          activePage={currentPage}
+          maxButtons={Math.ceil(totalCount / pageSize)}
+          onSelect={this.displayDocuments}
+        />
+      &lt;/div>
+    );
+  }
+}
+
+DocumentsPage.propTypes = {
+  search: React.PropTypes.array.isRequired,
+  fetchDocuments: React.PropTypes.func.isRequired,
+  deleteDocument: React.PropTypes.func.isRequired,
+  searchDocuments: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object.isRequired,
+  documents: React.PropTypes.array.isRequired,
+  metadata: React.PropTypes.object
+};
+/**
+ * Maps state to properties
+ * @param  {Object} state
+ * @return {object}
+ */
+const mapStateToProps = (state) => {
+  let documents = [];
+  documents = state.documents;
+  return {
+    documents,
+    search: state.search,
+    auth: state.auth,
+    metadata: state.paginate
+  };
+};
+
+export default connect(mapStateToProps,
+{ fetchDocuments, deleteDocument, searchDocuments })(DocumentsPage);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DocumentsPage.html">DocumentsPage</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ListRow.html">ListRow</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="NavigationBar.html">NavigationBar</a></li><li><a href="ProfilePage.html">ProfilePage</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="UserRow.html">UserRow</a></li><li><a href="UsersPage.html">UsersPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#bcrypt">bcrypt</a></li><li><a href="global.html#CheckDocument">CheckDocument</a></li><li><a href="global.html#deleteDocument">deleteDocument</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#documentSearched">documentSearched</a></li><li><a href="global.html#DocumentsList">DocumentsList</a></li><li><a href="global.html#EditUserRole">EditUserRole</a></li><li><a href="global.html#fetchDocument">fetchDocument</a></li><li><a href="global.html#fetchDocuments">fetchDocuments</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapDispatchToProps">mapDispatchToProps</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#mapToProps">mapToProps</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#ProfileForm">ProfileForm</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#saveDocument">saveDocument</a></li><li><a href="global.html#searchDocument">searchDocument</a></li><li><a href="global.html#searchRoute">searchRoute</a></li><li><a href="global.html#secretKey">secretKey</a></li><li><a href="global.html#server">server</a></li><li><a href="global.html#setAuthorizationToken">setAuthorizationToken</a></li><li><a href="global.html#signupRequest">signupRequest</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#updateDocument">updateDocument</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li><li><a href="global.html#UsersList">UsersList</a></li><li><a href="global.html#ValidateInput">ValidateInput</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 31 2017 19:50:30 GMT+0100 (WAT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

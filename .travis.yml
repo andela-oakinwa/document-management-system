@@ -1,0 +1,33 @@
+sudo: required
+dist: trusty
+language: node_js
+
+node_js:
+  - stable
+
+install:
+  - npm install
+
+before_script:
+  - nvm install 6
+  - npm install
+  - npm install -g sequelize-cli
+  - psql -c 'create database doqman_test;' -U postgres
+  - sudo -u postgres createuser oluwafemi
+
+script:
+  - npm test
+
+after_success: 
+  - npm run coveralls
+
+notifications:
+  email:
+    recipients:
+      - oluwafemi.akinwa@andela.com
+      - kaiser.phemi@protonmail.ch
+  slack:
+    rooms:
+      - andela: KtLgTrjrNVcoO1cr9tCjYcEh
+    on_success: change # default: always
+    on_failure: always # default: always
