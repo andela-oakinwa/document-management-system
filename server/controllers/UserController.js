@@ -188,11 +188,13 @@ const UserController = {
   deleteUser(request, response) {
     db.User.findById(request.params.id)
       .then((user) => {
-        user.destroy();
-        response.status(200)
-          .send({
-            message: 'This account has been successfully deleted.'
-          });
+        if (request.params.roleId === 1) {
+          user.destroy();
+          response.status(200)
+            .send({
+              message: 'This account has been successfully deleted.'
+            });
+        }
       })
       .catch((error) => {
         response.status(500)

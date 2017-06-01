@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/actions/UserAction.js</title>
+    <title>JSDoc: Source: client/Index.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/actions/UserAction.js</h1>
+    <h1 class="page-title">Source: client/Index.jsx</h1>
 
     
 
@@ -26,76 +26,47 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import axios from 'axios';
-import * as types from './ActionType';
+            <pre class="prettyprint source linenums"><code>import 'babel-polyfill';
+import React from 'react';
+import { render } from 'react-dom';
+import { Router, browserHistory } from 'react-router';
+import jwt from 'jsonwebtoken';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
 
+import './style/Index.scss';
+import setAuthorizationToken from './utilities/SetAuthorizationToken';
+import routes from './Routes';
+import * as types from './actions/ActionType';
+import rootReducer from './reducers/RootReducer';
 /**
- * Dispatch action to fetch users
- * @param {number} offset Output paging offset
- * @returns {Object}
+ * Creates the main store
+ * @param  {Object} f
  */
-const fetchUsers = (offset) => {
-    const pageOffset = offset || 0,
-      limit = 5;
-    return (dispatch) => {
-      return axios.get(`/users?offset=${pageOffset}&amp;limit=${limit}`)
-        .then((response) => {
-          dispatch({
-            type: types.SET_USERS,
-            users: response.data.rows,
-          });
-          dispatch({
-            type: types.SET_PAGINATION,
-            pagination: response.data.pagination
-          });
-        });
-    };
-  },
-/**
- * Dispatch action to fetch a user
- * @param {Object} id Specific user ID
- * @returns {Object}
- */
-  fetchUser = (id) => {
-    return (dispatch) => {
-      return axios.get(`/users/${id}`)
-        .then(response => dispatch({
-          type: types.LOAD_USER,
-          user: response.data,
-        }));
-    };
-  },
-/**
- * Dispatch action to update a user
- * @param {Object} user User object
- * @param {Object} userId User's userId
- * @returns {Object}
- */
-  updateUser = (user, userId) => {
-    return (dispatch) => {
-      return axios.put(`/users/${userId}`, user)
-        .then(response => dispatch({
-          type: types.UPDATE_USER,
-          user: response.data,
-        }));
-    };
-  },
-/**
- * Dispatches action for delete
- * @param {Object} id User ID
- * @returns {Object}
- */
-  deleteUser = (id) => {
-    return (dispatch) => {
-      return axios.delete(`/users/${id}`)
-        .then(() => dispatch({
-          type: types.DELETE_USER,
-          userId: id,
-        }));
-    };
-  };
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
-export { fetchUsers, fetchUser, updateUser, deleteUser };
+if (localStorage.jwtToken) {
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch({
+    type: types.SET_CURRENT_USER,
+    user: jwt.decode(localStorage.jwtToken)
+  });
+}
+/**
+ * Renders to the DOM
+ */
+render(
+  &lt;Provider store={store}>
+    &lt;Router history={browserHistory} routes={routes} />
+  &lt;/Provider>, document.getElementById('main-app')
+);
 </code></pre>
         </article>
     </section>

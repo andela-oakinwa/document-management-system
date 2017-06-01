@@ -21,7 +21,7 @@ export default (
     <Route path="/document" component={ManageDocumentPage} />
     <Route path="/document/:id" component={ManageDocumentPage} />
     <Route path="/users" component={UsersPage} />
-    <Route path="document-details/:id" component={DocumentDetailsPage} />
+    <Route path="/document-details/:id" component={DocumentDetailsPage} />
     <Route path="/editprofile" component={ProfilePage} />
   </Route>
 );

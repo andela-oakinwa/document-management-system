@@ -19,7 +19,7 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
             <p>{(document.createdAt) ?
               document.createdAt.split('T')[0] : ''}</p>
             <p id="owner">Author:
-              {document.owner.firstName} {document.owner.lastName}</p>
+              {document.User.firstName} {document.User.lastName}</p>
           </div>
         </div>
         <div className="card-action">

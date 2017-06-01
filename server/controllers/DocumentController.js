@@ -84,9 +84,9 @@ const DocumentController = {
           { ownerId: request.tokenDecode.userId }
         ]
       },
-      include: Helper.ownerDetails,
-      limit: request.dbQuery.limit || 10,
-      offset: request.dbQuery.offset || 0,
+      include: [db.User],
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
       order: [['createdAt', 'ASC']]
     };
     db.Document

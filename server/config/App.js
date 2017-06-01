@@ -46,6 +46,12 @@ app.use(webpackHotMiddleware(compiler, {
 /**
  * Routes
  */
+app.get('/home', (request, response) => {
+  response.status(200)
+    .send({
+      message: 'Welcome to doqMan Document Management System'
+    });
+});
 app.use('/users', userRouter);
 app.use('/documents', documentRouter);
 app.use('/roles', roleRouter);

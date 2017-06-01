@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Button } from 'react-materialize';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
   return (
@@ -13,7 +12,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.owner.firstName} {document.owner.lastName}</p>
+                {document.User.firstName} {document.User.lastName}</p>
           </div>
         </div>
         <div className="card-action">

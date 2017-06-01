@@ -20,7 +20,8 @@ const Authentication = {
    * @param  {Object} next Next process handler
    */
   verifyToken(request, response, next) {
-    const token = request.headers['x-access-token'];
+    const token = request.headers['x-access-token'] ||
+    request.headers.authorization;
     if (token) {
       jwt.verify(token, secretKey, (error, decoded) => {
         if (error) {

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Row, Input, Button } from 'react-materialize';
+import { Row, Input } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 
-const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
-
+const DocumentForm = ({ document, editorChange,
+  onSave, onChange, saving, errors }) => {
   return (
     <form className="container">
-      <h5 className="center" style={{ margin: 20 }}>Create/Update a Document</h5>
+      <h5 className="center" style={{ margin: 20 }}>
+        Create/Update a Document
+      </h5>
       <Row>
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
           <Input
@@ -27,7 +29,7 @@ const DocumentForm = ({ document, onSave, onChange, saving, errors }) => {
               plugins: 'autolink link image lists print preview',
               toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
             }}
-            onChange={onChange}
+            onChange={editorChange}
           />
           {errors.content && <div className="red-text">Enter Content</div>}
         </div>
@@ -65,6 +67,7 @@ DocumentForm.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
+  editorChange: React.PropTypes.object.isRequired
 };
 
 export default DocumentForm;

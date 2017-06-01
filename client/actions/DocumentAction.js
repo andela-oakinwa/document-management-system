@@ -30,11 +30,11 @@ const saveDocument = (data) => {
         .then((response) => {
           dispatch({
             type: types.SET_DOCUMENTS,
-            documents: response.data.rows,
+            documents: response.data.documents.rows,
           });
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: response.data.pagination
+            pagination: response.data.paging
           });
         });
     };
