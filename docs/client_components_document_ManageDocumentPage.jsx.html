@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/components/users/ListRow.jsx</title>
+    <title>JSDoc: Source: client/components/document/ManageDocumentPage.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/components/users/ListRow.jsx</h1>
+    <h1 class="page-title">Source: client/components/document/ManageDocumentPage.jsx</h1>
 
     
 
@@ -26,83 +26,155 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
-import EditUserRole from './EditUserRole';
-import * as userActions from '../../actions/UserAction';
+import validateInput from '../../../server/shared/CheckDocument';
+import DocumentForm from './DocumentForm';
+import * as documentActions from '../../actions/DocumentAction';
 /**
- * ListRow defined as class component. It's a root component
+ * Root component defined as class
  */
-class ListRow extends Component {
-  /**
-   * Class constructor
-   * @param  {Object} props Component property
-   * @return {void}
-   */
-  constructor(props) {
-    super(props);
+class ManageDocumentPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
     this.state = {
-      user: Object.assign({}, props.user),
+      document: {},
+      errors: {},
+      saving: false,
     };
-    this.onChange = this.onChange.bind(this);
+
+    this.updateDocumentState = this.updateDocumentState.bind(this);
+    this.saveDocument = this.saveDocument.bind(this);
+    this.redirect = this.redirect.bind(this);
+    this.editorChange = this.editorChange.bind(this);
   }
   /**
-   * Handles change of state
+   * 
+   * @param {Object} nextProps
    */
-  onChange(event) {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.document.id !== nextProps.document.id) {
+      this.setState({ document: Object.assign({}, nextProps.document) });
+    }
+  }
+  /**
+   * Update
+   * @param {Object} event
+   */
+  updateDocumentState(event) {
+    const field = event.target.name;
+    const document = this.state.document;
+    document[field] = event.target.value;
+    return this.setState({ document });
+  }
+  /**
+   * 
+   * @param {Object} event 
+   */
+  editorChange(event) {
+    const document = this.state.document;
+    document.content = event.target.getContent({
+      format: 'raw'
+    });
+    return this.setState({
+      document
+    });
+  }
+
+  saveSuccess() { this.redirect(); }
+
+  saveFailure(error) {
+    toastr.error(error);
+    this.setState({ saving: false });
+  }
+
+  isValid() {
+    const data = {
+      title: this.state.document.title,
+      content: this.state.document.content,
+      access: this.state.document.access
+    };
+    const { errors, isValid } = validateInput(data);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+
+  saveDocument(event) {
     event.preventDefault();
-    const field = event.target.name,
-      user = this.state.user;
-    user[field] = event.target.value;
-    this.setState({ user });
-    this.props.actions.updateUser(user);
+    if (this.isValid()) {
+      this.setState({ saving: true, errors: {} });
+      if (this.state.document.id) {
+        this.props.actions.updateDocument(this.state.document)
+            .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
+      } else {
+        this.props.actions.saveDocument(this.state.document)
+          .then(this.saveSuccess.bind(this), this.saveFailure.bind(this)); 
+      }
+    }
   }
-  /**
-   * renders to the DOM
-   * @return {Object}
-   */
+
+  redirect() {
+    this.setState({ saving: false });
+    toastr.success('Document saved');
+    this.context.router.push('/');
+  }
+
   render() {
-    const { user, deleteUser, authenticate } = this.props;
+    const { errors } = this.state;
+
     return (
-      &lt;tr>
-        &lt;td>{user.userName}&lt;/td>
-        &lt;td>{user.firstName}&lt;/td>
-        &lt;td>{user.lastName}&lt;/td>
-        &lt;td>{user.email}&lt;/td>
-        &lt;td>{auth.user.roleId !== user.roleId ? &lt;EditUserRole
-          value={parseInt(this.state.user.roleId, 10)}
-          onChange={this.onChange} /> : &lt;span>{user.Role.title}&lt;/span>
-          }
-        &lt;/td>
-        &lt;td>{user.createdAt.substr(0, 10)}&lt;/td>
-        &lt;td>{authenticate.user.userId !== user.id &amp;&amp;
-          &lt;Link to="/users" onClick={deleteUser(user.id)}>Delete&lt;/Link>
-          }
-        &lt;/td>
-      &lt;/tr>
+      &lt;div className="container">
+        &lt;DocumentForm
+          onChange={this.updateDocumentState}
+          editorChange={this.editorChange}
+          onSave={this.saveDocument}
+          document={this.state.document}
+          errors={this.state.errors}
+          saving={this.state.saving}
+        />
+      &lt;/div>
     );
   }
 }
 
-ListRow.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  deleteUser: React.PropTypes.func.isRequired,
-  authenticate: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired
-};
-/**
- * Maps state to component properties
- * @param {Object} release
- */
-const mapToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(userActions, dispatch),
-  };
+ManageDocumentPage.propTypes = {
+  document: React.PropTypes.object,
+  actions: React.PropTypes.object.isRequired,
 };
 
-export default connect(null, mapToProps)(ListRow);
+ManageDocumentPage.contextTypes = {
+  router: React.PropTypes.object,
+};
+
+const getDocumentById = (documents, id) => {
+    const document = documents.filter(item => item.id === id);
+    if (document) {
+      return document[0];
+    }
+    return null;
+  },
+  mapStateToProps = (state, ownProps) => {
+    const documentId = ownProps.params.id;
+    let document;
+    if (documentId &amp;&amp; state.documents.length > 0) {
+      document = getDocumentById(state.documents, parseInt(documentId, 10));
+    }
+    return {
+      document,
+    };
+  },
+
+  mapDispatchToProps = (dispatch) => {
+    return {
+      actions: bindActionCreators(documentActions, dispatch),
+    };
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageDocumentPage);
 </code></pre>
         </article>
     </section>

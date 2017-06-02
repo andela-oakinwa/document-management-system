@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: LoginPage</title>
+    <title>JSDoc: Class: ManageDocumentPage</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: LoginPage</h1>
+    <h1 class="page-title">Class: ManageDocumentPage</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2>LoginPage</h2>
+        <h2>ManageDocumentPage</h2>
         
-            <div class="class-description">Class component defined as this is a root component</div>
+            <div class="class-description">Root component defined as class</div>
         
     
 </header>
@@ -44,71 +44,18 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="LoginPage"><span class="type-signature"></span>new LoginPage<span class="signature">(props)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ManageDocumentPage"><span class="type-signature"></span>new ManageDocumentPage<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
-<div class="description">
-    Component properties
-</div>
 
 
 
 
 
 
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Component properties</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -144,7 +91,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_login_LoginPage.jsx.html">client/components/login/LoginPage.jsx</a>, <a href="client_components_login_LoginPage.jsx.html#line10">line 10</a>
+        <a href="client_components_document_ManageDocumentPage.jsx.html">client/components/document/ManageDocumentPage.jsx</a>, <a href="client_components_document_ManageDocumentPage.jsx.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -193,15 +140,12 @@
 
     
 
-    <h4 class="name" id="isValid"><span class="type-signature"></span>isValid<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="componentWillReceiveProps"><span class="type-signature"></span>componentWillReceiveProps<span class="signature">(nextProps)</span><span class="type-signature"></span></h4>
 
     
 
 
 
-<div class="description">
-    Checks client side input
-</div>
 
 
 
@@ -209,6 +153,54 @@
 
 
 
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>nextProps</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -244,7 +236,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_login_LoginPage.jsx.html">client/components/login/LoginPage.jsx</a>, <a href="client_components_login_LoginPage.jsx.html#line30">line 30</a>
+        <a href="client_components_document_ManageDocumentPage.jsx.html">client/components/document/ManageDocumentPage.jsx</a>, <a href="client_components_document_ManageDocumentPage.jsx.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -267,24 +259,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -293,14 +267,141 @@
 
     
 
-    <h4 class="name" id="onChange"><span class="type-signature"></span>onChange<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="editorChange"><span class="type-signature"></span>editorChange<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="client_components_document_ManageDocumentPage.jsx.html">client/components/document/ManageDocumentPage.jsx</a>, <a href="client_components_document_ManageDocumentPage.jsx.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateDocumentState"><span class="type-signature"></span>updateDocumentState<span class="signature">(event)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Handles change of state event as a result of user input
+    Update
 </div>
 
 
@@ -352,7 +453,7 @@
 
             
 
-            <td class="description last">Event triggered</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -393,7 +494,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_login_LoginPage.jsx.html">client/components/login/LoginPage.jsx</a>, <a href="client_components_login_LoginPage.jsx.html#line59">line 59</a>
+        <a href="client_components_document_ManageDocumentPage.jsx.html">client/components/document/ManageDocumentPage.jsx</a>, <a href="client_components_document_ManageDocumentPage.jsx.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -416,237 +517,6 @@
 
 
 
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="onSubmit"><span class="type-signature"></span>onSubmit<span class="signature">(event)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Handles submit event
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Event triggered</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_login_LoginPage.jsx.html">client/components/login/LoginPage.jsx</a>, <a href="client_components_login_LoginPage.jsx.html#line39">line 39</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Renders to the DOM
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_login_LoginPage.jsx.html">client/components/login/LoginPage.jsx</a>, <a href="client_components_login_LoginPage.jsx.html#line66">line 66</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
