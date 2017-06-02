@@ -13,6 +13,11 @@ engines:
       - javascript
   eslint:
     enabled: true
+    config:
+      config: .eslintrc.json
+      extensions:
+      - .js
+      - .jsx
     checks:
       import/no-unresolved:
         enabled: false
