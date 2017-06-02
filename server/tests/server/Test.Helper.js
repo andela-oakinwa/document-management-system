@@ -1,4 +1,4 @@
-import faker from 'faker';
+const faker = require('faker');
 
 const helper = {
   adminRole: {
@@ -121,4 +121,4 @@ const helper = {
     content: faker.lorem.paragraph(),
   }
 };
-export default helper;
+module.exports = helper;

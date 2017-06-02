@@ -20,7 +20,7 @@
     "main-server-test": "npm run 'drop:db' && npm run 'create:db' && npm run 'migrate:db' && npm run test:server",
     "build": "npm run clean && npm run build:server && npm run build:client",
     "webpack-dev-server": "webpack-dev-server --progress --inline --open",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R server/tests/**/*.js && codecov",
+    "coverage": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R server/tests/**/**/*.js && codecov",
     "drop:db": "psql -c 'drop database if exists doqman_test;' -U postgres",
     "create:db": "psql -c 'create database doqman_test;' -U postgres",
     "migrate:db": "NODE_ENV=test sequelize db:migrate",
