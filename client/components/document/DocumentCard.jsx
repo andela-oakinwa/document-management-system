@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
+  const handleClick = () => {
+    deleteDocument(document.id);
+  };
   return (
     <div className="col s4">
       <div className="card">
@@ -22,7 +25,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link className="edit" to={`/documents/${document.id}`}>Edit</Link>
-              <Link className="deleteDoc" to="/" onClick={() => deleteDocument(document.id)}>
+              <Link className="deleteDoc" to="/" onClick={handleClick()}>
                 Delete
               </Link>
             </div>}</div>

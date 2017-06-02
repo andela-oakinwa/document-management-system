@@ -1,75 +1,61 @@
-const webpack = require('webpack');
-const path = require('path');
+import webpack from 'webpack';
+import path from 'path';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-module.exports = {
-  context: `${__dirname}/client`,
-  entry: {
-    javascript: path.resolve(__dirname, 'client/Index.jsx'),
-    html: path.resolve(__dirname, 'client/Index.html'),
-  },
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('production')
+};
+
+export default {
+  entry: './client/index',
+  target: 'web',
   output: {
-    filename: '[name].js',
-    path: `${__dirname}/build/client`,
-    publicPath: '/'
+    path: path.join(__dirname, '/dist'),
+    publicPath: '/',
+    filename: 'bundle.js'
   },
+  devServer: {
+    contentBase: './dist'
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin(GLOBALS),
+    new ExtractTextPlugin('styles.css'),
+    new webpack.LoaderOptionsPlugin(),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery'
+    })
+  ],
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.(jsx|js)$/,
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        exclude: /node_modules/,
-        use: ['react-hot-loader', 'babel-loader'],
+        test: /\.jsx$/,
+        include: [path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/shared')],
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
       },
       {
-        test: /\.scss?$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /(\.s?css)$/,
+        loader: ExtractTextPlugin.extract('css-loader?sourceMap')
       },
       {
-        test: /\.json$/,
-        loader: ['json-loader'],
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
       },
       {
-        test: /\.(jpg|png|svg)$/,
-        loader: ['url-loader']
+        test: /\.(jpg|png)$/,
+        loader: 'file-loader'
       },
-      {
-        test: /\.html$/,
-        loader: 'file-loader?name=[name].[ext]',
-      }
     ],
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.scss']
+    extensions: [' ', '.js', '.jsx', '.css']
   },
-  devtool: 'cheap-source-map',
-  target: 'web',
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
-    // new webpack.optimize.UglifyJsPlugin({
-      // beautify: false,
-      // mangle: {
-      //   screw_ie8: true,
-      //   keep_fnames: true,
-      // },
-      // compress: {
-      //   screw_ie8: true,
-      //   warnings: false,
-      //   pure_funcs: ['console.log', 'window.console.log.apply']
-      // },
-      // comments: false
-    // })
-  ],
   node: {
     net: 'empty',
-    dns: 'empty',
-  },
+    dns: 'empty'
+  }
 };

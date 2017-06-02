@@ -55,6 +55,7 @@ var Helper = {
   /**
    * Gets document attributes
    * @param  {Object} createdDoc
+   * @return {Array}
    */
   getDocument: function getDocument(createdDoc) {
     return {

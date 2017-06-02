@@ -2,8 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
-import LandingPage from './components/LandingPage'; 
-import NavigationBar from './components/shared/NavigationBar';
+import LandingPage from './components/LandingPage';
 import SignUpPage from './components/signup/SignUpPage';
 import About from './components/About';
 import Login from './components/login/LoginPage';

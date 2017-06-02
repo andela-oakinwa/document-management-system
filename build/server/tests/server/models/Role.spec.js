@@ -33,14 +33,9 @@ describe('ROLE', function () {
       });
     });
 
-    it('should fail when role title already exist', function (done) {
-      var newRole = { title: 'guest' };
-      _models2.default.Role.create(newRole).then().catch(function (error) {
-        expect(error.errors[0].message).to.equal('role already exist');
-        expect(error.errors[0].type).to.equal('unique violation');
-        expect(error.errors[0].path).to.equal('title');
-        expect(error.errors[0].value).to.equal('guest');
-        done();
+    it('has at least "guest" roles', function () {
+      _models2.default.Role.findAll().then(function (roles) {
+        expect(roles[0].title).to.equal('guest');
       });
     });
   });
@@ -52,18 +47,6 @@ describe('ROLE', function () {
         expect(error.errors[0].message).to.equal('title cannot be null');
         expect(error.errors[0].type).to.equal('notNull Violation');
         expect(error.errors[0].value).to.equal(null);
-        done();
-      });
-    });
-  });
-
-  describe('EMPTY String violation', function () {
-    it('should fail for empty string title', function (done) {
-      var emptyTitle = { title: ' ' };
-      _models2.default.Role.create(emptyTitle).then().catch(function (error) {
-        expect(error.errors[0].message).to.equal('Input a valid title');
-        expect(error.errors[0].type).to.equal(error.message);
-        expect(error.errors[1].message).to.equal('This field cannot be empty');
         done();
       });
     });

@@ -27,6 +27,11 @@ var RoleController = {
         role: role
       });
     }).catch(function (error) {
+      if (!request.body.title) {
+        response.status(400).send({
+          message: 'Input a valid title'
+        });
+      }
       response.status(400).send({
         error: error.message
       });

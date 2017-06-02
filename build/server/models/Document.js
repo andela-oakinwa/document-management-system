@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * Document Model
- * @return {Object} Document
- */
 module.exports = function (sequelize, DataTypes) {
   var Document = sequelize.define('Document', {
     title: {

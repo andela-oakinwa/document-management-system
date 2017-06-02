@@ -9,9 +9,9 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import webpackConfig from '../../webpack.config';
 import userRouter from '../routes/UserRouter';
 import roleRouter from '../routes/RoleRouter';
+import webpackConfig from '../../webpack.config';
 import documentRouter from '../routes/DocumentRouter';
 // import searchRouter from '../routes/SearchRouter';
 /**
@@ -38,7 +38,7 @@ app.use(logger('dev'));
  * Hot reloading
  */
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'test') {
   const compiler = webpack(webpackConfig);
   app.use(webpackMiddleware(compiler));
   app.use(webpackHotMiddleware(compiler, {

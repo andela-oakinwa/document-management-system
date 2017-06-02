@@ -53,7 +53,6 @@ var DocumentController = {
    * Route: GET /documents/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   getDocument: function getDocument(request, response) {
     _models2.default.Document.findById(request.params.id).then(function (searchedDoc) {
@@ -134,7 +133,6 @@ var DocumentController = {
    * Route: DELETE /documents/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   deleteDocument: function deleteDocument(request, response) {
     _models2.default.Documents.findById(request.params.id).then(function (document) {

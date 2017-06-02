@@ -35,7 +35,7 @@ describe('Document Model', function () {
   });
 
   after(function (done) {
-    _models2.default.Role.destroy({ where: {} });done();
+    _models2.default.Document.destroy({ where: {} });done();
   });
 
   describe('CREATE Document', function () {
@@ -69,27 +69,12 @@ describe('Document Model', function () {
     });
   });
 
-  describe('EMPTY STRING', function () {
-    emptyFields.forEach(function (field) {
-      it('should return error', function (done) {
-        var emptyString = Object.assign({}, _Test2.default.publicDocument);
-        emptyString[field] = ' ';
-        _models2.default.Document.create(emptyString).then().catch(function (error) {
-          expect(error.errors[0].message).to.equal('This field cannot be empty');
-          expect(error.errors[0].type).to.equal('Validation error');
-          expect(error.errors[0].path).to.equal(field);
-          done();
-        });
-      });
-    });
-  });
-
   describe('ACCESS Violation', function () {
     it('should return error when access is not public, private or role', function (done) {
       var accessError = Object.assign({}, _Test2.default.publicDocument);
       accessError.access = 'andela';
       _models2.default.Document.create(accessError).then().catch(function (error) {
-        expect(error.errors[0].message).to.equal('public, private or role required');
+        expect(error.errors[0].message).to.equal('Validation isIn failed');
         expect(error.errors[0].type).to.equal('Validation error');
         expect(error.errors[0].path).to.equal('access');
         done();

@@ -4,7 +4,9 @@
   "description": "A full-stack document management system",
   "main": "client/Index.jsx",
   "scripts": {
-    "start": "NODE_ENV=production node build/server/Server.js",
+    "start": "nodemon --watch server ./node_modules/.bin/babel-node  -- server/Server.js",
+    "start:heroku": "npm run build && npm run webpack && node build/server/Server.js",
+    "start:main": "NODE_ENV=production nodemon --watch server --exec babel-node -- build/server/Server.js",
     "start:dev": "NODE_ENV=development npm run server",
     "cover": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- server/tests/**/**/*.js",
     "test:client": "NODE_ENV=test mocha --verbose --watch --coverage --reporter progress TestSetup.js server/tests/client/**/*.test.js",
@@ -12,7 +14,6 @@
     "babel": "babel-cli",
     "dev:server": "nodemon --watch server ./node_modules/.bin/babel-node  -- server/Server.js",
     "server": "./node_modules/.bin/babel-node -- server/Server.js",
-    "webpack": "webpack -p babel-node",
     "jsdoc": "jsdoc -c conf.json",
     "lint:client": "eslint client/",
     "lint:server": "eslint server/",
@@ -27,8 +28,15 @@
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
     "server:test": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/server/**/*.js",
     "clean": "rimraf build",
+    "webpack": "webpack --config ./webpack.conf.prod.js",
     "build:server": "babel server -d build/server",
-    "build:client": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js --progress --profile --colors"
+    "build:client": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js --progress --profile --colors",
+    "clean-dist": "npm run remove-dist && mkdir dist",
+    "remove-dist": "node_modules/.bin/rimraf ./dist",
+    "build:html": "babel-node tools/buildHtml.js",
+    "prebuild": "npm-run-all clean-dist test lint build:html",
+    "build:prod": "babel-node tools/build.js",
+    "postbuild": "babel-node tools/distServer.js"
   },
   "author": "Oluwafemi Akinwa",
   "repository": {
@@ -105,7 +113,10 @@
     "babel-register": "^6.24.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
+    "cheerio": "^1.0.0-rc.1",
     "classnames": "^2.2.5",
+    "colors": "^1.1.2",
+    "compression": "^1.6.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "faker": "^4.1.0",
@@ -117,6 +128,7 @@
     "materialize-css": "^0.98.2",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0",
+    "open": "0.0.5",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "pug": "^2.0.0-rc.1",
@@ -139,6 +151,7 @@
     "validator": "^7.0.0",
     "webpack": "^2.5.1",
     "webpack-dev-middleware": "^1.10.2",
-    "webpack-hot-middleware": "^2.18.0"
+    "webpack-hot-middleware": "^2.18.0",
+    "webpack-validator": "^3.0.0"
   }
 }

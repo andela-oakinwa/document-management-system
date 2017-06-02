@@ -1,27 +1,19 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _faker = require('faker');
-
-var _faker2 = _interopRequireDefault(_faker);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var faker = require('faker');
 
 var helper = {
   adminRole: {
     id: 1,
     title: 'admin'
   },
-  regularRole: {
-    id: 2,
-    title: 'regular'
-  },
   guestRole1: {
     id: 3,
     title: 'guest'
+  },
+  regularRole: {
+    id: 2,
+    title: 'regular'
   },
   guestRole2: {
     id: 4,
@@ -36,100 +28,100 @@ var helper = {
     title: 'guestSample'
   },
   adminUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   adminUser1: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   regularUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   regularUser2: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   firstUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   secondUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastname: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   thirdUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
   },
   usersArray: function usersArray() {
     var users = [];
     for (var i = 0; i <= 10; i += 1) {
       users.push({
-        username: _faker2.default.internet.username(),
-        firstName: _faker2.default.name.firstName(),
-        lastName: _faker2.default.name.lastName(),
-        email: _faker2.default.internet.email(),
-        password: _faker2.default.internet.password()
+        username: faker.internet.userName(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        password: faker.internet.password()
       });
     }
     return users;
   },
 
   invalidEmailUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: 'kkkkk',
-    password: _faker2.default.internet.password()
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: 'kaiser',
+    password: faker.internet.password()
   },
   invalidPasswordUser: {
-    username: _faker2.default.internet.userName(),
-    firstname: _faker2.default.name.firstName(),
-    lastname: _faker2.default.name.lastName(),
-    email: _faker2.default.internet.email(),
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
     password: 'ola'
   },
   publicDocument: {
-    title: _faker2.default.company.catchPhrase(),
-    content: _faker2.default.lorem.paragraph(),
+    title: faker.company.catchPhrase(),
+    content: faker.lorem.paragraph(),
     access: 'public'
   },
   privateDocument: {
-    title: _faker2.default.company.catchPhrase(),
-    content: _faker2.default.lorem.paragraph(),
+    title: faker.company.catchPhrase(),
+    content: faker.lorem.paragraph(),
     access: 'private'
   },
   roleDocument: {
-    title: _faker2.default.company.catchPhrase(),
-    content: _faker2.default.lorem.paragraph(),
+    title: faker.company.catchPhrase(),
+    content: faker.lorem.paragraph(),
     access: 'role'
   },
   testDocument: {
-    title: _faker2.default.company.catchPhrase(),
-    content: _faker2.default.lorem.paragraph()
+    title: faker.company.catchPhrase(),
+    content: faker.lorem.paragraph()
   }
 };
-exports.default = helper;
+module.exports = helper;

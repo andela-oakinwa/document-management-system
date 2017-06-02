@@ -24,6 +24,14 @@ var _webpack = require('webpack');
 
 var _webpack2 = _interopRequireDefault(_webpack);
 
+var _webpackDevMiddleware = require('webpack-dev-middleware');
+
+var _webpackDevMiddleware2 = _interopRequireDefault(_webpackDevMiddleware);
+
+var _webpackHotMiddleware = require('webpack-hot-middleware');
+
+var _webpackHotMiddleware2 = _interopRequireDefault(_webpackHotMiddleware);
+
 var _UserRouter = require('../routes/UserRouter');
 
 var _UserRouter2 = _interopRequireDefault(_UserRouter);
@@ -65,13 +73,12 @@ app.use((0, _morgan2.default)('dev'));
 /**
  * Hot reloading
  */
+
 if (process.env.NODE_ENV !== 'production') {
   var webpackConfig = require('../../webpack.config');
-  var webpackMiddleware = require('webpack-dev-middleware');
-  var webpackHotMiddleware = require('webpack-hot-middleware');
   var compiler = (0, _webpack2.default)(webpackConfig);
-  app.use(webpackMiddleware(compiler));
-  app.use(webpackHotMiddleware(compiler, {
+  app.use((0, _webpackDevMiddleware2.default)(compiler));
+  app.use((0, _webpackHotMiddleware2.default)(compiler, {
     hot: true,
     publicPath: webpackConfig.output.publicPath,
     noInfo: true
@@ -80,12 +87,6 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Routes
  */
-// app.get('/home', (request, response) => {
-//   response.status(200)
-//     .send({
-//       message: 'Welcome to doqMan Document Management System'
-//     });
-// });
 app.use('/users', _UserRouter2.default);
 app.use('/documents', _DocumentRouter2.default);
 app.use('/roles', _RoleRouter2.default);
