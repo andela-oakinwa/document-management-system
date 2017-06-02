@@ -22,16 +22,10 @@ describe('ROLE', () => {
         });
     });
 
-    it('should fail when role title already exist', (done) => {
-      const newRole = { title: 'guest' };
-      db.Role.create(newRole)
-        .then()
-        .catch((error) => {
-          expect(error.errors[0].message).to.equal('role already exist');
-          expect(error.errors[0].type).to.equal('unique violation');
-          expect(error.errors[0].path).to.equal('title');
-          expect(error.errors[0].value).to.equal('guest');
-          done();
+    it('has at least "guest" roles', () => {
+      db.Role.findAll()
+        .then((roles) => {
+          expect(roles[0].title).to.equal('guest');
         });
     });
   });
@@ -45,21 +39,6 @@ describe('ROLE', () => {
           expect(error.errors[0].message).to.equal('title cannot be null');
           expect(error.errors[0].type).to.equal('notNull Violation');
           expect(error.errors[0].value).to.equal(null);
-          done();
-        });
-    });
-  });
-
-  describe('EMPTY String violation', () => {
-    it('should fail for empty string title', (done) => {
-      const emptyTitle = { title: ' ' };
-      db.Role.create(emptyTitle)
-        .then()
-        .catch((error) => {
-          expect(error.errors[0].message).to.equal('Input a valid title');
-          expect(error.errors[0].type).to.equal(error.message);
-          expect(error.errors[1].message)
-            .to.equal('This field cannot be empty');
           done();
         });
     });

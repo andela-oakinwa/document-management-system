@@ -5,13 +5,13 @@ const helper = {
     id: 1,
     title: 'admin'
   },
-  regularRole: {
-    id: 2,
-    title: 'regular'
-  },
   guestRole1: {
     id: 3,
     title: 'guest'
+  },
+  regularRole: {
+    id: 2,
+    title: 'regular'
   },
   guestRole2: {
     id: 4,
@@ -27,50 +27,50 @@ const helper = {
   },
   adminUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   adminUser1: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   regularUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
   },
   regularUser2: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   firstUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   secondUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
+    firstName: faker.name.firstName(),
     lastname: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
   thirdUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -78,7 +78,7 @@ const helper = {
     const users = [];
     for (let i = 0; i <= 10; i += 1) {
       users.push({
-        username: faker.internet.username(),
+        username: faker.internet.userName(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
@@ -89,15 +89,15 @@ const helper = {
   },
   invalidEmailUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
-    email: 'kkkkk',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: 'kaiser',
     password: faker.internet.password()
   },
   invalidPasswordUser: {
     username: faker.internet.userName(),
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: 'ola'
   },

@@ -30,11 +30,9 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
     </div>
   );
 }
-
 DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };
-
 export default DocumentCard;

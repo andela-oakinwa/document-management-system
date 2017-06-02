@@ -24,6 +24,12 @@ const RoleController = {
           });
       })
       .catch((error) => {
+        if (!request.body.title) {
+          response.status(400)
+            .send({
+              message: 'Input a valid title'
+            });
+        }
         response.status(400)
           .send({
             error: error.message

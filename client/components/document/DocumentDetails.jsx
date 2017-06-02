@@ -7,7 +7,7 @@ export default
 function DocumentDetails({ document, deleteDocument, currentUser }) {
   return (
     <div className="col s12">
-      <div className="card qBox">
+      <div className="card">
         <div className="card-content white-text">
           <span className="card-title">{document.title}</span>
           <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
@@ -26,7 +26,7 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
           <Link to="/">back</Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link to={`/document/${document.id}`}>Edit</Link>
+              <Link to={`/documents/${document.id}`}>Edit</Link>
               <Link to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
             </div>
           }

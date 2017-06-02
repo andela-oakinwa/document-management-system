@@ -1,16 +1,15 @@
 /* eslint-disable no-var */
-
 process.env.NODE_ENV = 'test';
 
 require('babel-register')();
 
-require.extensions['.css'] =  function() { return null; };
-require.extensions['.png'] =  function() { return null; };
-require.extensions['.jpg'] =  function() { return null; };
+require.extensions['.css'] =  function () { return null; };
+require.extensions['.png'] =  function () { return null; };
+require.extensions['.jpg'] =  function () { return null; };
 
-const jsdom = require('jsdom').jsdom;
+var jsdom = require('jsdom').jsdom;
 
-const exposedProperties = ['window', 'navigator', 'document'];
+var exposedProperties = ['window', 'navigator', 'document'];
 
 global.document = jsdom('');
 global.window = document.defaultView;
@@ -24,3 +23,5 @@ Object.keys(document.defaultView).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js'
 };
+
+// documentRef = document;
