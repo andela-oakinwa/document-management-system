@@ -57,6 +57,7 @@ const Helper = {
   /**
    * Gets document attributes
    * @param  {Object} createdDoc
+   * @return {Array}
    */
   getDocument(createdDoc) {
     return {

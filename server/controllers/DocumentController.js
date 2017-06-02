@@ -39,7 +39,6 @@ const DocumentController = {
    * Route: GET /documents/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   getDocument(request, response) {
     db.Document.findById(request.params.id)
@@ -134,7 +133,6 @@ const DocumentController = {
    * Route: DELETE /documents/:id
    * @param {Object} request Request object
    * @param {Object} response Response object
-   * @return {Object} Response object
    */
   deleteDocument(request, response) {
     db.Documents.findById(request.params.id)
