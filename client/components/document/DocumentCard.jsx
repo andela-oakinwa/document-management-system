@@ -7,12 +7,12 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
       <div className="card">
         <div className="card-content white-text">
           <span className="card-title">{document.title}</span>
-          <p>Access: &nbsp; <span>{(document.access).toUpperCase()}</span></p><br />
+          <p>Access: &nbsp; <span>{(document.access)}</span></p><br />
           <div>
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.User ? `$(document.User.firstName) $(document.User.lastName)}</p>
+                {document.owner.firstName} {document.owner.lastName}</p>
           </div>
         </div>
         <div className="card-action">
