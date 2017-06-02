@@ -1,10 +1,10 @@
 /* eslint "react/no-danger": 0 */
 import React from 'react';
 import { Link } from 'react-router';
-import { Button } from 'react-materialize';
 
-export default
-function DocumentDetails({ document, deleteDocument, currentUser }) {
+const DocumentDetails = (
+  { document, deleteDocument, currentUser }
+  ) => {
   return (
     <div className="col s12">
       <div className="card">
@@ -34,10 +34,11 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
       </div>
     </div>
   );
-}
+};
 
 DocumentDetails.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };
+export default DocumentDetails;
