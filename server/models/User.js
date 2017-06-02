@@ -1,6 +1,3 @@
-/**
- * Model for User
- */
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {

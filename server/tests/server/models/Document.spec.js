@@ -24,7 +24,7 @@ describe('Document Model', () => {
       });
   });
 
-  after((done) => { db.Role.destroy({ where: {} }); done(); });
+  after((done) => { db.Document.destroy({ where: {} }); done(); });
 
   describe('CREATE Document', () => {
     it('should create a document', (done) => {
@@ -61,24 +61,6 @@ describe('Document Model', () => {
     });
   });
 
-  describe('EMPTY STRING', () => {
-    emptyFields.forEach((field) => {
-      it('should return error', (done) => {
-        const emptyString = Object.assign({}, helper.publicDocument);
-        emptyString[field] = ' ';
-        db.Document.create(emptyString)
-          .then()
-          .catch((error) => {
-            expect(error.errors[0].message)
-              .to.equal('This field cannot be empty');
-            expect(error.errors[0].type).to.equal('Validation error');
-            expect(error.errors[0].path).to.equal(field);
-            done();
-          });
-      });
-    });
-  });
-
   describe('ACCESS Violation', () => {
     it('should return error when access is not public, private or role',
     (done) => {
@@ -88,7 +70,7 @@ describe('Document Model', () => {
         .then()
         .catch((error) => {
           expect(error.errors[0].message)
-            .to.equal('public, private or role required');
+            .to.equal('Validation isIn failed');
           expect(error.errors[0].type).to.equal('Validation error');
           expect(error.errors[0].path).to.equal('access');
           done();

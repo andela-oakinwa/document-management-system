@@ -66,6 +66,8 @@
     "image-webpack-loader": "^3.3.1",
     "istanbul": "^0.4.5",
     "jasmine-core": "^2.6.1",
+    "jsdom": "11.0.0",
+    "jsdom-global": "3.0.2",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
