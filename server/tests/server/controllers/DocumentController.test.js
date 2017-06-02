@@ -7,304 +7,659 @@ import helper from '../Test.Helper';
 
 const request = supertest.agent(app),
   expect = chai.expect,
-  publicDocDetails = helper.publicDocument,
-  privateDocDetails = helper.privateDocument,
-  roleDocDetails = helper.roleDocument,
+  publicD = helper.publicDocument,
+  privateD = helper.privateDocument,
+  roleDoc = helper.roleDocument,
   userDetails = helper.firstUser,
   ownerDetails = helper.secondUser,
   compareDates = (firstDate, secondDate) => {
     new Date(firstDate).getTime() <= new Date (secondDate).getTime();
   };
-let adminToken, regularToken;
-let privateDocument, roleDocument, publicDocument;
-let updateDocument, createdDoc;
+let adminToken, regularToken, regularToken2, regularUser, regularUser2,
+  privateDocument, roleDocument, publicDocument,
+  document, updateDoc, createdDoc;
 
-describe('Document API', () => {
+describe('DOCUMENT API', () => {
   before((done) => {
     db.Role.bulkCreate([helper.adminRole, helper.regularRole])
-      .then((newRoles) => {
-        adminRole = newRoles[0];
-        regularRole = newRoles[1];
-        userDetails.roleId = regularRole.id;
-        ownerDetails.roleId = adminRole.id;
-        request.post('/users')
-          .send(userDetails)
-          .end((errand, response) => {
-            user = response.body.user;
-            token = response.body.token;
-            publicDocDetails.ownerId = user.id;
-            done();
+      .then((roles) => {
+        helper.adminUser.roleId = roles[0].id;
+        db.User.create(helper.adminUser)
+          .then(() => {
+            request.post('/users/login')
+              .send(helper.adminUser)
+              .end((err, res1) => {
+                adminToken = res1.body.token;
+                request.post('/users')
+                  .send(helper.regularUser)
+                  .end((err, res2) => {
+                    regularUser = res2.body.user;
+                    regularToken = res2.body.token;
+                    request.post('/users')
+                      .send(helper.regularUser2)
+                      .end((err, res3) => {
+                        regularUser2 = res3.body.user;
+                        regularToken2 = res3.body.token;
+                        done();
+                      });
+                  });
+              });
           });
       });
   });
-  after(() => db.Document.sequelize.sync({ force: true }));
 
-  describe('CONTEXT: With existing document', () => {
-    beforeEach(() =>
-      Document.create(documentParams)
-        .then((newDocument) => {
-          createdDoc = newDocument;
-        }));
-
-    afterEach(() => Document.destroy({ where: {} }));
-
-    describe('Get all GET: /documents', () => {
-      it('should return unauthorised without a token', (done) => {
-        request.get('/documents')
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            done();
-          });
-      });
-
-      it('should return all documents', (done) => {
-        request.get('/documents')
-          .set({ Authorization: token })
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(Array.isArray(res.body.rows)).to.be.true;
-            expect(res.body.length).to.not.equal(0);
-            done();
-          });
-      });
-    });
-
-    describe('Get Document GET: /documents/:id', () => {
-      it('should get correct document', (done) => {
-        request.get(`/documents/${document.id}`)
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body.title).to.equal(document.title);
-            done();
-          });
-      });
-
-      it('should return NOT FOUND for invalid id', (done) => {
-        request.get('/documents/100')
-          .set({ Authorization: token })
-          .expect(404, done);
-      });
-    });
-
-    describe('Edit document PUT: /documents/:id', () => {
-      it('updates the document attributes', (done) => {
-        const newAttributes = { title: 'New title', content: 'new content' };
-
-        request.put(`/documents/${document.id}`)
-          .set({ Authorization: token })
-          .send(newAttributes)
-          .end((errand, response) => {
-            expect(response.status).to.equal(201);
-            expect(response.body.title).to.equal(newAttributes.title);
-            expect(response.body.content).to.equal(newAttributes.content);
-            done();
-          });
-      });
-
-      it('should return NOT FOUND for invalid id', (done) => {
-        request.put('/documents/100')
-          .set({ Authorization: token })
-          .expect(404, done);
-      });
-    });
-
-    describe('Delete document DELETE: /documents/:id', () => {
-      it('deletes the document', (done) => {
-        request.delete(`/documents/${document.id}`)
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            Document.count().then((count) => {
-              expect(count).to.equal(0);
-              done();
-            });
-          });
-      });
-
-      it('should return NOT FOUND for invalid id', (done) => {
-        request.delete('/documents/100')
-          .set({ Authorization: token })
-          .expect(404, done);
-      });
-    });
-
-    describe('Get all GET: /users/:id/documents', () => {
-      it('should return all user documents', (done) => {
-        request.get(`/users/${document.ownerId}/documents`)
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            expect(Array.isArray(response.body)).to.be.true;
-            expect(response.body.length).to.not.equal(0);
-            done();
-          });
-      });
-    });
+  after(() => {
+    db.Role.destroy({ where: {} });
   });
 
-  describe('CONTEXT: Without existing document', () => {
-    before((done) => {
-      request.post('/users')
-        .send(ownerParams)
-        .end((errand, response) => {
-          owner = response.body.user;
-          ownerToken = response.body.token;
+  describe('CREATE DOCUMENT POST /documents', () => {
+    it('should create a new document', (done) => {
+      request.post('/documents')
+        .send(publicD)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body.document.title).to.equal(publicD.title);
+          expect(res.body.document.ownerId).to.equal(regularUser.id);
+          expect(res.body.document.access).to.equal(publicD.access);
           done();
         });
     });
 
-    describe('Get Private document GET: /documents/:id', () => {
-      before(() => {
-        privateDocumentParams.ownerId = owner.id;
-        return Document.create(privateDocumentParams)
-          .then((newPrivateDocument) => {
-            privateDocument = newPrivateDocument;
+    it('should return varification failed when token is not supplied',
+    (done) => {
+      request.post('/documents')
+        .send(publicD)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Please sign in or register to get a token');
+          done();
+        });
+    });
+
+    it('should not create document when title is not supplied', (done) => {
+      const invalidDoc = { content: 'new document' };
+      request.post('/documents')
+        .send(invalidDoc)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Title field is required');
+          done();
+        });
+    });
+
+    it('should not create document when content is not supplied', (done) => {
+      const invalidDoc = { title: 'new document' };
+      request.post('/documents')
+        .send(invalidDoc)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Content field is required');
+          done();
+        });
+    });
+
+    it('should not create document when an unknow access level is provided',
+    (done) => {
+      const invalidDoc =
+      { title: 'hello', content: 'new Andela', access: 'new' };
+      request.post('/documents')
+        .send(invalidDoc)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Access type can only be public, private or role');
+          done();
+        });
+    });
+  });
+
+  describe('Update Document /documents/:id', () => {
+    before((done) => {
+      request.post('/documents')
+        .send(publicD)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          createdDoc = res.body.document;
+          done();
+        });
+    });
+
+    it('should update document when user is the owner', (done) => {
+      updateDoc = { title: 'andela' };
+      request.put(`/documents/${createdDoc.id}`)
+        .send(updateDoc)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.updatedDocument.title).to.equal(updateDoc.title);
+          expect(res.body.updatedDocument.content).to.equal(createdDoc.content);
+          done();
+        });
+    });
+
+    it('should allow admin to update document', (done) => {
+      updateDoc = { title: 'TIA' };
+      request.put(`/documents/${createdDoc.id}`)
+        .send(updateDoc)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.updatedDocument.title).to.equal(updateDoc.title);
+          expect(res.body.updatedDocument.content).to.equal(createdDoc.content);
+          done();
+        });
+    });
+
+    it('should not update document when user is not the owner', (done) => {
+      updateDoc = { content: 'new life, new culture, new community' };
+      request.put(`/documents/${createdDoc.id}`)
+        .send(updateDoc)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message)
+            .to.equal('You are not permitted to modify this document');
+          done();
+        });
+    });
+
+    it('should not update document when token is not supply', (done) => {
+      updateDoc = { content: 'new life, new culture, new community' };
+      request.put(`/documents/${createdDoc.id}`)
+        .send(updateDoc)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Please sign in or register to get a token');
+          done();
+        });
+    });
+
+    it('should return not found when invalid id is supplied', (done) => {
+      updateDoc = { content: 'new life, new culture, new community' };
+      request.put('/documents/9999')
+        .send(updateDoc)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('This document does not exist');
+          done();
+        });
+    });
+  });
+
+  describe('Delete Document DELETE /documents/:id', () => {
+    beforeEach((done) => {
+      request.post('/documents')
+        .send(privateD)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          document = res.body.document;
+          done();
+        });
+    });
+
+    it('should allow document\'s owner to delete document', (done) => {
+      request.delete(`/documents/${document.id}`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message)
+            .to.equal('This document has been deleted successfully');
+          done();
+        });
+    });
+
+    it('should allow admin to delete any document', (done) => {
+      request.delete(`/documents/${document.id}`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to
+            .equal('This document has been deleted successfully');
+          done();
+        });
+    });
+
+    it('should not delete document if requester is not the owner or admin',
+    (done) => {
+      request.delete(`/documents/${document.id}`)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to
+            .equal('You are not permitted to modify this document');
+          done();
+        });
+    });
+
+    it('should return not found when for invlid id', (done) => {
+      request.delete('/documents/999')
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('This document does not exist');
+          done();
+        });
+    });
+  });
+
+  describe('GET document /documents/:id', () => {
+    describe('GET document with PRIVATE access', () => {
+      before((done) => {
+        request.post('/documents')
+          .send(privateD)
+          .set({ 'x-access-token': regularToken })
+          .end((err, res) => {
+            privateDocument = res.body.document;
+            done();
           });
       });
 
-      it('should return permission denied if not owner', (done) => {
+      it('should ONLY return the document when the user is the owner',
+      (done) => {
         request.get(`/documents/${privateDocument.id}`)
-          .set({ Authorization: token })
-          .expect(403, done);
+          .set({ 'x-access-token': regularToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.message).to
+              .equal('You have successfully retrived this document');
+            expect(res.body.document.title).to.equal(privateDocument.title);
+            expect(res.body.document.access).to.equal('private');
+            expect(res.body.document.ownerId).to.equal(regularUser.id);
+            done();
+          });
       });
 
-      it('should return document for owner', (done) => {
+      it('should allow admin to retrieve document with private access level',
+      (done) => {
         request.get(`/documents/${privateDocument.id}`)
-          .set({ Authorization: ownerToken })
-          .expect(200, done);
+          .set({ 'x-access-token': adminToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.message).to
+              .equal('You have successfully retrived this document');
+            expect(res.body.document.title).to.equal(privateDocument.title);
+            expect(res.body.document.access).to.equal('private');
+            done();
+          });
+      });
+
+      it('should NOT return document when user is not the owner', (done) => {
+        request.get(`/documents/${privateDocument.id}`)
+          .set({ 'x-access-token': regularToken2 })
+          .end((err, res) => {
+            expect(res.status).to.equal(401);
+            expect(res.body.message).to
+              .equal('You are not permitted to view this document');
+            done();
+          });
       });
     });
 
-    describe('Get role document GET: /documents/:id', () => {
-      before(() => {
-        roleDocumentParams.ownerId = owner.id;
-
-        return Document.create(roleDocumentParams)
-          .then((newRoleDocument) => {
-            roleDocument = newRoleDocument;
+    describe('PUBLIC DOCUMENT', () => {
+      before((done) => {
+        request.post('/documents')
+          .send(publicD)
+          .set({ 'x-access-token': regularToken2 })
+          .end((err, res) => {
+            publicDocument = res.body.document;
+            done();
           });
       });
 
-      it('should return permission denied if in different role', (done) => {
+      it('should return document to all users', (done) => {
+        request.get(`/documents/${publicDocument.id}`)
+          .set({ 'x-access-token': regularToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.document.title).to.equal(publicDocument.title);
+            expect(res.body.document.access).to.equal('public');
+            expect(res.body.message).to
+              .equal('You have successfully retrived this document');
+            done();
+          });
+      });
+
+      it('should return document not found when invalid id is supplied',
+      (done) => {
+        request.get('/documents/99999')
+          .set({ 'x-access-token': regularToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.message).to.equal('This document cannot be found');
+            done();
+          });
+      });
+    });
+
+    describe('ROLE ACCESS DOCUMENT', () => {
+      let guestToken;
+      before((done) => {
+        db.Role.create(helper.guestRole1)
+          .then((guestRole) => {
+            helper.secondUser.roleId = guestRole.id;
+            request.post('/users')
+              .send(helper.secondUser)
+              .end((error, response) => {
+                guestToken = response.body.token;
+                request.post('/documents')
+                  .send(roleD)
+                  .set({ 'x-access-token': regularToken })
+                  .end((err, res) => {
+                    roleDocument = res.body.document;
+                    done();
+                  });
+              });
+          });
+      });
+
+      it('should ONLY return document when user has same role as owner',
+      (done) => {
         request.get(`/documents/${roleDocument.id}`)
-          .set({ Authorization: token })
-          .expect(403, done);
-      });
-
-      it('should return document for owner', (done) => {
-        const sameRoleUserParams = helper.thirdUser;
-        sameRoleUserParams.roleId = adminRole.id;
-
-        request.post('/users')
-          .send(sameRoleUserParams)
-          .end((errand, response) => {
-            const sameRoleUserToken = response.body.token;
-            request.get(`/documents/${roleDocument.id}`)
-              .set({ Authorization: sameRoleUserToken })
-              .expect(200, done);
-          });
-      });
-    });
-
-    describe('Create document POST: /document', () => {
-      it('creates a new document', (done) => {
-        request.post('/documents')
-          .set({ Authorization: token })
-          .send(documentParams)
-          .end((errand, response) => {
-            expect(response.status).to.equal(201);
-            expect(response.body.title).to.equal(documentParams.title);
+          .set({ 'x-access-token': regularToken2 })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.document.title).to.equal(roleDocument.title);
+            expect(res.body.document.access).to.equal('role');
+            expect(res.body.message).to
+              .equal('You have successfully retrived this document');
             done();
           });
       });
 
-      it('fails for invalid document attributes', (done) => {
-        const invalidParams = { name: 'new document' };
-        request.post('/documents')
-          .set({ Authorization: token })
-          .send(invalidParams)
-          .expect(400, done);
-      });
-    });
-    describe('Edit document POST: /documents/:id', () => {
-      before(() => {
-        privateDocumentParams.ownerId = owner.id;
-        return Document.create(privateDocumentParams)
-          .then((newPrivateDocument) => {
-            privateDocument = newPrivateDocument;
+      it('should allow admin to view all role level access documents',
+      (done) => {
+        request.get(`/documents/${roleDocument.id}`)
+          .set({ 'x-access-token': adminToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.document.title).to.equal(roleDocument.title);
+            expect(res.body.document.access).to.equal('role');
+            expect(res.body.message).to
+              .equal('You have successfully retrived this document');
+            done();
           });
       });
-      it('should return unauthorised if not owner', (done) => {
-        const newAttributes = { title: 'Edited title', content: 'new content' };
-        request.put(`/documents/${privateDocument.id}`)
-          .set({ Authorization: token })
-          .send(newAttributes)
-          .end((errand, response) => {
-            expect(response.status).to.equal(401);
+
+      it('should not return document if not of the same role level', (done) => {
+        request.get(`/documents/${roleDocument.id}`)
+          .set({ 'x-access-token': guestToken })
+          .end((err, res) => {
+            expect(res.status).to.equal(401);
+            expect(res.body.message).to
+              .equal('You are not permitted to view this document');
             done();
           });
       });
     });
   });
 
-  describe('CONTEXT: With multiple documents', () => {
-    before(() => Document.bulkCreate(documentParamsArray));
-
-    describe('Document Pagination', () => {
-      it('uses query params "limit" to limit the result', (done) => {
-        request.get('/documents?limit=5')
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body.rows.length).to.equal(5);
-            done();
+  describe('GET ALL DOCUMENT PAGINATION', () => {
+    it('should return all documents to admin user', (done) => {
+      request.get('/documents')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to
+            .equal('You have successfully retrieved all documents');
+          res.body.documents.rows.forEach((doc) => {
+            expect(doc.access).to.be.oneOf(['role', 'private', 'public']);
           });
-      });
+          done();
+        });
+    });
 
-      it('is returned in order of their published dates', (done) => {
-        request.get('/documents?limit=5')
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            const documents = response.body;
-            let flag = true;
+    it('should return all documents with pagination', (done) => {
+      request.get('/documents?limit=4&offset=3')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.pagination.page_count).to.equal(2);
+          expect(res.body.pagination.page).to.equal(1);
+          expect(res.body.pagination.page_size).to.equal(4);
+          expect(res.body.pagination.total_count).to.equal(7);
+          done();
+        });
+    });
 
-            for (let i = 0; i < documents.length - 1; i += 1) {
-              flag = compareDates(documents[i].createdAt, documents[i + 1].createdAt);
-              if (!flag) break;
+    it(`should return all documents created by a user irrespective of the
+    access level and every other documents with role or puclic access with
+    limit set to 4`, (done) => {
+      request.get('/documents?limit=4')
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          res.body.documents.rows.forEach((doc) => {
+            if (doc.ownerId === regularUser2.id) {
+              expect(doc.access).to.be.oneOf(['role', 'private', 'public']);
+            } else {
+              expect(doc.access).to.be.oneOf(['role', 'public']);
             }
-
-            expect(flag).to.be.true;
-            done();
           });
-      });
+          done();
+        });
     });
 
-    describe('Document search', () => {
-      it('searches and returns the correct documents', (done) => {
-        const query = documentParamsArray[4].title;
-        const matcher = new RegExp(query);
-
-        request.get(`/search/documents?q=${query}`)
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            expect(matcher.test(response.body.rows[0].title)).to.be.true;
-            done();
-          });
-      });
-
-      it('uses query params "limit" to limit the result', (done) => {
-        request.get('/search/documents?limit=5')
-          .set({ Authorization: token })
-          .end((errand, response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body.rows.length).to.equal(5);
-            done();
-          });
-      });
+    it(`should return all documents in descending order of their respective
+      published date`, (done) => {
+      request.get('/documents')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          for (let i = 0; i < res.body.documents.rows.length - 1; i += 1) {
+            const flag = compareDates(
+              res.body.documents.rows[i].createdAt,
+              res.body.documents.rows[1 + i].createdAt
+            );
+            expect(flag).to.equal(false);
+          }
+          done();
+        });
     });
   });
 
+  describe('DOCUMENT SEARCH PAGINATION', () => {
+    it('should return search results', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          res.body.documents.rows.forEach((doc) => {
+            if (doc.ownerId === regularUser2.id) {
+              expect(doc.access).to.be.oneOf(['public', 'role', 'private']);
+            } else { expect(doc.access).to.be.oneOf(['public', 'role']); }
+          });
+          expect(res.body.message).to.equal('This search was successfull');
+          done();
+        });
+    });
 
+    it('should return all search results to admin',
+    (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          res.body.documents.rows.forEach((doc) => {
+            expect(doc.access).to.be.oneOf(['public', 'role', 'private']);
+          });
+          done();
+        });
+    });
+
+    it('should allow multiple search terms', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)} ${publicD.title.substr(1, 6)}`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          res.body.documents.rows.forEach((doc) => {
+            if (doc.ownerId === regularUser2.id) {
+              expect(doc.access).to.be.oneOf(['public', 'role', 'private']);
+            } else { expect(doc.access).to.be.oneOf(['public', 'role']); }
+          });
+          done();
+        });
+    });
+
+    it('should return all documents with pagination', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)} ${publicD.title.substr(1, 6)}`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.pagination.page_count).to.be.greaterThan(0);
+          expect(res.body.pagination.page).to.be.greaterThan(0);
+          expect(res.body.pagination.page_size).to.greaterThan(0);
+          expect(res.body.pagination.total_count).to.be.greaterThan(0);
+          done();
+        });
+    });
+
+    it('should return "enter search string" when search query is not supplied',
+    (done) => {
+      request.get('/documents/search')
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please enter a search query');
+          done();
+        });
+    });
+
+    it('should return error for negative limit', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}&limit=-2`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Only positive number is allowed for limit value');
+          done();
+        });
+    });
+
+    it('should return error for negative offset', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}&limit=2&offset=-2`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Only positive number is allowed for offset value');
+          done();
+        });
+    });
+
+    it('should return error when limit entered is string', (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}&limit=aaa`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to
+            .equal('Only positive number is allowed for limit value');
+          done();
+        });
+    });
+
+    it('should return documents in order of their respective published date',
+    (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}&publishedDate=DESC`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          for (let i = 0; i < res.body.documents.rows.length - 1; i += 1) {
+            const flag = compareDates(
+              res.body.documents.rows[i].createdAt,
+              res.body.documents.rows[1 + i].createdAt
+            );
+            expect(flag).to.equal(false);
+          }
+          done();
+        });
+    });
+
+    it('should return documents in ascending order of published date',
+    (done) => {
+      request.get(`/documents/search?query=
+      ${publicD.content.substr(2, 6)}&publishedDate=ASC`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          for (let i = 0; i < res.body.documents.rows.length - 1; i += 1) {
+            const flag = compareDates(
+              res.body.documents.rows[i].createdAt,
+              res.body.documents.rows[1 + i].createdAt
+            );
+            expect(flag).to.equal(true);
+          }
+          done();
+        });
+    });
+  });
+
+  describe('Fetch all user\'s document', () => {
+    it('should return all documents created by a particular user', (done) => {
+      request.get(`/users/${regularUser.id}/documents`)
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.userDocuments.user.id).to.equal(regularUser.id);
+          expect(res.body.userDocuments.documents.rows.length)
+            .to.be.greaterThan(0);
+          res.body.userDocuments.documents.rows.forEach((doc) => {
+            expect(doc.access).to.be.oneOf(['public', 'role', 'private']);
+          });
+          done();
+        });
+    });
+
+    it('should return all documents created by a particular user to admin user',
+    (done) => {
+      request.get(`/users/${regularUser.id}/documents`)
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.userDocuments.user.id).to.equal(regularUser.id);
+          expect(res.body.userDocuments.documents.rows.length)
+            .to.be.greaterThan(0);
+          res.body.userDocuments.documents.rows.forEach((doc) => {
+            expect(doc.access).to.be.oneOf(['public', 'role', 'private']);
+          });
+          done();
+        });
+    });
+
+    it(`should return all public or role access level
+    documents to a requester user`, (done) => {
+      request.get(`/users/${regularUser.id}/documents`)
+        .set({ 'x-access-token': regularToken2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.userDocuments.user.id).to.equal(regularUser.id);
+          res.body.userDocuments.documents.rows.forEach((doc) => {
+            expect(doc.access).to.be.oneOf(['role', 'public']);
+          });
+          done();
+        });
+    });
+
+    it('should return no document found for invalid id', (done) => {
+      request.get('/users/0/documents')
+        .set({ 'x-access-token': regularToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('This user does not exist');
+          done();
+        });
+    });
+  });
 });
