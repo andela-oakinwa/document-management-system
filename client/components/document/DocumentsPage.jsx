@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination, Button } from 'react-materialize';
-import DocumentsList from './DocumentList';
+import DocumentsList from './DocumentsList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
 import { searchDocuments } from '../../actions/Search';
 import Search from '../shared/SearchBox';

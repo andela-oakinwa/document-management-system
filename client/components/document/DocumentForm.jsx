@@ -67,7 +67,7 @@ DocumentForm.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
-  editorChange: React.PropTypes.object.isRequired
+  editorChange: React.PropTypes.func.isRequired
 };
 
 export default DocumentForm;
