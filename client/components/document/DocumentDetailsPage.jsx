@@ -38,12 +38,12 @@ DocumentDetailsPage.propTypes = {
 };
 
 const getDocumentById = (documents, id) => {
-  const document = documents.filter(item => item.id === id);
-  if (document) return document[0];
-  return null;
-},
+    const document = documents.filter(item => item.id === id);
+    if (document) return document[0];
+    return null;
+  },
   mapStateToProps = (state, ownProps) => {
-    const documentId = ownProps.params.id; // from the path `/document/:id`
+    const documentId = ownProps.params.id;
 
     let document;
 
