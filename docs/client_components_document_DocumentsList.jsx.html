@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Footer</title>
+    <title>JSDoc: Source: client/components/document/DocumentsList.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,282 +17,53 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Footer</h1>
+    <h1 class="page-title">Source: client/components/document/DocumentsList.jsx</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>Footer</h2>
-        
-            <div class="class-description">Class component. This is a root component</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Footer"><span class="type-signature"></span>new Footer<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_shared_Footer.jsx.html">client/components/shared/Footer.jsx</a>, <a href="client_components_shared_Footer.jsx.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">(url)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Renders to the DOM
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Link to twitter page</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_shared_Footer.jsx.html">client/components/shared/Footer.jsx</a>, <a href="client_components_shared_Footer.jsx.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Pagination } from 'react-materialize';
+import DocumentCard from './DocumentCard';
+/**
+ * Component defined as a function.
+ */
+const DocumentsList = ({ documents,
+  deleteDocument, currentUser, filtered, notFiltered }) => {
+  const emptyMessage = (&lt;p>No documents Found&lt;/p>),
+    isFiltered = filtered ? documents : notFiltered,
+    documentsList = (
+      &lt;div>
+        {isFiltered.map(document => &lt;DocumentCard
+        document={document} key={document.id}
+        deleteDocument={deleteDocument}
+        currentUser={currentUser} />)}
+      &lt;/div>
+    );
+
+  return (
+    &lt;div className="row">
+      {isFiltered.length > 0 ? documentsList : emptyMessage}
+    &lt;/div>
+  );
+};
+
+DocumentsList.propTypes = {
+  documents: React.PropTypes.array,
+  deleteDocument: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
+  filtered: React.PropTypes.bool,
+  notFiltered: React.PropTypes.array
+};
+
+export default DocumentsList;
+</code></pre>
+        </article>
+    </section>
 
 
 
