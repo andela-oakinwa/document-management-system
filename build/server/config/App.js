@@ -40,6 +40,10 @@ var _RoleRouter = require('../routes/RoleRouter');
 
 var _RoleRouter2 = _interopRequireDefault(_RoleRouter);
 
+var _webpackConfig = require('../../webpack.config.dev');
+
+var _webpackConfig2 = _interopRequireDefault(_webpackConfig);
+
 var _DocumentRouter = require('../routes/DocumentRouter');
 
 var _DocumentRouter2 = _interopRequireDefault(_DocumentRouter);
@@ -51,10 +55,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Create an instance of the express app
  * @type {Object}
  */
-/**
- * Dependencies declared
- */
-var app = (0, _express2.default)();
+var app = (0, _express2.default)(); /**
+                                     * Dependencies declared
+                                     */
+
 
 app.use(_express2.default.static(_path2.default.join(__dirname, '../../client/')));
 /**
@@ -74,13 +78,12 @@ app.use((0, _morgan2.default)('dev'));
  * Hot reloading
  */
 
-if (process.env.NODE_ENV !== 'production') {
-  var webpackConfig = require('../../webpack.config');
-  var compiler = (0, _webpack2.default)(webpackConfig);
+if (process.env.NODE_ENV !== 'test') {
+  var compiler = (0, _webpack2.default)(_webpackConfig2.default);
   app.use((0, _webpackDevMiddleware2.default)(compiler));
   app.use((0, _webpackHotMiddleware2.default)(compiler, {
     hot: true,
-    publicPath: webpackConfig.output.publicPath,
+    publicPath: _webpackConfig2.default.output.publicPath,
     noInfo: true
   }));
 }

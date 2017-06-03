@@ -1,18 +1,17 @@
-import webpack from 'webpack';
-import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const webpack = require('webpack'),
+  path = require('path'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  GLOBALS = {
+    'process.env.NODE_ENV': JSON.stringify('production')
+  };
 
-const GLOBALS = {
-  'process.env.NODE_ENV': JSON.stringify('production')
-};
-
-export default {
-  entry: './client/index',
+module.exports = {
+  entry: './client/Index',
   target: 'web',
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'Bundle.js'
   },
   devServer: {
     contentBase: './dist'
@@ -31,7 +30,7 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
+        test: /\.jsx?$/,
         include: [path.join(__dirname, 'client'),
           path.join(__dirname, 'server/shared')],
         loaders: ['babel-loader'],

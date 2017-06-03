@@ -6,7 +6,7 @@ import colors from 'colors';
 
 /* eslint-disable no-console */
 
-fs.readFile('src/index.html', 'utf8', (err, markup) => {
+fs.readFile('Client/Index.html', 'utf8', (err, markup) => {
   if (err) {
     return console.log(err);
   }
@@ -15,10 +15,10 @@ fs.readFile('src/index.html', 'utf8', (err, markup) => {
 
   $('head').prepend('<link rel="stylesheet" href="styles.css">');
 
-  fs.writeFile('dist/index.html', $.html(), 'utf8', (err) => {
+  fs.writeFile('dist/Index.html', $.html(), 'utf8', (err) => {
     if (err) {
       return console.log(err);
     }
-    console.log('index.html written to /dist'.green);
+    console.log('Index.html written to /dist'.green);
   });
 });
