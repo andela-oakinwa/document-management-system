@@ -21,6 +21,10 @@ module.exports = {
     new webpack.DefinePlugin(GLOBALS),
     new ExtractTextPlugin('styles.css'),
     new webpack.LoaderOptionsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      include: /\.min\.js$/,
+      minimize: true
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
