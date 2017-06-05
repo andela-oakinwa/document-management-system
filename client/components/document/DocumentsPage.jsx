@@ -102,94 +102,37 @@ class DocumentsPage extends React.Component {
       pageSize,
       currentPage,
       pageCount } = this.props.metadata;
-    return (
-      <div className="container">
-        <h4 className="center">Available Documents</h4>
-          <div className="">
-            <Link
-              className="btn create-list-link blue darken-4"
-              to="document">
-              Add Document
-            </Link>
-            <Dropdown
-              className="tab col s4"
-              trigger={<Button>View Documents</Button>}>
-              <NavItem onClick={this.filterPublicDocs}>
-                Public Documents
-              </NavItem>
-              <NavItem divider />
-              <NavItem onClick={this.filterPrivateDocs}>
-                Private Documents
-              </NavItem>
-              <NavItem divider />
-              <NavItem onClick={this.filterRoleDocs}>
-                Role Documents
-              </NavItem>
-            </Dropdown>
-
-          </div>
-          <div className="col s7 push-s4">
-            <Search onChange={this.handleSearch} />
-          </div>
-          <DocumentsList
-            documents={this.state.renderedDocuments}
-            filtered={this.state.filtered}
-            notFiltered={this.props.documents}
-            deleteDocument={this.deleteDoc}
-            currentUser={this.props.auth.user}
-          />
-          <Pagination
-            items={pageCount}
-            activePage={currentPage}
-            maxButtons={Math.ceil(totalCount / pageSize)}
-            onSelect={this.displayDocuments}
-        />
-          
-      </div>
-    )
-    /*return (
-      <div className="container">
-        <h4 className="center">Available Documents</h4>
+   return (
+      <div>
+        <h1>Available Documents</h1>
         <div className="row">
           <div className="col s7 push-s4">
             <Search onChange={this.handleSearch} />
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
-            className="btn create-list-link blue darken-4"
+            className="btn create-list-link hero-btn"
             to="document">
               Add Document
             </Link>
           </div>
         </div>
-        
         <div className="row">
           <div className="col s12">
-            <ul>
-              <li className="tab col s4">
+            <ul className="dropdown-content">
+              <li className="tab col s4 blue">
                 <Button
-                  className="blue"
                   onClick={this.filterPublicDocs}
-                >
-                  Public Documents
-                </Button>
-              </li>
-              <li className="tab col s4">
+                >Public Documents</Button></li>
+              <li className="tab col s4 blue">
                 <Button
-                  className="blue"
-                  onClick={this.filterPrivateDocs}
-                >
-                  Private Documents
-                </Button>
+                onClick={this.filterPrivateDocs}>
+                Private Documents</Button>
               </li>
-              <li className="tab col s4">
+              <li className="tab col s4 blue">
                 <Button
-                  className="blue"
-                  onClick={this.filterRoleDocs}
-                >
-                  Role Documents
-                </Button>
-              </li>
+                onClick={this.filterRoleDocs}
+                >Role Documents</Button></li>
             </ul>
           </div>
         </div>
@@ -208,7 +151,7 @@ class DocumentsPage extends React.Component {
           onSelect={this.displayDocuments}
         />
       </div>
-    );*/
+    );
   }
 }
 

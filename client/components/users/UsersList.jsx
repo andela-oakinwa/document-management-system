@@ -1,11 +1,11 @@
 import React from 'react';
-import ListRow from './ListRow';
+import UserRow from './UserRow';
 /**
  * Functional component as this is chile component of UsersPage
  */
 const UsersList = () => {
   const usersRow = users.map((user) => {
-    return <ListRow
+    <UserRow
       user={user}
       key={user.id}
       deleteUser={deleteUser}

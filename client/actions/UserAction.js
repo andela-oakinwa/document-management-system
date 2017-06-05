@@ -10,7 +10,7 @@ const fetchUsers = (offset) => {
     const pageOffset = offset || 0,
       limit = 5;
     return (dispatch) => {
-      return axios.get(`/users?offset=${pageOffset}&limit=${limit}`)
+      return axios.get(`/users/?offset=${pageOffset}&limit=${limit}`)
         .then((response) => {
           dispatch({
             type: types.SET_USERS,

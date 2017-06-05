@@ -1,7 +1,7 @@
 import React from 'react';
 import UserRow from './UserRow';
 
-export default function UsersList({ users, deleteUser, auth }) {
+const UsersList = ({ users, deleteUser, auth }) => {
   const userRows = users.map(user =>
     <UserRow user={user} key={user.id} deleteUser={deleteUser} auth={auth} />);
   return (
@@ -22,10 +22,12 @@ export default function UsersList({ users, deleteUser, auth }) {
       </tbody>
     </table>
   );
-}
+};
 
 UsersList.propTypes = {
   users: React.PropTypes.array.isRequired,
   deleteUser: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object.isRequired,
 };
+
+export default UsersList; 

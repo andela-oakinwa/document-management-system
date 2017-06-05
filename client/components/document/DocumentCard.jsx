@@ -21,7 +21,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link className="edit" to={`/documents/${document.id}`}>Edit</Link>
+              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
               <Link className="deleteDoc" to="/" onClick={deleteDocument(document.id)}>
                 Delete
               </Link>
@@ -29,7 +29,8 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
       </div>
     </div>
   );
-}
+};
+
 DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,

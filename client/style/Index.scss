@@ -4,6 +4,7 @@ $primary-bg-color: rgb(255, 255, 255);
 $button-color: rgb(73, 106, 226);
 $shadow-color: rgb(51, 51, 51);
 $alpha: .5;
+$btn-bg: rgb(73, 106, 226);
 $bg-shade: rgba(20, 20, 20, $alpha);
 
 body {
@@ -16,6 +17,10 @@ body {
 
 main {
   flex: 1 0 auto;
+}
+
+.login-form {
+  width: 600px;
 }
 
 .get-started-btn {
