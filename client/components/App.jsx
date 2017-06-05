@@ -7,11 +7,15 @@ class App extends Component {
     return (
       <div>
         <NavigationBar />
-        <main>{this.props.children}</main>
+        {this.props.children}
         <FooterPage />
       </div>
     );
   }
 }
+
+App.propTypes = {
+  children: React.PropTypes.object.isRequired
+};
 
 export default App;

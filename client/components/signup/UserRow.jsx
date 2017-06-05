@@ -69,7 +69,7 @@ UserRow.propTypes = {
  */
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(userActions, dispatch),
+    actions: bindActionCreators(actions, dispatch),
   };
 };
 

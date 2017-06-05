@@ -15,7 +15,7 @@ class DocumentDetailsPage extends React.Component {
 
   deleteDoc(id) {
     this.props.actions.deleteDocument(id)
-      .then(res => toastr.success('Document deleted successfully!'));
+      .then(() => toastr.success('Document deleted successfully!'));
   }
 
   render() {
