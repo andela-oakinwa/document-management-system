@@ -2,7 +2,7 @@
  * Test for User model
  */
 import chai from 'chai';
-import db from '../../../models';
+import db from '../../models';
 import helper from '../Test.Helper';
 
 const expect = chai.expect;
