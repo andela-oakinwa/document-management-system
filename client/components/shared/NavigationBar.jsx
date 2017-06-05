@@ -52,7 +52,7 @@ class NavigationBar extends React.Component {
                   && <Link to="/login">Login</Link>}
               </li>
               {user.roleId === 1
-                && <li><Link to="/users"><span>Users</span></Link></li>
+                && <li><Link to="/user"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>

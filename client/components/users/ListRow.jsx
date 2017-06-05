@@ -50,7 +50,7 @@ class ListRow extends Component {
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>
         <td>{authenticate.user.userId !== user.id &&
-          <Link to="/users" onClick={() => deleteUser(user.id)}>Delete</Link>
+          <Link to="/user" onClick={() => deleteUser(user.id)}>Delete</Link>
           }
         </td>
       </tr>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+/* import { Link } from 'react-router'; */
 import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
 import UsersList from './UsersList';
@@ -34,10 +34,11 @@ class UsersPage extends Component {
    * @return {Object}
    */
   render() {
-    const { totalCount, pageSize, currentPage, pageCount } = this.props.metadata;
+    const { totalCount, pageSize, currentPage, pageCount }
+      = this.props.metadata;
     return (
-      <div>
-        <h3>Registered Users</h3>
+      <div className="container">
+        <h5 className="center">Registered Users</h5>
         <UsersList
           users={this.props.users}
           deleteUser={this.props.deleteUser}

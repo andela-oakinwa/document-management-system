@@ -19,7 +19,7 @@ export default (
     <Route path="login" component={Login} />
     <Route path="document" component={ManageDocumentPage} />
     <Route path="document/:id" component={ManageDocumentPage} />
-    <Route path="users" component={UsersPage} />
+    <Route path="user" component={UsersPage} />
     <Route path="document/:id/details" component={DocumentDetailsPage} />
     <Route path="editprofile" component={ProfilePage} />
   </Route>
