@@ -23,6 +23,17 @@ main {
   width: 600px;
 }
 
+.main-box {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.doc-box { 
+  background: url("../assets/images/blu-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .get-started-btn {
   background-color: $button-color;
 }
