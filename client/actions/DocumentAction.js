@@ -26,7 +26,7 @@ const saveDocument = (data) => {
     const pageOffset = offset || 0;
     const limit = 6;
     return (dispatch) => {
-      return axios.get(`/documents?offset=${pageOffset}&limit=${limit}`)
+      return axios.get(`/documents/?offset=${pageOffset}&limit=${limit}`)
         .then((response) => {
           dispatch({
             type: types.SET_DOCUMENTS,
