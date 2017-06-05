@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Icon, Input } from 'react-materialize';
 
 /**
- * Search bar functional component
+ * Search bar stateless functional component
  */
 const SearchBox = ({ onChange }) =>
   <div>

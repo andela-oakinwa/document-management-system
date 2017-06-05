@@ -13,7 +13,7 @@ const UsersList = ({ users, deleteUser, auth }) => {
     />;
   });
   return (
-    <table className="responsive-table striped">
+    <table className="responsive-table bordered striped">
       <thead>
         <th>UserName</th>
         <th>First Name</th>

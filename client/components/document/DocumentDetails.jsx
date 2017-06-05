@@ -6,9 +6,9 @@ const DocumentDetails = (
   { document, deleteDocument, currentUser }
   ) => {
   return (
-    <div className="col s12">
+    <div className="col s12 container">
       <div className="card">
-        <div className="card-content white-text">
+        <div className="card-content indigo white-text">
           <span className="card-title">{document.title}</span>
           <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
           <br />
