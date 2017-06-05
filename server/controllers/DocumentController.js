@@ -113,7 +113,7 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   updateDocument(request, response) {
-    db.Document.findById(request.params.id)
+    db.Document.findById(request.decoded.id)
       .then((updatedDocument) => {
         response.status(200)
           .send({
@@ -135,7 +135,8 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   deleteDocument(request, response) {
-    db.Documents.findById(request.params.id)
+    console.log(request);
+    db.Documents.findById(request.decoded.id)
       .then((document) => {
         if (!document) {
           return response.status(404)
