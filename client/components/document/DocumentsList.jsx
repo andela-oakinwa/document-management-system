@@ -10,8 +10,8 @@ const DocumentsList = ({ documents,
     isFiltered = filtered ? documents : notFiltered,
     documentsList = (
       <div>
-        {isFiltered.map(document => <DocumentCard
-        document={document} key={document.id}
+        {isFiltered.map(allDocuments => <DocumentCard
+        document={allDocuments} key={allDocuments.id}
         deleteDocument={deleteDocument}
         currentUser={currentUser} />)}
       </div>

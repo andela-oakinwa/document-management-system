@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
-import { Pagination, Button } from 'react-materialize';
+import { Pagination, Button, Dropdown, NavItem } from 'react-materialize';
 import DocumentsList from './DocumentsList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
 import { searchDocuments } from '../../actions/Search';
@@ -57,7 +57,7 @@ class DocumentsPage extends React.Component {
     }
   }
   /**
-   * Displays lit of document
+   * Displays list of document
    * @param  {Number} pageNumber
    */
   displayDocuments(pageNumber) {
@@ -105,6 +105,51 @@ class DocumentsPage extends React.Component {
     return (
       <div className="container">
         <h4 className="center">Available Documents</h4>
+          <div className="">
+            <Link
+              className="btn create-list-link blue darken-4"
+              to="document">
+              Add Document
+            </Link>
+            <Dropdown
+              className="tab col s4"
+              trigger={<Button>View Documents</Button>}>
+              <NavItem onClick={this.filterPublicDocs}>
+                Public Documents
+              </NavItem>
+              <NavItem divider />
+              <NavItem onClick={this.filterPrivateDocs}>
+                Private Documents
+              </NavItem>
+              <NavItem divider />
+              <NavItem onClick={this.filterRoleDocs}>
+                Role Documents
+              </NavItem>
+            </Dropdown>
+
+          </div>
+          <div className="col s7 push-s4">
+            <Search onChange={this.handleSearch} />
+          </div>
+          <DocumentsList
+            documents={this.state.renderedDocuments}
+            filtered={this.state.filtered}
+            notFiltered={this.props.documents}
+            deleteDocument={this.deleteDoc}
+            currentUser={this.props.auth.user}
+          />
+          <Pagination
+            items={pageCount}
+            activePage={currentPage}
+            maxButtons={Math.ceil(totalCount / pageSize)}
+            onSelect={this.displayDocuments}
+        />
+          
+      </div>
+    )
+    /*return (
+      <div className="container">
+        <h4 className="center">Available Documents</h4>
         <div className="row">
           <div className="col s7 push-s4">
             <Search onChange={this.handleSearch} />
@@ -117,6 +162,7 @@ class DocumentsPage extends React.Component {
             </Link>
           </div>
         </div>
+        
         <div className="row">
           <div className="col s12">
             <ul>
@@ -162,7 +208,7 @@ class DocumentsPage extends React.Component {
           onSelect={this.displayDocuments}
         />
       </div>
-    );
+    );*/
   }
 }
 

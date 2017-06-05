@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
-  const handleClick = () => {
-    deleteDocument(document.id);
-  };
   return (
     <div className="col s4">
       <div className="card">
@@ -19,13 +16,13 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           </div>
         </div>
         <div className="card-action">
-          <Link to={`/document-details/${document.id}`}>
+          <Link to={`/document/${document.id}/details`}>
               Details
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link className="edit" to={`/documents/${document.id}`}>Edit</Link>
-              <Link className="deleteDoc" to="/" onClick={handleClick()}>
+              <Link className="deleteDoc" to="/" onClick={deleteDocument(document.id)}>
                 Delete
               </Link>
             </div>}</div>
@@ -37,5 +34,6 @@ DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
+  handleClick: React.PropTypes.func.isRequired
 };
 export default DocumentCard;
