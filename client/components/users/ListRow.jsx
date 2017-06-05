@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import EditUserRole from './EditUserRole';
-import * as userActions from '../../actions/UserAction';
+import * as allActions from '../../actions/UserAction';
 /**
  * ListRow defined as class component. It's a root component
  */
@@ -39,7 +39,7 @@ class ListRow extends Component {
     const { user, deleteUser, authenticate } = this.props;
     return (
       <tr>
-        <td>{user.userName}</td>
+        <td>{user.username}</td>
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
@@ -50,7 +50,7 @@ class ListRow extends Component {
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>
         <td>{authenticate.user.userId !== user.id &&
-          <Link to="/users" onClick={deleteUser(user.id)}>Delete</Link>
+          <Link to="/users" onClick={() => deleteUser(user.id)}>Delete</Link>
           }
         </td>
       </tr>
@@ -68,10 +68,10 @@ ListRow.propTypes = {
  * Maps state to component properties
  * @param {Object} release
  */
-const mapToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(userActions, dispatch),
+    actions: bindActionCreators(allActions, dispatch)
   };
 };
 
-export default connect(null, mapToProps)(ListRow);
+export default connect(null, mapDispatchToProps)(ListRow);

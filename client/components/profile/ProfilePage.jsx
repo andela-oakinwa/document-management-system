@@ -25,7 +25,7 @@ class ProfilePage extends Component {
   /**
    * Checks for mounted details
    */
-  checkMount() {
+  componentDidMount() {
     this.props.getUser(this.props.userId)
       .then((response) => {
         this.setState({

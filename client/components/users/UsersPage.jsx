@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
@@ -7,7 +7,7 @@ import { fetchUsers, deleteUser } from '../../actions/UserAction';
 /**
  * Defined as class components as this is a root component
  */
-class UsersPage extends React.Component {
+class UsersPage extends Component {
   /**
    * Instantiates the class with default properties
    */

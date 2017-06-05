@@ -1,16 +1,16 @@
 import React from 'react';
-import UserRow from './UserRow';
+import ListRow from './ListRow';
 /**
- * Functional component as this is chile component of UsersPage
+ * Functional stateless component.
  */
-const UsersList = () => {
+const UsersList = ({ users, deleteUser, auth }) => {
   const usersRow = users.map((user) => {
-    <UserRow
+    <ListRow
       user={user}
       key={user.id}
       deleteUser={deleteUser}
-      authenticate={auth}
-      />;
+      auth={auth}
+    />;
   });
   return (
     <table className="responsive-table striped">

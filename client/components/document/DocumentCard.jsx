@@ -2,17 +2,18 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
+  // console.log(document);
   return (
     <div className="col s4">
-      <div className="card">
-        <div className="card-content white-text">
+      <div className="card main-box">
+        <div className="card-content white-text doc-box">
           <span className="card-title">{document.title}</span>
           <p>Access: &nbsp; <span>{(document.access)}</span></p><br />
           <div>
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.owner.firstName} {document.owner.lastName}</p>
+                {document.User.firstName} {document.User.lastName}</p>
           </div>
         </div>
         <div className="card-action">
@@ -22,7 +23,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
-              <Link className="deleteDoc" to="/" onClick={deleteDocument(document.id)}>
+              <Link className="delete" to="/" onClick={deleteDocument(document.id)}>
                 Delete
               </Link>
             </div>}</div>
