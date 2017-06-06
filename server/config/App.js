@@ -38,7 +38,7 @@ app.use(logger('dev'));
  * Hot reloading
  */
 
-if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'test') {
   const compiler = webpack(webpackConfig);
   app.use(webpackMiddleware(compiler));
   app.use(webpackHotMiddleware(compiler, {
