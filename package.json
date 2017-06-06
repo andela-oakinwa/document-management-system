@@ -7,6 +7,7 @@
     "start:dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/Server.js",
     "cover": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- server/test/**/**/*.js, client/test/**/**/*.js",
     "coverage": "codecov -t 1a7fffda-028f-45ee-a46a-45389d417d58",
+    "test": "npm run test:client && test:server",
     "test:client": "NODE_ENV=test mocha --verbose --watch --coverage --reporter progress TestSetup.js client/test/**/*.test.js",
     "test:server": "NODE_ENV=test mocha --compilers js:babel-core/register server/test/**/*.js",
     "test:e2e": "NODE_ENV=test node_modules/.bin/nightwatch --verbose -w --config nightwatch.conf.js",
