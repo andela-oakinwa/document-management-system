@@ -26,9 +26,9 @@ const UsersList = ({ users, deleteUser, auth }) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
+        
           {usersRow}
-        </tr>
+      
       </tbody>
     </table>
   );

@@ -11,9 +11,10 @@ class UsersPage extends Component {
   /**
    * Instantiates the class with default properties
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.displayUsers = this.displayUsers.bind(this);
+    console.log(props);
   }
   /**
    * Checks for returned list of users

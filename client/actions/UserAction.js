@@ -14,7 +14,7 @@ const fetchUsers = (offset) => {
         .then((response) => {
           dispatch({
             type: types.SET_USERS,
-            users: response.data.rows
+            users: response.data.users.rows
           });
           dispatch({
             type: types.SET_PAGINATION,

@@ -92,6 +92,11 @@ class DocumentsPage extends Component {
       .filter(document => document.access === 'role');
     this.setState({ renderedDocuments, filtered: true });
   }
+
+  deleteUserDoc(docId) {
+    return () => this.props.deleteDocument(docId);
+  }
+
   /**
    * Renders to the DOM
    * @return {Object}
@@ -153,7 +158,7 @@ class DocumentsPage extends Component {
           documents={this.state.renderedDocuments}
           filtered={this.state.filtered}
           notFiltered={this.props.documents}
-          deleteDocument={this.removeDocument}
+          deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
         <Pagination

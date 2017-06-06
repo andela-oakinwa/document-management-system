@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { Link } from 'react-router';
@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as documentActions from '../../actions/DocumentAction';
 import DocumentDetails from './DocumentDetails';
 
-class DocumentDetailsPage extends React.Component {
+class DocumentDetailsPage extends Component {
   constructor() {
     super();
 

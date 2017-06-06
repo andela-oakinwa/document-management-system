@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pagination } from 'react-materialize';
+import shortId from 'shortid';
+/*import { Pagination } from 'react-materialize';*/
 import DocumentCard from './DocumentCard';
 /**
  * Component defined as a function.
@@ -11,7 +12,8 @@ const DocumentsList = ({ documents,
     documentsList = (
       <div>
         {isFiltered.map(allDocuments => <DocumentCard
-        document={allDocuments} key={allDocuments.id}
+        key={shortId.generate()}
+        document={allDocuments}
         deleteDocument={deleteDocument}
         currentUser={currentUser} />)}
       </div>

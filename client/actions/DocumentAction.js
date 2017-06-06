@@ -12,7 +12,7 @@ const saveDocument = (data) => {
          .then((response) => {
            dispatch({
              type: types.CREATE_DOCUMENT,
-             document: response.data
+             document: response.data.createdDoc
            });
          });
     };

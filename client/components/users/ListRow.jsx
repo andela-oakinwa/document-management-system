@@ -43,7 +43,7 @@ class ListRow extends Component {
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
-        <td>{auth.user.roleId !== user.roleId ? <EditUserRole
+        <td>{authenticate.user.roleId !== user.roleId ? <EditUserRole
           value={parseInt(this.state.user.roleId, 10)}
           onChange={this.onChange} /> : <span>{user.Role.title}</span>
           }
@@ -64,6 +64,16 @@ ListRow.propTypes = {
   authenticate: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired
 };
+
+/**
+ * States to expose as props
+ */
+const mapStateToProps = (state) => {
+  return {
+    authenticate: state.auth
+  };
+};
+
 /**
  * Maps state to component properties
  * @param {Object} release
@@ -74,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ListRow);
+export default connect(mapStateToProps, mapDispatchToProps)(ListRow);

@@ -35,7 +35,7 @@ class NavigationBar extends React.Component {
         <nav role="navigation" className="nav-bar blue darken-4">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
-              <img src="../../assets/images/dms-logo.png" />
+              doqMan
             </Link>
             <Link to="#" data-activates="mobile-menu"
             className="button-collapse">

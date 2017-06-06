@@ -8,8 +8,8 @@ module.exports = {
     'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, '/client/Index.jsx')
   ],
-    target: 'web',
-    output: {
+  target: 'web',
+  output: {
     path: path.join(__dirname, 'client/'),
     filename: 'Bundle.js',
     publicPath: '/'

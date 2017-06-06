@@ -135,7 +135,7 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   deleteDocument(request, response) {
-    db.Documents.findById(request.tokenDecode.id)
+    db.Documents.findById(request.decoded.id)
       .then((document) => {
         if (!document) {
           return response.status(404)

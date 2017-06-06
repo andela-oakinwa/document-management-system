@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
@@ -8,7 +8,7 @@ import * as documentActions from '../../actions/DocumentAction';
 /**
  * Root component defined as class
  */
-class ManageDocumentPage extends React.Component {
+class ManageDocumentPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
