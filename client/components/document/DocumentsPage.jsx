@@ -122,7 +122,7 @@ class DocumentsPage extends Component {
             <Link
               className="dropdown-button blue btn s3"
               data-activates="type-list">
-                View Documents
+                Filter Documents
             </Link>
             <ul id="type-list" className="dropdown-content">
               <li className="tab col s4">

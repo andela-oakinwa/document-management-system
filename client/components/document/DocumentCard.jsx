@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
-  // console.log(document);
+  console.log(document);
   return (
     <div className="col s4">
       <div className="card main-box">
