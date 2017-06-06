@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination, Button } from 'react-materialize';
-import DocumentsList from './DocumentList';
+import DocumentsList from './DocumentsList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
 import { searchDocuments } from '../../actions/Search';
 import Search from '../shared/SearchBox';
 /**
  * Defined as class component.
  */
-class DocumentsPage extends React.Component {
+class DocumentsPage extends Component {
   /**
    * Component properties
    * @param {Object} props
@@ -22,7 +22,7 @@ class DocumentsPage extends React.Component {
       filtered: false
     };
     this.handleSearch = this.handleSearch.bind(this);
-    this.deleteDocument = this.deleteDocument.bind(this);
+    this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterPublicDocs = this.filterPublicDocs.bind(this);
     this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
@@ -39,7 +39,7 @@ class DocumentsPage extends React.Component {
    * Handles document deletion and notification
    * @param  {Number} id Specific document Id
    */
-  deleteDocument(id) {
+  removeDocument(id) {
     this.props.deleteDocument(id)
       .then(() => toastr.success('Document deleted successfully!'));
   }
@@ -57,7 +57,7 @@ class DocumentsPage extends React.Component {
     }
   }
   /**
-   * Displays lit of document
+   * Displays list of document
    * @param  {Number} pageNumber
    */
   displayDocuments(pageNumber) {
@@ -92,6 +92,11 @@ class DocumentsPage extends React.Component {
       .filter(document => document.access === 'role');
     this.setState({ renderedDocuments, filtered: true });
   }
+
+  deleteUserDoc(docId) {
+    return () => this.props.deleteDocument(docId);
+  }
+
   /**
    * Renders to the DOM
    * @return {Object}
@@ -111,7 +116,7 @@ class DocumentsPage extends React.Component {
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
-            className="btn create-list-link blue darken-4"
+            className="btn blue darken-4"
             to="document">
               Add Document
             </Link>
@@ -119,40 +124,41 @@ class DocumentsPage extends React.Component {
         </div>
         <div className="row">
           <div className="col s12">
-            <ul>
+            <Link
+              className="dropdown-button blue btn s3"
+              data-activates="type-list">
+                Filter Documents
+            </Link>
+            <ul id="type-list" className="dropdown-content">
               <li className="tab col s4">
                 <Button
                   className="blue"
-                  onClick={this.filterPublicDocs}
-                >
+                  onClick={this.filterPublicDocs}>
                   Public Documents
                 </Button>
               </li>
               <li className="tab col s4">
                 <Button
                   className="blue"
-                  onClick={this.filterPrivateDocs}
-                >
+                  onClick={this.filterPrivateDocs}>
                   Private Documents
                 </Button>
               </li>
               <li className="tab col s4">
                 <Button
                   className="blue"
-                  onClick={this.filterRoleDocs}
-                >
+                  onClick={this.filterRoleDocs}>
                   Role Documents
                 </Button>
               </li>
             </ul>
           </div>
         </div>
-
         <DocumentsList
           documents={this.state.renderedDocuments}
           filtered={this.state.filtered}
           notFiltered={this.props.documents}
-          deleteDocument={this.deleteDoc}
+          deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
         <Pagination

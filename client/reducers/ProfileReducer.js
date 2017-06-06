@@ -5,7 +5,7 @@ const user = (state = [], action = {}) => {
   case SET_USER_ID:
     return [
       ...state,
-      action.id,
+      action.id
     ];
   default: return state;
   }

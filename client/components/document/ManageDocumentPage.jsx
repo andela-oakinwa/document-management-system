@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
@@ -8,7 +8,7 @@ import * as documentActions from '../../actions/DocumentAction';
 /**
  * Root component defined as class
  */
-class ManageDocumentPage extends React.Component {
+class ManageDocumentPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -21,6 +21,13 @@ class ManageDocumentPage extends React.Component {
     this.saveDocument = this.saveDocument.bind(this);
     this.redirect = this.redirect.bind(this);
     this.editorChange = this.editorChange.bind(this);
+  }
+  /**
+   * 
+   */
+  componentDidMount() {
+    $('select').material_select();
+    $('#section').on('change', this.filterAccess);
   }
   /**
    * 
@@ -42,8 +49,8 @@ class ManageDocumentPage extends React.Component {
     return this.setState({ document });
   }
   /**
-   * 
-   * @param {Object} event 
+   * Handles changes from editor
+   * @param {Object} event
    */
   editorChange(event) {
     const document = this.state.document;

@@ -11,7 +11,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import userRouter from '../routes/UserRouter';
 import roleRouter from '../routes/RoleRouter';
-import webpackConfig from '../../webpack.config';
+import webpackConfig from '../../webpack.config.dev';
 import documentRouter from '../routes/DocumentRouter';
 // import searchRouter from '../routes/SearchRouter';
 /**

@@ -4,6 +4,7 @@ $primary-bg-color: rgb(255, 255, 255);
 $button-color: rgb(73, 106, 226);
 $shadow-color: rgb(51, 51, 51);
 $alpha: .5;
+$btn-bg: rgb(73, 106, 226);
 $bg-shade: rgba(20, 20, 20, $alpha);
 
 body {
@@ -18,6 +19,21 @@ main {
   flex: 1 0 auto;
 }
 
+.login-form {
+  width: 600px;
+}
+
+.main-box {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.doc-box { 
+  background: url("../assets/images/blu-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .get-started-btn {
   background-color: $button-color;
 }

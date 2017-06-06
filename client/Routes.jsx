@@ -14,13 +14,13 @@ import ProfilePage from './components/profile/ProfilePage';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} />
-    <Route path='signup' component={SignUpPage} />
-    <Route path='about' component={About} />
-    <Route path='login' component={Login} />
+    <Route path="signup" component={SignUpPage} />
+    <Route path="about" component={About} />
+    <Route path="login" component={Login} />
     <Route path="document" component={ManageDocumentPage} />
     <Route path="document/:id" component={ManageDocumentPage} />
-    <Route path="users" component={UsersPage} />
-    <Route path="document-details/:id" component={DocumentDetailsPage} />
+    <Route path="user" component={UsersPage} />
+    <Route path="document/:id/details" component={DocumentDetailsPage} />
     <Route path="editprofile" component={ProfilePage} />
   </Route>
 );

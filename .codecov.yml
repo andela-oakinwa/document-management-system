@@ -1,4 +1,5 @@
 codecov:
+  branch: staging
   notify:
     require_ci_to_pass: no
   token: 1a7fffda-028f-45ee-a46a-45389d417d58

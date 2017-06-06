@@ -38,7 +38,7 @@ class SignUpPage extends Component {
    * @return {Boolean}
    */
   isValid() {
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateInput.signUpInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }

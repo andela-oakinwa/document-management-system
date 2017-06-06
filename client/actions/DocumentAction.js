@@ -12,7 +12,7 @@ const saveDocument = (data) => {
          .then((response) => {
            dispatch({
              type: types.CREATE_DOCUMENT,
-             document: response.data
+             document: response.data.createdDoc
            });
          });
     };
@@ -26,11 +26,11 @@ const saveDocument = (data) => {
     const pageOffset = offset || 0;
     const limit = 6;
     return (dispatch) => {
-      return axios.get(`/documents?offset=${pageOffset}&limit=${limit}`)
+      return axios.get(`/documents/?offset=${pageOffset}&limit=${limit}`)
         .then((response) => {
           dispatch({
             type: types.SET_DOCUMENTS,
-            documents: response.data.documents.rows,
+            documents: response.data.documents.rows
           });
           dispatch({
             type: types.SET_PAGINATION,
@@ -46,7 +46,7 @@ const saveDocument = (data) => {
    */
   fetchDocument = (id) => {
     return (dispatch) => {
-      return axios.get(`/documents/${id}`)
+      return axios.get(`/document/${id}`)
         .then((response) => {
           dispatch({
             type: types.LOAD_DOCUMENT,
@@ -62,7 +62,7 @@ const saveDocument = (data) => {
    */
   updateDocument = (data) => {
     return (dispatch) => {
-      return axios.put(`/documents/${data.id}`, data)
+      return axios.put(`/document/${data.id}`, data)
         .then((response) => {
           dispatch({
             type: types.UPDATE_DOCUMENT,

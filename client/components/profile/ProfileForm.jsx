@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Input } from 'react-materialize';
 /**
- * Functional component as this is a child of ProfilePage component
+ * Functional stateless component
  * @return {Object}
  */
 const ProfileForm = ({ userProps, onChange, onSubmit }) => {

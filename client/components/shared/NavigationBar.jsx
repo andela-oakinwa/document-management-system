@@ -35,7 +35,7 @@ class NavigationBar extends React.Component {
         <nav role="navigation" className="nav-bar blue darken-4">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
-              <img src="../../assets/images/dms-logo.png" />
+              doqMan
             </Link>
             <Link to="#" data-activates="mobile-menu"
             className="button-collapse">
@@ -52,7 +52,7 @@ class NavigationBar extends React.Component {
                   && <Link to="/login">Login</Link>}
               </li>
               {user.roleId === 1
-                && <li><Link to="/users"><span>Users</span></Link></li>
+                && <li><Link to="/user"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
-import { Link } from 'react-router';
+/* import { Link } from 'react-router'; */
 import { bindActionCreators } from 'redux';
 import * as documentActions from '../../actions/DocumentAction';
 import DocumentDetails from './DocumentDetails';
 
-class DocumentDetailsPage extends React.Component {
+class DocumentDetailsPage extends Component {
   constructor() {
     super();
 
@@ -15,7 +15,7 @@ class DocumentDetailsPage extends React.Component {
 
   deleteDoc(id) {
     this.props.actions.deleteDocument(id)
-      .then(res => toastr.success('Document deleted successfully!'));
+      .then(() => toastr.success('Document deleted successfully!'));
   }
 
   render() {
@@ -38,12 +38,12 @@ DocumentDetailsPage.propTypes = {
 };
 
 const getDocumentById = (documents, id) => {
-  const document = documents.filter(item => item.id === id);
-  if (document) return document[0];
-  return null;
-},
+    const document = documents.filter(item => item.id === id);
+    if (document) return document[0];
+    return null;
+  },
   mapStateToProps = (state, ownProps) => {
-    const documentId = ownProps.params.id; // from the path `/document/:id`
+    const documentId = ownProps.params.id;
 
     let document;
 

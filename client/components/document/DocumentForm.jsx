@@ -16,7 +16,7 @@ const DocumentForm = ({ document, editorChange,
             validate
             name="title"
             onChange={onChange}
-            value={document.title || ''}
+            value={document.title}
             id="title"
           />
           {errors.title && <span className="red-text">Enter Title</span>}
@@ -24,7 +24,7 @@ const DocumentForm = ({ document, editorChange,
         <div className="input-field col s12" style={{ marginBottom: 10 }}>
           <TinyMCE
             id="content"
-            content={document.content || ''}
+            content={document.content}
             config={{
               plugins: 'autolink link image lists print preview',
               toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
@@ -37,7 +37,7 @@ const DocumentForm = ({ document, editorChange,
           <select
             style={{ display: 'block' }}
             id="access"
-            value={document.access || ''}
+            value={document.access}
             onChange={onChange}
             name="access"
           >
@@ -67,7 +67,7 @@ DocumentForm.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
-  editorChange: React.PropTypes.object.isRequired
+  editorChange: React.PropTypes.func.isRequired
 };
 
 export default DocumentForm;

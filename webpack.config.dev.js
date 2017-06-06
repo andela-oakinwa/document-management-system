@@ -5,10 +5,11 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'babel-polyfill',
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, '/client/Index.jsx')
-    ],
-  output: { 
+  ],
+  target: 'web',
+  output: {
     path: path.join(__dirname, 'client/'),
     filename: 'Bundle.js',
     publicPath: '/'
@@ -26,10 +27,11 @@ module.exports = {
     })
   ],
   module: {
-    loaders:[
+    loaders: [
       {
         test: /\.jsx$/,
-        include: [ path.join(__dirname, 'client'), path.join(__dirname, 'server/shared') ], 
+        include: [path.join(__dirname, 'client'), path.join(__dirname, 'server/shared')],
+        exclude: /node_modules/,
         loaders: ['react-hot-loader', 'babel-loader']
       },
       {
@@ -40,8 +42,7 @@ module.exports = {
         test: /\.(jpg|png)$/,
         loader: 'file-loader'
       }
-    ],
-    exclude: /node_modules/,
+    ]
   },
   resolve: {
     extensions: [' ', '.js', '.jsx']

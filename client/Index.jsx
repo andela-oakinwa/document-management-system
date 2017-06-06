@@ -4,25 +4,14 @@ import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import jwt from 'jsonwebtoken';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
 
 import './style/Index.scss';
+import configureStore from './store/Store';
 import setAuthorizationToken from './utilities/SetAuthorizationToken';
 import routes from './Routes';
 import * as types from './actions/ActionType';
-import rootReducer from './reducers/RootReducer';
-/**
- * Creates the main store
- * @param  {Object} f
- */
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+
+const store = configureStore();
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);

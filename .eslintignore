@@ -2,6 +2,10 @@
 webpack.config.js
 karma.conf.js
 out/
+client/test
 coverage/
-server/tests
+server/test
 TestSetup.js
+nightwatch.conf.js
+screenshots/
+reports/

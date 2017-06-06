@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+/* import { Link } from 'react-router'; */
 import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
 import UsersList from './UsersList';
@@ -7,13 +7,14 @@ import { fetchUsers, deleteUser } from '../../actions/UserAction';
 /**
  * Defined as class components as this is a root component
  */
-class UsersPage extends React.Component {
+class UsersPage extends Component {
   /**
    * Instantiates the class with default properties
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.displayUsers = this.displayUsers.bind(this);
+    console.log(props);
   }
   /**
    * Checks for returned list of users
@@ -34,10 +35,11 @@ class UsersPage extends React.Component {
    * @return {Object}
    */
   render() {
-    const { totalCount, pageSize, currentPage, pageCount } = this.props.metadata;
+    const { totalCount, pageSize, currentPage, pageCount }
+      = this.props.metadata;
     return (
-      <div>
-        <h3>Registered Users</h3>
+      <div className="container">
+        <h5 className="center">Registered Users</h5>
         <UsersList
           users={this.props.users}
           deleteUser={this.props.deleteUser}

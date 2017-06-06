@@ -16,7 +16,7 @@ const documentSearched = (searchResult) => {
  * @param {Object} queryString
  * @returns {Object}
  */
-  searchDocument = (queryString) => {
+  searchDocuments = (queryString) => {
     return (dispatch) => {
       return axios.get(`/search/documents?q=${queryString}`)
         .then((response) => {
@@ -29,4 +29,4 @@ const documentSearched = (searchResult) => {
     };
   };
 
-export { documentSearched, searchDocument };
+export { documentSearched, searchDocuments };
