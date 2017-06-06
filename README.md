@@ -1,6 +1,7 @@
 # Doqman Document Management System
 [![Build Status](https://travis-ci.org/andela-oakinwa/document-management-system.svg?branch=master)](https://travis-ci.org/andela-oakinwa/document-management-system)
 [![codecov](https://codecov.io/gh/andela-oakinwa/document-management-system/branch/master/graph/badge.svg)](https://codecov.io/gh/andela-oakinwa/document-management-system)
+[![Coverage Status](https://coveralls.io/repos/github/andela-oakinwa/document-management-system/badge.svg?branch=staging)](https://coveralls.io/github/andela-oakinwa/document-management-system?branch=staging)
 
 ## About doqMan
 - A simple Document Management System complete with roles and privileges. Each document defines access rights and the document defines which roles can access it.
