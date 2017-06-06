@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const DocumentCard = ({ document, deleteDocument, currentUser }) => {
-  console.log(currentUser, document)
-  const { firstName, lastName } = document.User || { firstName : '', lastName : ''}
+  const { firstName, lastName } = document.User ||
+  { firstName: '', lastName: '' };
   return (
     <div className="col s4">;
       <div className="card main-box">

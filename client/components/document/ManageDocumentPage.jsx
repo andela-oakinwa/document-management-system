@@ -24,6 +24,13 @@ class ManageDocumentPage extends Component {
   }
   /**
    * 
+   */
+  componentDidMount() {
+    $('select').material_select();
+    $('#section').on('change', this.filterAccess);
+  }
+  /**
+   * 
    * @param {Object} nextProps
    */
   componentWillReceiveProps(nextProps) {
@@ -42,8 +49,8 @@ class ManageDocumentPage extends Component {
     return this.setState({ document });
   }
   /**
-   * 
-   * @param {Object} event 
+   * Handles changes from editor
+   * @param {Object} event
    */
   editorChange(event) {
     const document = this.state.document;

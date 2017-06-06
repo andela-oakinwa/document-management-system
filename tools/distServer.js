@@ -1,11 +1,11 @@
 import express from 'express';
 import path from 'path';
 import compression from 'compression';
+import app from '../server/config/App';
 
 /* eslint-disable no-console */
 
 const port = parseInt(process.env.PORT, 10) || 4000;
-const app = express();
 
 app.use(compression());
 app.use(express.static('dist'));
