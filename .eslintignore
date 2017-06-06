@@ -7,3 +7,5 @@ coverage/
 server/test
 TestSetup.js
 nightwatch.conf.js
+screenshots/
+reports/
