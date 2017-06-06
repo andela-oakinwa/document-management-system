@@ -1,52 +1,43 @@
-$font-stack:'Lato', sans-serif; 
-$primary-color: rgb(233, 250, 251);
-$primary-bg-color: rgb(255, 255, 255); 
-$button-color: rgb(73, 106, 226);
-$shadow-color: rgb(51, 51, 51);
-$alpha: .5;
-$bg-shade: rgba(20, 20, 20, $alpha);
-
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: $primary-bg-color;
-  font-family: $font-stack;  
-}
+  background-color: white;
+  font-family: "Lato", sans-serif; }
 
 main {
-  flex: 1 0 auto;
-}
+  flex: 1 0 auto; }
+
+.login-form {
+  width: 600px; }
+
+.main-box {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  transition: 0.3s; }
+
+.doc-box {
+  background: url(/d9580b4370dd9911250821df57f06262.png);
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 .get-started-btn {
-  background-color: $button-color;
-}
+  background-color: #496ae2; }
 
 .profile-form {
   padding: 20px;
-  box-shadow: 3px 3px 5px $shadow-color;
-  margin: 5% 10%;
-}
+  box-shadow: 3px 3px 5px #333333;
+  margin: 5% 10%; }
 
 .landing-page {
-  background:
-    -webkit-linear-gradient($bg-shade, $bg-shade),
-     url(/d963d96eda20cd104232a3e61198cd81.png);
-  background:
-    -moz-linear-gradient($bg-shade, $bg-shade),
-     url(/d963d96eda20cd104232a3e61198cd81.png);
-  background:
-    -o-linear-gradient($bg-shade, $bg-shade),
-     url(/d963d96eda20cd104232a3e61198cd81.png);
-  background:
-    linear-gradient($bg-shade, $bg-shade),
-     url(/d963d96eda20cd104232a3e61198cd81.png);
+  background: -webkit-linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url(/d963d96eda20cd104232a3e61198cd81.png);
+  background: -moz-linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url(/d963d96eda20cd104232a3e61198cd81.png);
+  background: -o-linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url(/d963d96eda20cd104232a3e61198cd81.png);
+  background: linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url(/d963d96eda20cd104232a3e61198cd81.png);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
-}
+  height: 100vh; }
 
 .banner {
   margin: 0;
-  margin-top: -25px;
-}
+  margin-top: -25px; }

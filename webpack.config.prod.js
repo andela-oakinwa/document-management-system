@@ -23,7 +23,10 @@ module.exports = {
     new webpack.LoaderOptionsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       include: /\.min\.js$/,
-      minimize: true
+      minimize: true,
+      compress: {
+        warnings: false
+      }
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -41,8 +44,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /(\.s?css)$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap')
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
