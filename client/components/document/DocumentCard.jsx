@@ -5,7 +5,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
   const { firstName, lastName } = document.User ||
   { firstName: '', lastName: '' };
   return (
-    <div className="col s4">;
+    <div className="col s4">
       <div className="card main-box">
         <div className="card-content white-text doc-box">
           <span className="card-title">{document.title}</span>
@@ -24,7 +24,7 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
-              <Link className="delete" to="/" onClick={deleteDocument(document.id)}>
+              <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}>
                 Delete
               </Link>
             </div>}</div>
@@ -36,7 +36,6 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
 DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
-  currentUser: React.PropTypes.object.isRequired,
-  // handleClick: React.PropTypes.func.isRequired
+  currentUser: React.PropTypes.object.isRequired
 };
 export default DocumentCard;

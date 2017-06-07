@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 /**
- * Class component. This is a root component
+ * Class component.
  */
-class Footer extends React.Component {
+class Footer extends Component {
   /**
    * Renders to the DOM
-   * @param {String} url Link to twitter page
+   * @param {String} socialUrl Link to twitter page
    * @return {Object}
    */
   render() {
-    const url = 'https://twitter.com/Kaiser_Phemi';
+    const socialUrl = 'https://twitter.com/Kaiser_Phemi';
     return (
       <footer className="page-footer blue darken-4">
         <div className="container">
@@ -32,7 +32,7 @@ class Footer extends React.Component {
           <div className="footer-copyright">
             <div className="container">
             © 2017 Oluwafemi Akinwa
-            <a className="white-text right" href={url} target="_blank">
+            <a className="white-text right" href={socialUrl} target="_blank">
               Follow on Twitter
             </a>
             </div>

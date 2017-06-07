@@ -5,7 +5,7 @@ import SignUpForm from './SignUpForm';
 import signupRequest from '../../actions/SignUpAction';
 import validateInput from '../../../server/shared/ValidateInput';
 /**
- * Component declared as a class since it's a root component
+ * Component declared as a class
  */
 class SignUpPage extends Component {
   /**

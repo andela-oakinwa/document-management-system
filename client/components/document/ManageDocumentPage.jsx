@@ -24,13 +24,6 @@ class ManageDocumentPage extends Component {
   }
   /**
    * 
-   */
-  componentDidMount() {
-    $('select').material_select();
-    $('#section').on('change', this.filterAccess);
-  }
-  /**
-   * 
    * @param {Object} nextProps
    */
   componentWillReceiveProps(nextProps) {
@@ -45,6 +38,9 @@ class ManageDocumentPage extends Component {
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
+    if (event.target.id === 'content') {
+      document.content = event.target.getContent();
+    }
     document[field] = event.target.value;
     return this.setState({ document });
   }
@@ -109,7 +105,7 @@ class ManageDocumentPage extends Component {
       <div className="container">
         <DocumentForm
           onChange={this.updateDocumentState}
-          editorChange={this.editorChange}
+          // editorChange={this.editorChange}
           onSave={this.saveDocument}
           document={this.state.document}
           errors={this.state.errors}

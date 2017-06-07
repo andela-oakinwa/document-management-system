@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Input } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 
-const DocumentForm = ({ document, editorChange,
+const DocumentForm = ({ document,
   onSave, onChange, saving, errors }) => {
   return (
     <form className="container">
@@ -29,7 +29,7 @@ const DocumentForm = ({ document, editorChange,
               plugins: 'autolink link image lists print preview',
               toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
             }}
-            onChange={editorChange}
+            onChange={onChange}
           />
           {errors.content && <div className="red-text">Enter Content</div>}
         </div>
@@ -67,7 +67,7 @@ DocumentForm.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
-  editorChange: React.PropTypes.func.isRequired
+  // editorChange: React.PropTypes.func.isRequired
 };
 
 export default DocumentForm;

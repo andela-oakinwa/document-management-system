@@ -13,7 +13,7 @@ const SearchBox = ({ onChange }) =>
       onChange={onChange}
       validate
       className="search"
-    ><Icon style={{ color: 'white' }}>search</Icon></Input>
+    ><Icon>search</Icon></Input>
   </div>;
 
 SearchBox.propTypes = {

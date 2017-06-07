@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
 import { logout } from '../../actions/Authentication';
 /**
- * Class component defined as this is a root component
+ * Class component
  */
 class NavigationBar extends React.Component {
   /**
@@ -106,7 +105,7 @@ NavigationBar.contextTypes = {
 };
 /**
  * Maps component state to properties
- * @param {*} state State of component
+ * @param {Object} state
  */
 const mapStateToProps = (state) => {
   return {

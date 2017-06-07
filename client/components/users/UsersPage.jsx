@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-/* import { Link } from 'react-router'; */
 import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
 import UsersList from './UsersList';
 import { fetchUsers, deleteUser } from '../../actions/UserAction';
 /**
- * Defined as class components as this is a root component
+ * Defined as class component
  */
 class UsersPage extends Component {
   /**
@@ -17,7 +16,7 @@ class UsersPage extends Component {
     console.log(props);
   }
   /**
-   * Checks for returned list of users
+   * Fetches list of users
    */
   componentDidMount() {
     this.props.fetchUsers();
