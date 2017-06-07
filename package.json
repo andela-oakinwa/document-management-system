@@ -4,7 +4,7 @@
   "description": "A full-stack document management system",
   "main": "client/Index.jsx",
   "scripts": {
-    "start": "node_modules/.bin/babel-node tools/distServer",
+    "start": "npm run prebuild && npm run postbuild && npm run build",
     "start:dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/Server.js",
     "cover": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- server/test/**/*.js, client/test/**/*.js",
     "coverage": "codecov -t 1a7fffda-028f-45ee-a46a-45389d417d58",
