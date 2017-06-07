@@ -9,8 +9,8 @@ module.exports = {
   entry: './client/Index',
   target: 'web',
   output: {
-    path: path.join(__dirname, '/dist'),
-    publicPath: '/',
+    path: path.join(__dirname, '/dist/'),
+    publicPath: '/client',
     filename: 'Bundle.js'
   },
   devServer: {
@@ -41,7 +41,7 @@ module.exports = {
         include: [path.join(__dirname, 'client'),
           path.join(__dirname, 'server/shared')],
         loaders: ['babel-loader'],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
