@@ -1,9 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { deleteDocument } from '../../actions/DocumentAction';
 
-const DocumentCard = ({ document, deleteDocument, currentUser }) => {
+const DocumentCard = ({ document, currentUser }) => {
   const { firstName, lastName } = document.User ||
   { firstName: '', lastName: '' };
+
+  const onClick = (id) => {
+    deleteDocument(id)
+    .then(() => {
+      window.reload();
+    });
+  };
+
   return (
     <div className="col s4">
       <div className="card main-box">
@@ -23,8 +32,8 @@ const DocumentCard = ({ document, deleteDocument, currentUser }) => {
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
-              <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}>
+              <Link className="edit" to={`/document/${document.id}/edit`}>Edit</Link>
+              <Link className="delete" to="/" onClick={() => onClick(document.id)}>
                 Delete
               </Link>
             </div>}</div>

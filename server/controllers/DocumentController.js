@@ -153,7 +153,7 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   deleteDocument(request, response) {
-    db.Documents.findById(request.params.id)
+    db.Document.findById(request.params.id)
       .then((document) => {
         if (!document) {
           return response.status(404)

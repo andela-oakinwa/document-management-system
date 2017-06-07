@@ -9,6 +9,7 @@ import Login from './components/login/LoginPage';
 import ManageDocumentPage from './components/document/ManageDocumentPage';
 import UsersPage from './components/users/UsersPage';
 import DocumentDetailsPage from './components/document/DocumentDetailsPage';
+import DocumentEdit from './components/document/DocumentEdit';
 import ProfilePage from './components/profile/ProfilePage';
 
 export default (
@@ -19,6 +20,7 @@ export default (
     <Route path="login" component={Login} />
     <Route path="document" component={ManageDocumentPage} />
     <Route path="document/:id" component={ManageDocumentPage} />
+    <Route path="document/:id/edit" component={DocumentEdit} />
     <Route path="user" component={UsersPage} />
     <Route path="document/:id/details" component={DocumentDetailsPage} />
     <Route path="editprofile" component={ProfilePage} />

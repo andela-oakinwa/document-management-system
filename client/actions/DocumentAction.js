@@ -16,13 +16,13 @@ const saveDocument = (data) => {
            });
          });
     };
-  },
+  };
   /**
    * Dispatches action to fetch all documents
    * @param {Object} offset Paging offset
    * @returns {Object}
    */
-  fetchDocuments = (offset) => {
+ const fetchDocuments = (offset) => {
     const pageOffset = offset || 0;
     const limit = 6;
     return (dispatch) => {
@@ -38,15 +38,15 @@ const saveDocument = (data) => {
           });
         });
     };
-  },
+  };
   /**
    * Action to fetch a specific document
    * @param {Object} id Document Id
    * @returns {Object}
    */
-  fetchDocument = (id) => {
+ const fetchDocument = (id) => {
     return (dispatch) => {
-      return axios.get(`/document/${id}`)
+      return axios.get(`/documents/${id}`)
         .then((response) => {
           dispatch({
             type: types.LOAD_DOCUMENT,
@@ -54,15 +54,15 @@ const saveDocument = (data) => {
           });
         });
     };
-  },
+  };
   /**
    * Action to edit a specific document
    * @param {Object} data Document data
    * @returns {Object}
    */
-  updateDocument = (data) => {
+  const updateDocument = (id, document) => {
     return (dispatch) => {
-      return axios.put(`/document/${data.id}`, data)
+      return axios.put(`/documents/${id}`, document)
         .then((response) => {
           dispatch({
             type: types.UPDATE_DOCUMENT,
@@ -70,22 +70,21 @@ const saveDocument = (data) => {
           });
         });
     };
-  },
+  };
   /**
    * Action to delete a specific document
    * @param {Object} id Document Id
    * @returns {Object}
    */
-  deleteDocument = (id) => {
-    return (dispatch) => {
-      return axios.delete(`/documents/${id}`)
-        .then(() => {
-          dispatch({
-            type: types.DELETE_DOCUMENT,
-            documentId: id,
-          });
-        });
-    };
+  const deleteDocument = (id) => {
+    // return (dispatch) => {
+    return axios.delete(`/documents/${id}`)
+      .then((res) => {
+        return res.data;
+      }, (error) => {
+        throw (error.response.data.message);
+      });
+    // };
   };
 
 export { saveDocument, fetchDocument, fetchDocuments,
