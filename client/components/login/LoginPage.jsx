@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import validateInput from '../../../server/shared/ValidateInput';
+import validateInput from '../../utilities/ValidateInput';
 import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 

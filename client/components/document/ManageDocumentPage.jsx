@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
-import validateInput from '../../../server/shared/CheckDocument';
+import validateInput from '../../utilities/CheckDocument';
 import DocumentForm from './DocumentForm';
 import * as documentActions from '../../actions/DocumentAction';
 /**
