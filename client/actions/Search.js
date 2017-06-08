@@ -11,6 +11,12 @@ const documentSearched = (searchResult) => {
       searchResult,
     };
   },
+  userSearched = (searchResult) => {
+    return {
+      type: types.SEARCH_RESULTS,
+      searchResult
+    };
+  },
 /**
  * Dispatch action to search a document
  * @param {Object} queryString
@@ -18,7 +24,7 @@ const documentSearched = (searchResult) => {
  */
   searchDocuments = (queryString) => {
     return (dispatch) => {
-      return axios.get(`/search/documents?q=${queryString}`)
+      return axios.get(`/documents/search/documents?q=${queryString}`)
         .then((response) => {
           dispatch(documentSearched(response.data.rows));
           dispatch({
@@ -27,6 +33,25 @@ const documentSearched = (searchResult) => {
           });
         });
     };
+  },
+  /**
+   * Dispatch action to search a user
+   * @param {Object}
+   */
+  searchUsers = (queryString) => {
+    return (dispatch) => {
+      return axios.get(`/users/search/users?q=${queryString}`)
+        .then((response) => {
+          if (!queryString) {
+            dispatch(userSearched([]));
+          }
+          dispatch(userSearched(response.data.rows));
+          dispatch({
+            type: types.SET_PAGINATION,
+            pagination: response.data.pagination
+          });
+        });
+    };
   };
 
-export { documentSearched, searchDocuments };
+export { documentSearched, searchDocuments, userSearched, searchUsers };

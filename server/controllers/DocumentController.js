@@ -183,6 +183,50 @@ const DocumentController = {
             message: error.message
           });
       });
+  },
+  /**
+   * Search for documents by title
+   * Route: GET: /search/documents?q={title}
+   * @param {Object} request Request object
+   * @param {Object} response Response object
+   * @returns {void} no returns
+   */
+  searchDocument(request, response) {
+    const queryString = request.query.q;
+    const query = {
+      where: {
+        $and: [{ $or: [
+          { access: 'public' },
+          { ownerId: request.tokenDecode.userId },
+        ],
+        }],
+      },
+      include: [{ model: db.User, as: 'owner' }],
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+
+    if (queryString) {
+      query.where.$and.push({ $or: [
+        { title: { $iLike: `%${queryString}%` } },
+      ] });
+    }
+    db.Document.findAndCountAll(query)
+      .then((allDocs) => {
+        const constraint = {
+          count: allDocs.count,
+          limit: query.limit,
+          offset: query.offset
+        };
+        delete allDocs.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            paging,
+            rows: allDocs.rows
+          });
+      });
   }
 };
 

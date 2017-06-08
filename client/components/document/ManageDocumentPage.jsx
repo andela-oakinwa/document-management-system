@@ -48,7 +48,7 @@ class ManageDocumentPage extends Component {
    * Handles changes from editor
    * @param {Object} event
    */
-  editorChange(event) {
+  /*editorChange(event) {
     const document = this.state.document;
     document.content = event.target.getContent({
       format: 'raw'
@@ -57,7 +57,7 @@ class ManageDocumentPage extends Component {
       document
     });
   }
-
+*/
   saveSuccess() { this.redirect(); }
 
   saveFailure(error) {
