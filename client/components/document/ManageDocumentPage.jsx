@@ -20,7 +20,6 @@ class ManageDocumentPage extends Component {
     this.updateDocumentState = this.updateDocumentState.bind(this);
     this.saveDocument = this.saveDocument.bind(this);
     this.redirect = this.redirect.bind(this);
-    this.editorChange = this.editorChange.bind(this);
   }
   /**
    * 

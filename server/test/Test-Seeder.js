@@ -9,7 +9,7 @@ import db from '../models';
  * @returns {String} bcrypt hash value of the plain password
  */
 const hashPassword = plainPassword =>
-  bcrypt.hashSync(plainPassword, 10);
+  bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(10));
 
 export const roles = [{
   title: 'admin'
@@ -28,7 +28,7 @@ export const users = [{
 }, {
   firstName: 'Olusegun',
   lastName: 'Akinwa',
-  username: 'dealwap',
+  username: 'phemi',
   email: 'segun@gmail.com',
   password: hashPassword('oluwafemi'),
   roleId: 1

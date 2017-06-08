@@ -20,13 +20,20 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
     new ExtractTextPlugin('styles.css'),
-    new webpack.LoaderOptionsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      include: /\.min\.js$/,
+    new webpack.LoaderOptionsPlugin({
       minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
       compress: {
-        warnings: false
-      }
+        screw_ie8: true
+      },
+      comments: false
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

@@ -36,7 +36,8 @@ const documentSearched = (searchResult) => {
   },
   /**
    * Dispatch action to search a user
-   * @param {Object}
+   * @param {String} queryString String passed to search function
+   * @return {Object}
    */
   searchUsers = (queryString) => {
     return (dispatch) => {
