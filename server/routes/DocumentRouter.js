@@ -18,7 +18,8 @@ documentRouter.route('/')
 /**
  * Routes to retrieve document
  */
-documentRouter.get('./search', Authentication.verifyToken);
+documentRouter.get('/search/documents', Authentication.verifyToken,
+  DocumentController.searchDocument);
 /**
  * Routes for retrieving, updating and deleting document
  */

@@ -1,5 +1,5 @@
 import faker from 'faker';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 import db from '../models';
 
 /**
@@ -9,7 +9,7 @@ import db from '../models';
  * @returns {String} bcrypt hash value of the plain password
  */
 const hashPassword = plainPassword =>
-  bcrypt.hashSync(plainPassword, 10);
+  bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(10));
 
 export const roles = [{
   title: 'admin'
@@ -18,23 +18,23 @@ export const roles = [{
 }];
 
 export const users = [{
-  firstname: 'Oluwafemi',
-  lastname: 'Akinwa',
+  firstName: 'Oluwafemi',
+  lastName: 'Akinwa',
   username: 'kaiser',
   email: 'femi.akinwa@gmail.com',
   password: hashPassword('oluwafemi'),
   roleId: 1
 
 }, {
-  firstname: 'Olusegun',
-  lastname: 'Akinwa',
+  firstName: 'Olusegun',
+  lastName: 'Akinwa',
   username: 'dealwap',
   email: 'segun@gmail.com',
   password: hashPassword('oluwafemi'),
   roleId: 1
 }, {
-  firstname: 'Mark',
-  lastname: 'Angel',
+  firstName: 'Mark',
+  lastName: 'Angel',
   username: 'angeli',
   email: 'mark.angel@gmail.com',
   password: hashPassword('andelatia'),

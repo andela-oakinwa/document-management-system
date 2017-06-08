@@ -4,7 +4,7 @@
   "description": "A full-stack document management system",
   "main": "client/Index.jsx",
   "scripts": {
-    "start": "npm run build",
+    "start": "node_modules/.bin/babel-node tools/distServer.js",
     "start:dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/Server.js",
     "cover": "NODE_ENV=test node_modules/babel-cli/bin/babel-node.js node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- server/test/**/*.js, client/test/**/*.js",
     "coverage": "codecov -t 1a7fffda-028f-45ee-a46a-45389d417d58",
@@ -17,6 +17,7 @@
     "lint:server": "node_modules/.bin/eslint server/",
     "linting": "npm-run-all lint:server lint:client",
     "drop:db": "psql -c 'drop database if exists doqman_test;' -U postgres",
+    "db:seed": "babel-node ./server/test/Test-Seeder",
     "create:db": "psql -c 'create database doqman_test;' -U postgres",
     "migrate:db": "NODE_ENV=test sequelize db:migrate",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R client/test/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",

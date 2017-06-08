@@ -8,7 +8,7 @@ import * as types from './ActionType';
 const documentSearched = (searchResult) => {
     return {
       type: types.SEARCH_RESULTS,
-      searchResult,
+      searchResult
     };
   },
   userSearched = (searchResult) => {
