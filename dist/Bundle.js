@@ -63110,9 +63110,9 @@ var _LandingPage = __webpack_require__(550);
 
 var _LandingPage2 = _interopRequireDefault(_LandingPage);
 
-var _SignUpPage = __webpack_require__(568);
+var _SignupPage = __webpack_require__(568);
 
-var _SignUpPage2 = _interopRequireDefault(_SignUpPage);
+var _SignupPage2 = _interopRequireDefault(_SignupPage);
 
 var _About = __webpack_require__(548);
 
@@ -63148,7 +63148,7 @@ exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { path: '/', component: _App2.default },
   _react2.default.createElement(_reactRouter.IndexRoute, { component: _LandingPage2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _SignUpPage2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _SignupPage2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _About2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: 'document', component: _ManageDocumentPage2.default }),
@@ -68036,9 +68036,9 @@ var _SignUpForm = __webpack_require__(567);
 
 var _SignUpForm2 = _interopRequireDefault(_SignUpForm);
 
-var _SignUpAction = __webpack_require__(547);
+var _SignupAction = __webpack_require__(547);
 
-var _SignUpAction2 = _interopRequireDefault(_SignUpAction);
+var _SignupAction2 = _interopRequireDefault(_SignupAction);
 
 var _ValidateInput = __webpack_require__(252);
 
@@ -68172,7 +68172,7 @@ SignUpPage.contextTypes = {
   router: _react2.default.PropTypes.object.isRequired
 };
 
-exports.default = (0, _reactRedux.connect)(null, { signupRequest: _SignUpAction2.default })(SignUpPage);
+exports.default = (0, _reactRedux.connect)(null, { signupRequest: _SignupAction2.default })(SignUpPage);
 
 /***/ }),
 /* 569 */
