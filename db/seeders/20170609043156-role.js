@@ -4,7 +4,7 @@ module.exports = {
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
     */
-    return queryInterface.bulkInsert('Role', [
+    return queryInterface.bulkInsert('Roles', [
       {
         title: 'admin',
         createdAt: new Date(),
