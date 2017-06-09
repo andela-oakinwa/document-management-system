@@ -155,6 +155,7 @@ const UserController = {
    * @param  {Object} response Response object
    */
   updateUser(request, response) {
+    console.log(request.params);
     db.User.findById(request.params.id)
       .then((user) => {
         if (!user) {

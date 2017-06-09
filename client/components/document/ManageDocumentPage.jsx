@@ -44,19 +44,8 @@ class ManageDocumentPage extends Component {
     return this.setState({ document });
   }
   /**
-   * Handles changes from editor
-   * @param {Object} event
+   * This will run after saving document
    */
-  /*editorChange(event) {
-    const document = this.state.document;
-    document.content = event.target.getContent({
-      format: 'raw'
-    });
-    return this.setState({
-      document
-    });
-  }
-*/
   saveSuccess() { this.redirect(); }
 
   saveFailure(error) {
@@ -104,7 +93,6 @@ class ManageDocumentPage extends Component {
       <div className="container">
         <DocumentForm
           onChange={this.updateDocumentState}
-          // editorChange={this.editorChange}
           onSave={this.saveDocument}
           document={this.state.document}
           errors={this.state.errors}

@@ -5,14 +5,6 @@ import { deleteDocument } from '../../actions/DocumentAction';
 const DocumentCard = ({ document, currentUser }) => {
   const { firstName, lastName } = document.User ||
   { firstName: '', lastName: '' };
-
-  const onClick = (id) => {
-    deleteDocument(id)
-    .then(() => {
-      window.reload();
-    });
-  };
-
   return (
     <div className="col s4">
       <div className="card main-box">
@@ -33,7 +25,7 @@ const DocumentCard = ({ document, currentUser }) => {
           {currentUser.userId === document.ownerId &&
             <div className="right">
               <Link className="edit" to={`/document/${document.id}/edit`}>Edit</Link>
-              <Link className="delete" to="/" onClick={() => onClick(document.id)}>
+              <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}>
                 Delete
               </Link>
             </div>}</div>
@@ -47,4 +39,5 @@ DocumentCard.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired
 };
+
 export default DocumentCard;
