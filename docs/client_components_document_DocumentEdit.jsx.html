@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: client/components/signup/SignupPage.jsx</title>
+    <title>JSDoc: Source: client/components/document/DocumentEdit.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: client/components/signup/SignupPage.jsx</h1>
+    <h1 class="page-title">Source: client/components/document/DocumentEdit.jsx</h1>
 
     
 
@@ -26,102 +26,135 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+            <pre class="prettyprint source linenums"><code>import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Row, Input } from 'react-materialize';
+import TinyMCE from 'react-tinymce';
+import toastr from 'toastr';
+import { updateDocument } from '../../actions/DocumentAction';
 
-import SignUpForm from './SignUpForm';
-import signupRequest from '../../actions/SignupAction';
-import validateInput from '../../utilities/ValidateInput';
-/**
- * Component declared as a class
- */
-class SignUpPage extends Component {
-  /**
-   * Instance properties
-   * @param  {Object} props
-   */
+class DocumentEdit extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      errors: {}
+      title: props.document.title,
+      content: props.document.content,
+      access: props.document.access
     };
+
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onClickUpdate = this.onClickUpdate.bind(this);
   }
-  /**
-   * Checks events triggered from the form
-   * @param  {Object} event
-   */
+
   onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
-  /**
-   * Validates user inputs
-   * @return {Boolean}
-   */
-  isValid() {
-    const { errors, isValid } = validateInput.signUpInput(this.state);
-    if (!isValid) {
-      this.setState({ errors });
-    }
-    return isValid;
+
+  handleChange(event) {
+    const content = event.target.getContent();
+    this.setState({ content });
   }
-  /**
-   * Forwards data to server
-   * @param  {Object} event
-   */
-  onSubmit(event) {
+
+  onClickUpdate(event) {
     event.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {} });
-      this.props.signupRequest(this.state)
-        .then(
-          () => {
-            this.context.router.push('/');
-          },
-          ({ data }) => {
-            const errors = {};
-            errors.form = data.message;
-            this.setState({ errors });
-          });
-    }
+    const docId = this.props.document.id;
+    this.props.updateDocument(docId, this.state)
+      .then(() => {
+        window.history.back();
+        toastr.success('Document updated');
+      });
   }
-  /**
-   * DOM rendering
-   * @return {Object}
-   */
+
   render() {
-    const { errors } = this.state;
     return (
-      &lt;div className="row">
-        &lt;div className="col s8 offset-s2">
-          &lt;SignUpForm
-            onChange={this.onChange}
-            userProps={this.state}
-            onSubmit={this.onSubmit}
-            errors={errors}
-          />
-        &lt;/div>
-      &lt;/div>
+      &lt;form className="container">
+        &lt;h5 className="center" style={{ margin: 20 }}>
+          Create/Update a Document
+        &lt;/h5>
+        &lt;Row>
+          &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+            &lt;label htmlFor="title" className="active">Title&lt;/label>
+            &lt;input
+              type="text"
+              validate
+              name="title"
+              value={this.state.title}
+              onChange={this.onChange}
+              id="title"
+            />
+            {/*{errors.title &amp;&amp; &lt;span className="red-text">Enter Title&lt;/span>}*/}
+          &lt;/div>
+          &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+            &lt;TinyMCE
+              id="content"
+              config={{
+                plugins: 'autolink link image lists print preview',
+                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+              }}
+              name="content"
+              content={this.state.content}
+              onChange={this.handleChange}
+            />
+            {/*{errors.content &amp;&amp; &lt;div className="red-text">Enter Content&lt;/div>}*/}
+          &lt;/div>
+          &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+            &lt;select
+              style={{ display: 'block' }}
+              id="access"
+              value={this.state.access}
+              onChange={this.onChange}
+              name="access"
+            >
+              &lt;option defaultValue>Select Access&lt;/option>
+              &lt;option value="public">Public&lt;/option>
+              &lt;option value="private">Private&lt;/option>
+              &lt;option value="role">Role&lt;/option>
+            &lt;/select>
+          &lt;/div>
+          &lt;div className="input-field col s12" style={{ marginBottom: 10 }}>
+            &lt;Input
+              type="submit"
+              // disabled={saving}
+              // value={saving ? 'Saving...' : 'Save'}
+              className="btn waves-effect waves-light blue"
+              onClick={this.onClickUpdate}
+            />
+          &lt;/div>
+        &lt;/Row>
+      &lt;/form>
     );
   }
 }
 
-SignUpPage.propTypes = {
-  signupRequest: React.PropTypes.func.isRequired
+DocumentEdit.propTypes = {
+  document: PropTypes.object.isRequired,
+  updateDocument: PropTypes.func.isRequired,
 };
 
-SignUpPage.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
+/**
+ * @function
+ * @param {*} state
+ * @param {*} ownProps
+ * @returns {onject} - current document
+ */
+function mapStateToProps(state, ownProps) {
+  const documentId = ownProps.params.id;
+  let document = {};
+  state.documents.forEach((doc) => {
+    const curDocumentId = String(doc.id);
+    if (curDocumentId === documentId) {
+      document = doc;
+    }
+  });
 
-export default connect(null, { signupRequest })(SignUpPage);
+  return { document };
+}
+
+export default connect(mapStateToProps, { updateDocument })(DocumentEdit);
 </code></pre>
         </article>
     </section>

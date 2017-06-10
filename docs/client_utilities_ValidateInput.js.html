@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ListRow</title>
+    <title>JSDoc: Source: client/utilities/ValidateInput.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,368 +17,82 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ListRow</h1>
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>ListRow</h2>
-        
-            <div class="class-description">ListRow defined as class component. It's a root component</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="ListRow"><span class="type-signature"></span>new ListRow<span class="signature">(props)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Class constructor
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>props</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Component property</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_users_ListRow.jsx.html">client/components/users/ListRow.jsx</a>, <a href="client_components_users_ListRow.jsx.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="onChange"><span class="type-signature"></span>onChange<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Handles change of state
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_users_ListRow.jsx.html">client/components/users/ListRow.jsx</a>, <a href="client_components_users_ListRow.jsx.html#line26">line 26</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    renders to the DOM
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_components_users_ListRow.jsx.html">client/components/users/ListRow.jsx</a>, <a href="client_components_users_ListRow.jsx.html#line38">line 38</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">Source: client/utilities/ValidateInput.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import validator from 'validator';
+import isEmpty from 'lodash/isEmpty';
+/**
+ * Handles client side user input validations
+ * @type {Object}
+ */
+const ValidateInput = {
+  /**
+   * Handles user login input validation
+   * @param  {Object} details Data containing login details
+   * @return {Object}
+   */
+  loginInput(details) {
+    const errors = {};
+    if (!validator.isEmail(details.email)) {
+      errors.email = 'Email is invalid';
+    }
+    if (validator.isEmpty(details.password)) {
+      errors.password = 'This field is required';
+    }
+    return {
+      errors,
+      isValid: isEmpty(errors)
+    };
+  },
+  /**
+   * Handles user signup inputs validation
+   * @param  {Object} details Data containing signup details
+   * @return {Object}
+   */
+  signUpInput(details) {
+    const errors = {};
+    if (validator.isEmpty(details.firstName)) {
+      errors.firstName = 'This field is required';
+    }
+    if (validator.isEmpty(details.lastName)) {
+      errors.lastName = 'This field is required';
+    }
+    if (validator.isEmpty(details.username)) {
+      errors.username = 'This field is required';
+    }
+    if (validator.isEmpty(details.email)) {
+      errors.email = 'This field is required';
+    }
+    if (!validator.isEmail(details.email)) {
+      errors.email = 'Email is invalid';
+    }
+    if (validator.isEmpty(details.password)) {
+      errors.password = 'This field is required';
+    }
+    if (validator.isEmpty(details.passwordConfirmation)) {
+      errors.passwordConfirmation = 'This field is required';
+    }
+    if (!validator.equals(details.password, details.passwordConfirmation)) {
+      errors.passwordConfirmation = 'Passwords must match';
+    }
+    return {
+      errors,
+      isValid: isEmpty(errors)
+    };
+  },
+};
+
+export default ValidateInput;
+</code></pre>
+        </article>
+    </section>
 
 
 
