@@ -84,7 +84,8 @@ describe('User Model', () => {
           decryptPassword = user.validPassword(helper.regularUser.password);
           expect(decryptPassword).to.be.equal(true);
           expect(user.password).to.not.equal(helper.regularUser.password);
-        });
+          done();
+        });     
     });
   });
 });
