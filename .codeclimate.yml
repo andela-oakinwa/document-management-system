@@ -31,7 +31,6 @@ exclude_paths:
 - node_modules/
 - server/test/
 - client/test
-- usr/local/node_modules/babel-eslint/index.js
 - coverage/
 - docs/
 - db/
