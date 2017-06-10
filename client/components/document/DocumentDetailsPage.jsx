@@ -44,7 +44,6 @@ const getDocumentById = (documents, id) => {
   },
   mapStateToProps = (state, ownProps) => {
     const documentId = ownProps.params.id;
-
     let document;
 
     if (documentId && state.documents.length > 0) {
