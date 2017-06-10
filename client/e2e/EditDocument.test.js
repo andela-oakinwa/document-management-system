@@ -5,9 +5,9 @@ module.exports = {
     browser
      .url(config.url)
      .click('#login')
-     .setValue('Input[name=identifier]', 'kaiser.phemi@gmail.com')
+     .setValue('Input[name=email]', 'kaiser.phemi@gmail.com')
      .setValue('Input[name=password]', 'oluwafemi')
-     .click('Input[type=submit]')
+     .click('Button[type=submit]')
      .pause(5000)
      .assert.urlEquals('http://localhost:4000/')
      .waitForElementVisible('body')

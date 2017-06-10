@@ -7,7 +7,7 @@ engines:
       box-sizing:
         enabled: false
   duplication:
-    enabled: true
+    enabled: false
   eslint:
     enabled: true
     config:

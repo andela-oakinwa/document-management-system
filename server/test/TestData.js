@@ -14,28 +14,31 @@ export default {
     updatedAt: new Date()
   },
   userTwo: {
-    username: faker.internet.userName(),
-    fullName: faker.name.findName(),
+    username: 'bendozi',
+    firstName: 'Mark',
+    lastName: 'Angel',
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    password: 'password',
     roleId: 2,
     about: faker.lorem.paragraph(),
     createdAt: new Date(),
     updatedAt: new Date()
   },
   userThree: {
-    username: faker.internet.userName(),
-    fullName: faker.name.findName(),
+    username: 'olusegun',
+    firstName: 'Olabode',
+    lastName: 'Akinwa',
     email: faker.internet.email(),
-    password: faker.internet.password(),
-    roleId: 2,
+    password: 'password',
+    roleId: 1,
     about: faker.lorem.paragraph(),
     createdAt: new Date(),
     updatedAt: new Date()
   },
   privateDocument: {
-    title: 'private document',
-    content: 'private document2',
+    title: 'Private Things',
+    content: `They were figuratively speaking going at it like bunnies,
+    creating ripples of waves around them.`,
     access: 'private',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -59,16 +62,17 @@ export default {
     username: 'kenpachi',
     fullName: 'Kenpachi Zaraki',
     email: faker.internet.email(),
-    password: bcrypt.hashSync('alpine', bcrypt.genSaltSync(10)),
+    password: bcrypt.hashSync('oluwafemi', bcrypt.genSaltSync(10)),
     roleId: 2,
     createdAt: new Date(),
     updatedAt: new Date()
   },
   editorTwo: {
     username: faker.internet.userName(),
-    fullName: faker.name.findName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
-    password: bcrypt.hashSync('alpine', bcrypt.genSaltSync(10)),
+    password: bcrypt.hashSync('olusegun', bcrypt.genSaltSync(10)),
     roleId: 2,
     createdAt: new Date(),
     updatedAt: new Date()

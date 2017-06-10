@@ -69,6 +69,7 @@ const SignUpForm = ({ onChange, userProps, onSubmit, errors }) => {
                 name="passwordConfirmation"
               />
               <Button
+                  id="signup"
                   type="submit"
                   className="btn col s12 blue darken-2 btn-large waves-effect"
                 >

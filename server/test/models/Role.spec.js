@@ -22,10 +22,11 @@ describe('ROLE', () => {
         });
     });
 
-    it('has at least "guest" roles', () => {
+    it('has at least "regular" roles', () => {
       db.Role.findAll()
         .then((roles) => {
-          expect(roles[0].title).to.equal('guest');
+          expect(roles[0].title).to.equal('regular');
+          done();
         });
     });
   });

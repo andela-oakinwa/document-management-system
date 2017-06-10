@@ -126,7 +126,7 @@ const UserController = {
       }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     };
     db.User
       .findAndCountAll(query)
@@ -155,7 +155,6 @@ const UserController = {
    * @param  {Object} response Response object
    */
   updateUser(request, response) {
-    console.log(request.params);
     db.User.findById(request.params.id)
       .then((user) => {
         if (!user) {
