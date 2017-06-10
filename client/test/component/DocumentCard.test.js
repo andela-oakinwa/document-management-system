@@ -26,9 +26,9 @@ const setup = () => {
 };
 
 describe('DocumentCard', () => {
-  it('renders a row div', () => {
+  it('renders a col div', () => {
     const wrapper = setup();
-    expect(wrapper.find('.row')).toExist();
+    expect(wrapper.find('.col')).toExist();
   });
 
   it('renders card', () => {
