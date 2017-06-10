@@ -13,7 +13,6 @@ import userRouter from '../routes/UserRouter';
 import roleRouter from '../routes/RoleRouter';
 import webpackConfig from '../../webpack.config.dev';
 import documentRouter from '../routes/DocumentRouter';
-// import searchRouter from '../routes/SearchRouter';
 /**
  * Create an instance of the express app
  * @type {Object}
@@ -53,7 +52,6 @@ if (process.env.NODE_ENV !== 'test') {
 app.use('/users', userRouter);
 app.use('/documents', documentRouter);
 app.use('/roles', roleRouter);
-// app.use('/search', searchRouter);
 app.get('*', (request, response) => {
   response.status(200)
     .sendFile(path.join(__dirname, '../../client/Index.html'));

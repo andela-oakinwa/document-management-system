@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
 import { logout } from '../../actions/Authentication';
 /**
- * Class component defined as this is a root component
+ * Class component
  */
 class NavigationBar extends React.Component {
   /**
@@ -77,7 +76,7 @@ class NavigationBar extends React.Component {
                 }
               </li>
               {user.roleId === 1
-                && <li><Link to="/users"><span>Users</span></Link></li>
+                && <li><Link to="/user"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>
@@ -106,7 +105,7 @@ NavigationBar.contextTypes = {
 };
 /**
  * Maps component state to properties
- * @param {*} state State of component
+ * @param {Object} state
  */
 const mapStateToProps = (state) => {
   return {

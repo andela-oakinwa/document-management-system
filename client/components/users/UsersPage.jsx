@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-/* import { Link } from 'react-router'; */
 import { connect } from 'react-redux';
 import { Pagination } from 'react-materialize';
 import UsersList from './UsersList';
 import { fetchUsers, deleteUser } from '../../actions/UserAction';
+import Search from '../shared/SearchBox';
+import { searchUsers } from '../../actions/Search';
 /**
- * Defined as class components as this is a root component
+ * Defined as class component
  */
 class UsersPage extends Component {
   /**
@@ -13,11 +14,16 @@ class UsersPage extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      renderedUsers: props.users,
+      filtered: false
+    };
+
     this.displayUsers = this.displayUsers.bind(this);
-    console.log(props);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   /**
-   * Checks for returned list of users
+   * Fetches list of users
    */
   componentDidMount() {
     this.props.fetchUsers();
@@ -31,17 +37,42 @@ class UsersPage extends Component {
     this.props.fetchUsers(offset);
   }
   /**
+   * Handles search feature
+   * @param  {Object} event Events from user input
+   */
+  handleSearch(event) {
+    event.preventDefault();
+    const query = event.target.value;
+    this.props.searchUsers(query);
+    const userSearchResult = this.props.search;
+    if (query.trim().length > 0) {
+      this.setState({ renderedUsers: userSearchResult });
+    }
+  }
+  /**
    * Renders to the DOM
    * @return {Object}
    */
   render() {
     const { totalCount, pageSize, currentPage, pageCount }
       = this.props.metadata;
+    // if (this.props.search.length > 0) {
+
+    // }
     return (
       <div className="container">
         <h5 className="center">Registered Users</h5>
+        <div className="col s7 push-s4">
+            <Search onChange={this.handleSearch} />
+        </div>
         <UsersList
-          users={this.props.users}
+          users={
+            this.props.search.length > 0
+            ?
+            this.props.search
+            :
+            this.props.users
+          }
           deleteUser={this.props.deleteUser}
           auth={this.props.auth}
         />
@@ -57,7 +88,9 @@ class UsersPage extends Component {
 }
 
 UsersPage.propTypes = {
+  search: React.PropTypes.array.isRequired,
   users: React.PropTypes.array.isRequired,
+  searchUsers: React.PropTypes.func.isRequired,
   fetchUsers: React.PropTypes.func.isRequired,
   deleteUser: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object.isRequired,
@@ -69,11 +102,15 @@ UsersPage.propTypes = {
  * @return {Object}
  */
 const mapStateToProps = (state) => {
+  let users = [];
+  users = state.users;
   return {
-    users: state.users,
+    users,
+    search: state.search,
     auth: state.auth,
     metadata: state.paginate,
   };
 };
 
-export default connect(mapStateToProps, { fetchUsers, deleteUser })(UsersPage);
+export default connect(mapStateToProps,
+{ fetchUsers, deleteUser, searchUsers })(UsersPage);

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentsPage from './document/DocumentsPage';
 
-class LandingPage extends React.Component {
+class LandingPage extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     return (

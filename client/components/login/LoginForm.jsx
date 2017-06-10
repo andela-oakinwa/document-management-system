@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
 import { Link } from 'react-router';
 /**
- * Functional component since it's a chile of LoginPage component
+ * Stateless Functional component
  */
 const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
   return (
@@ -21,6 +21,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
               onChange={onChange}
               value={loginProps.email}
               name="email"
+              type="email"
               id="email"
               className="validate"
             />
@@ -40,6 +41,7 @@ const LoginForm = ({ errors, onChange, loginProps, onSubmit }) => {
             <i className="small material-icons">lock</i>
             <div className="center">
               <Button
+                id="login"
                 type="submit"
                 className="col s12 btn blue btn-large login-btn waves-effect"
               >

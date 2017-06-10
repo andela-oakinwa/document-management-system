@@ -3,7 +3,7 @@ import users from '../../reducers/AuthenticationReducer';
 import * as actions from '../../actions/Authentication';
 import * as types from '../../actions/ActionType';
 
-describe('Auth Reducer', () => {
+describe('Authentication Reducer', () => {
   it('should set user when passed SET_CURRENT_USER', () => {
     const initialState = {
       isAuthenticated: false,

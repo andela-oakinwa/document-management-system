@@ -1,6 +1,5 @@
 import React from 'react';
 import shortId from 'shortid';
-/*import { Pagination } from 'react-materialize';*/
 import DocumentCard from './DocumentCard';
 /**
  * Component defined as a function.

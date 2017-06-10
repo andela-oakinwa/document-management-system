@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination, Button } from 'react-materialize';
@@ -92,11 +93,31 @@ class DocumentsPage extends Component {
       .filter(document => document.access === 'role');
     this.setState({ renderedDocuments, filtered: true });
   }
-
+  /**
+   * [deleteUserDoc description]
+   * @param  {[type]} docId [description]
+   * @return {[type]}       [description]
+   */
   deleteUserDoc(docId) {
     return () => this.props.deleteDocument(docId);
   }
-
+  /**
+   * Called after render method
+   */
+  componentDidMount() {
+    const element = ReactDOM.findDOMNode(this.refs.dropdown)
+    $(element).ready(() => {
+      $('.dropdown-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrain_width: true,
+        hover: true,
+        gutter: 0,
+        belowOrigin: false,
+        alignment: 'left'
+      });
+    });
+  }
   /**
    * Renders to the DOM
    * @return {Object}
@@ -129,7 +150,8 @@ class DocumentsPage extends Component {
               data-activates="type-list">
                 Filter Documents
             </Link>
-            <ul id="type-list" className="dropdown-content">
+            <ul id="type-list"
+              className="dropdown-content dropdown-button">
               <li className="tab col s4">
                 <Button
                   className="blue"

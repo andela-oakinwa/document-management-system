@@ -155,6 +155,7 @@ const UserController = {
    * @param  {Object} response Response object
    */
   updateUser(request, response) {
+    console.log(request.params);
     db.User.findById(request.params.id)
       .then((user) => {
         if (!user) {
@@ -220,6 +221,57 @@ const UserController = {
           .send({
             message: error.message
           });
+      });
+  },
+  /**
+   * Search for a user
+   * Route: GET: /search/users?q={queryParam}
+   * @param {Object} request Request object
+   * @param {Object} response Response object
+   * @returns {void} no returns
+   */
+  searchUser(request, response) {
+    const query = {
+      where: {
+        $or: [{
+          username: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          firstName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          lastName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          email: {
+            $iLike: `%${request.query.q}%`
+          }
+        }],
+      },
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+    db.User.findAndCountAll(query)
+      .then((users) => {
+        const results = users.rows.map(user => Helper.userProfile(user));
+        const constraint = {
+          count: users.count,
+          limit: query.limit,
+          offset: query.offset
+        };
+        delete users.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            paging,
+            rows: results
+          });
+        response.status(200)
+          .send(results);
       });
   }
 };

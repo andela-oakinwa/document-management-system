@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
-import validateInput from '../../../server/shared/CheckDocument';
+import validateInput from '../../utilities/CheckDocument';
 import DocumentForm from './DocumentForm';
 import * as documentActions from '../../actions/DocumentAction';
 /**
@@ -20,14 +20,6 @@ class ManageDocumentPage extends Component {
     this.updateDocumentState = this.updateDocumentState.bind(this);
     this.saveDocument = this.saveDocument.bind(this);
     this.redirect = this.redirect.bind(this);
-    this.editorChange = this.editorChange.bind(this);
-  }
-  /**
-   * 
-   */
-  componentDidMount() {
-    $('select').material_select();
-    $('#section').on('change', this.filterAccess);
   }
   /**
    * 
@@ -45,23 +37,15 @@ class ManageDocumentPage extends Component {
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
+    if (event.target.id === 'content') {
+      document.content = event.target.getContent();
+    }
     document[field] = event.target.value;
     return this.setState({ document });
   }
   /**
-   * Handles changes from editor
-   * @param {Object} event
+   * This will run after saving document
    */
-  editorChange(event) {
-    const document = this.state.document;
-    document.content = event.target.getContent({
-      format: 'raw'
-    });
-    return this.setState({
-      document
-    });
-  }
-
   saveSuccess() { this.redirect(); }
 
   saveFailure(error) {
@@ -109,7 +93,6 @@ class ManageDocumentPage extends Component {
       <div className="container">
         <DocumentForm
           onChange={this.updateDocumentState}
-          editorChange={this.editorChange}
           onSave={this.saveDocument}
           document={this.state.document}
           errors={this.state.errors}

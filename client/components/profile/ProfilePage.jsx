@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ProfileForm from './ProfileForm';
 import getUser, { updateUser } from '../../actions/Profile';
 /**
- * Class component as this is a root component
+ * Class component
  */
 class ProfilePage extends Component {
   /**

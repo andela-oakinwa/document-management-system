@@ -21,6 +21,11 @@ userRouter.route('/')
 userRouter.route('/login')
   .post(Authentication.verifyLogin, UserController.login);
 /**
+ * Search for users
+ */
+userRouter.get('/search/users',
+  Authentication.verifyToken, UserController.searchUser);
+/**
  * Logout route
  */
 userRouter.route('/logout')
