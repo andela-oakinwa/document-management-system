@@ -1,11 +1,16 @@
 **/*{.,-}min.js
 webpack.config.js
 karma.conf.js
-out/
+docs/
+db/
 client/test
+client/e2e
+node_modules/
 coverage/
 server/test
 TestSetup.js
+testSetup.js
+server/test
 nightwatch.conf.js
 screenshots/
 reports/

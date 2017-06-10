@@ -29,9 +29,9 @@ ratings:
   - "**.module"
 exclude_paths:
 - node_modules/
-- server/tests/
+- server/test/
+- client/test
 - usr/local/node_modules/babel-eslint/index.js
-- out/
 - coverage/
 - docs/
 - db/

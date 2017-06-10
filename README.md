@@ -52,7 +52,7 @@ The following features make up the doqMan Document Management System API:
 - It allows users to retrieve all public documents
 - It allows users on the same role to retrieve role-based documents
 
-####Search
+#### Search
 
 - It allows admin to retrieve all documents that matches search term
 - It allows admin to search users based on a specified search term
