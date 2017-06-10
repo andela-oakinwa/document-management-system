@@ -17,7 +17,7 @@ module.exports = {
         .setValue('Input[name=lastName]', faker.name.lastName())
         .setValue('Input[type="email"]', faker.internet.email())
         .setValue('Input[type="password"]', 'passwordpassword')
-        .click('Input[type="submit"]')
+        .click('Button[type="submit"]')
         .pause(10000)
         .assert.urlEquals('http://localhost:4000/signup')
         .end();
