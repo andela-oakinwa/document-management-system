@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/8</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/7</span>
+        <span class='fraction'>7/7</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -108,15 +108,23 @@
 63
 64
 65
-66</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+66
+67
+68
+69
+70</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,22 +185,26 @@
 import { Row, Input, Button } from 'react-materialize';
 import { Link } from 'react-router';
 /**
- * Functional component since it's a chile of LoginPage component
+ * Stateless Functional component
  */
-const LoginForm = <span class="fstat-no" title="function not covered" >({ <span class="cstat-no" title="statement not covered" >errors, onChange, loginProps, onSubmit }) =&gt; {</span></span>
+const LoginForm = ({ errors, onChange, loginProps, onSubmit }) =&gt; {
   return (
-<span class="cstat-no" title="statement not covered" >    &lt;form className="container col s12" onSubmit={onSubmit} method="post"&gt;</span>
-      &lt;h5 className="center"&gt;Please login into your account&lt;/h5&gt;
+    &lt;form className="container col s12 login-form"
+      onSubmit={onSubmit} method="post"&gt;
       &lt;center&gt;
         &lt;Row className="container"&gt;
-          {errors.form &amp;&amp; &lt;div style={{ color: '#f43636' }}&gt;{errors.form}&lt;/div&gt;}
+          {errors.form &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;div style={{ color: '#f43636' }}&gt;{errors.form}&lt;/div&gt;}</span>
           &lt;div className="z-depth-1 grey lighten-4 row card-panel"&gt;
+            &lt;h5 className="center teal-text"&gt;
+              Please login into your account.
+            &lt;/h5&gt;
             &lt;Input
               label="Enter your email"
               s={12}
               onChange={onChange}
               value={loginProps.email}
               name="email"
+              type="email"
               id="email"
               className="validate"
             /&gt;
@@ -212,19 +224,19 @@ const LoginForm = <span class="fstat-no" title="function not covered" >({ <span 
             &lt;i className="small material-icons"&gt;lock&lt;/i&gt;
             &lt;div className="center"&gt;
               &lt;Button
+                id="login"
                 type="submit"
-                className="col s12 btn btn-large waves-effect"
-                style={{ backgroundColor: '#496AE2' }}
+                className="col s12 btn blue btn-large login-btn waves-effect"
               &gt;
                 Login
               &lt;/Button&gt;
             &lt;/div&gt;
+            &lt;span&gt;
+              Don’t have an account?
+            &lt;/span&gt;
+            &lt;Link to="/signup"&gt; Create Account&lt;/Link&gt;
           &lt;/div&gt;
         &lt;/Row&gt;
-        &lt;span className="signup-login-form__switch-copy"&gt;
-          Don’t have an account?
-        &lt;/span&gt;
-        &lt;Link to="/signup"&gt; Create Account&lt;/Link&gt;
       &lt;/center&gt;
     &lt;/form&gt;
   );
@@ -244,7 +256,7 @@ export default LoginForm;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 03 2017 18:49:11 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jun 11 2017 02:40:36 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

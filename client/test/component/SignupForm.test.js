@@ -1,6 +1,6 @@
 import expect from 'expect';
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import SignUpForm from '../../components/signup/SignUpForm';
 
 const setup = () => {
@@ -10,8 +10,7 @@ const setup = () => {
     onSubmit: () => {},
     onChange: () => {}
   };
-
-  return mount(<SignUpForm {...props} />);
+  return shallow(<SignUpForm {...props} />);
 };
 
 describe('Component: SignUpForm', () => {
@@ -23,9 +22,9 @@ describe('Component: SignUpForm', () => {
   });
   it('should take props', () => {
     const wrapper = setup();
-    expect(wrapper.props().errors).toExist;
-    expect(wrapper.props().userProps).toExist;
-    expect(wrapper.props().onChange).toExist;
-    expect(wrapper.props().onSubmit).toExist;
+    expect(wrapper.props('errors')).toExist();
+    expect(wrapper.props('userProps')).toExist();
+    expect(wrapper.props('onChange')).toExist();
+    expect(wrapper.props('onSubmit')).toExist();
   });
 });

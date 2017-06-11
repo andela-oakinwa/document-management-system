@@ -25,8 +25,10 @@ describe('User Actions', () => {
         .reply(200, {
           body: { user } });
 
-      const expectedActions = [{ type: types.ADD_USER,
-        user }];
+      const expectedActions = [{
+        type: types.ADD_USER,
+        user
+      }];
       const store = mockStore({ users: [] });
       store.dispatch(userSignupRequest(user))
         .then(() => {

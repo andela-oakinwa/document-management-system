@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.43% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/7</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/6</span>
+        <span class='fraction'>7/7</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -130,12 +130,30 @@
 85
 86
 87
-88</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -219,80 +237,89 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 import { Row, Input, Button } from 'react-materialize';
+import { Link } from 'react-router';
 &nbsp;
-const SignUpForm = <span class="fstat-no" title="function not covered" >({ <span class="cstat-no" title="statement not covered" >onChange, userProps, onSubmit, errors }) =&gt; {</span></span>
+const SignUpForm = ({ onChange, userProps, onSubmit, errors }) =&gt; {
   return (
-<span class="cstat-no" title="statement not covered" >    &lt;div className="container sign-up-form"&gt;</span>
-      &lt;form className="col s12" onSubmit={onSubmit} method="post"&gt;
-        &lt;h5 className="center"&gt;Create Account&lt;/h5&gt;
-        &lt;Row&gt;
-          {errors.form &amp;&amp; &lt;div style={{ color: '#f43636' }}&gt;{errors.form}&lt;/div&gt;}
-          &lt;Input
-            label="First Name"
-            s={6}
-            validate
-            errors={errors.firstName}
-            value={userProps.firstName}
-            onChange={onChange}
-            type="text"
-            name="firstName"
-          /&gt;
-          &lt;Input
-            label="Last Name"
-            s={6}
-            validate
-            errors={errors.lastName}
-            value={userProps.lastName}
-            onChange={onChange}
-            type="text"
-            name="lastName"
-          /&gt;
-          &lt;Input
-            label="Username"
-            s={12}
-            validate
-            errors={errors.username}
-            value={userProps.username}
-            onChange={onChange}
-            name="username"
-          /&gt;
-          &lt;Input
-            label="Email"
-            s={12}
-            validate
-            errors={errors.email}
-            value={userProps.email}
-            onChange={onChange}
-            type="email"
-            name="email"
-          /&gt;
-          &lt;Input
-            label="Password"
-            s={12}
-            validate
-            value={userProps.password}
-            onChange={onChange}
-            type="password"
-            name="password"
-          /&gt;
-          &lt;Input
-            label="Re-type Password"
-            s={12}
-            validate
-            value={userProps.passwordConfirmation}
-            onChange={onChange}
-            type="password"
-            name="passwordConfirmation"
-          /&gt;
-          &lt;Button
-              type="submit"
-              className="btn blue darken-4 waves-effect"
-            &gt;
-              Sign Up
-          &lt;/Button&gt;
-        &lt;/Row&gt;
+      &lt;form className="col s12 container"
+        onSubmit={onSubmit} method="post"&gt;
+        &lt;center&gt;
+          &lt;Row className="container"&gt;
+            {errors.form &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;div style={{ color: '#f43636' }}&gt;{errors.form}&lt;/div&gt;}</span>
+            &lt;div className="z-depth-1 grey lighten-4 row card-panel"&gt;
+              &lt;h5 className="center teal-text"&gt;Create Account&lt;/h5&gt;
+              &lt;Input
+                label="First Name"
+                s={6}
+                validate
+                errors={errors.firstName}
+                value={userProps.firstName}
+                onChange={onChange}
+                type="text"
+                name="firstName"
+              /&gt;
+              &lt;Input
+                label="Last Name"
+                s={6}
+                validate
+                errors={errors.lastName}
+                value={userProps.lastName}
+                onChange={onChange}
+                type="text"
+                name="lastName"
+              /&gt;
+              &lt;Input
+                label="Username"
+                s={12}
+                validate
+                errors={errors.username}
+                value={userProps.username}
+                onChange={onChange}
+                name="username"
+              /&gt;
+              &lt;Input
+                label="Email"
+                s={12}
+                validate
+                errors={errors.email}
+                value={userProps.email}
+                onChange={onChange}
+                type="email"
+                name="email"
+              /&gt;
+              &lt;Input
+                label="Password"
+                s={12}
+                validate
+                value={userProps.password}
+                onChange={onChange}
+                type="password"
+                name="password"
+              /&gt;
+              &lt;Input
+                label="Re-type Password"
+                s={12}
+                validate
+                value={userProps.passwordConfirmation}
+                onChange={onChange}
+                type="password"
+                name="passwordConfirmation"
+              /&gt;
+              &lt;Button
+                  id="signup"
+                  type="submit"
+                  className="btn col s12 blue darken-2 btn-large waves-effect"
+                &gt;
+                  Sign Up
+              &lt;/Button&gt;
+              &lt;span&gt;
+                Already have an account?
+              &lt;/span&gt;
+              &lt;Link to="/login"&gt; Login&lt;/Link&gt;
+            &lt;/div&gt;
+          &lt;/Row&gt;
+        &lt;/center&gt;
       &lt;/form&gt;
-    &lt;/div&gt;
   );
 };
 &nbsp;
@@ -310,7 +337,7 @@ export default SignUpForm;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 03 2017 18:49:11 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jun 11 2017 02:40:36 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

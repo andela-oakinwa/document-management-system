@@ -38,7 +38,7 @@ class DocumentsPage extends Component {
   }
   /**
    * Handles document deletion and notification
-   * @param  {Number} id Specific document Id
+   * @param {Number} id Specific document Id
    */
   removeDocument(id) {
     this.props.deleteDocument(id)

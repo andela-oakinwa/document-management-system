@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.77% </span>
+        <span class="strong">10.71% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/47</span>
+        <span class='fraction'>6/56</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>0/18</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/23</span>
+        <span class='fraction'>0/26</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.77% </span>
+        <span class="strong">10.91% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/47</span>
+        <span class='fraction'>6/55</span>
       </div>
     </div>
   </div>
@@ -270,7 +270,58 @@
 225
 226
 227
-228</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -491,6 +542,57 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -625,7 +727,7 @@ const UserController = {
       }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     };
     db.<span class="cstat-no" title="statement not covered" >User</span>
       .findAndCountAll(query)
@@ -720,6 +822,57 @@ const UserController = {
             message: error.message
           });
       });
+  },
+  /**
+   * Search for a user
+   * Route: GET: /search/users?q={queryParam}
+   * @param {Object} request Request object
+   * @param {Object} response Response object
+   * @returns {void} no returns
+   */
+  searchUser(<span class="fstat-no" title="function not covered" >request, response) {</span>
+    const <span class="cstat-no" title="statement not covered" >query = {</span>
+      where: {
+        $or: [{
+          username: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          firstName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          lastName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          email: {
+            $iLike: `%${request.query.q}%`
+          }
+        }],
+      },
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+    db.<span class="cstat-no" title="statement not covered" >User.findAndCountAll(query)</span>
+      .then(<span class="fstat-no" title="function not covered" >(users) =&gt; {</span>
+        const <span class="cstat-no" title="statement not covered" >results = users.rows.map(<span class="fstat-no" title="function not covered" >user =&gt; <span class="cstat-no" title="statement not covered" >Helper.userProfile(user));</span></span></span>
+        const <span class="cstat-no" title="statement not covered" >constraint = {</span>
+          count: users.count,
+          limit: query.limit,
+          offset: query.offset
+        };
+        delete <span class="cstat-no" title="statement not covered" >users.count;</span>
+        const <span class="cstat-no" title="statement not covered" >paging = Helper.paging(constraint);</span>
+        response.<span class="cstat-no" title="statement not covered" >status(200)</span>
+          .send({
+            paging,
+            rows: results
+          });
+        response.<span class="cstat-no" title="statement not covered" >status(200)</span>
+          .send(results);
+      });
   }
 };
 &nbsp;
@@ -730,7 +883,7 @@ export default UserController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 03 2017 18:49:11 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jun 11 2017 02:40:36 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

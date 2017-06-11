@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import DocumentCard from '../../components/document/DocumentCard';
 
 const middlewares = [thunk];
@@ -19,7 +19,7 @@ const setup = () => {
     currentUser: {}
   };
 
-  return mount(
+  return shallow(
     <DocumentCard {...props} />,
     context: { store: mockStore }
   );
