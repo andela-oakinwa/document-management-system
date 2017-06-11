@@ -86,6 +86,12 @@ const UserController = {
                 message: 'You have successfully logged out.'
               });
           });
+      })
+      .catch(() => {
+        response.status(400)
+        .send({
+          message: 'An error has occured. Invalid request'
+        });
       });
   },
   /**
@@ -173,10 +179,10 @@ const UserController = {
               });
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(400)
           .send({
-            message: error.message
+            message: 'Missing attributes. Please check details.'
           });
       });
   },
@@ -215,10 +221,10 @@ const UserController = {
           allDocs
         });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(404)
           .send({
-            message: error.message
+            message: 'Document not found'
           });
       });
   },

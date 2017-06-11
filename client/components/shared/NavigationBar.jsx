@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout } from '../../actions/Authentication';
 /**
  * Class component
  */
-class NavigationBar extends React.Component {
+class NavigationBar extends Component {
   /**
    * Component properties
    * @param {Object} props Component properties

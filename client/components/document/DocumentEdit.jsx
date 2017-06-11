@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Row, Input } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 import toastr from 'toastr';
 import { updateDocument } from '../../actions/DocumentAction';
 
-class DocumentEdit extends React.Component {
+class DocumentEdit extends Component {
   constructor(props) {
     super(props);
 
@@ -108,12 +108,12 @@ DocumentEdit.propTypes = {
 };
 
 /**
- * @function
- * @param {*} state
- * @param {*} ownProps
- * @returns {onject} - current document
+ * Maps state to props
+ * @param {Object} state
+ * @param {Object} ownProps
+ * @returns {Object} - current document
  */
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   const documentId = ownProps.params.id;
   let document = {};
   state.documents.forEach((doc) => {

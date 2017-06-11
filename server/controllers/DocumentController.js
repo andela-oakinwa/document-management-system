@@ -62,10 +62,10 @@ const DocumentController = {
             message: 'Document is private'
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid query details.'
           });
       });
   },
@@ -83,7 +83,7 @@ const DocumentController = {
           { ownerId: request.tokenDecode.userId }
         ]
       },
-      include: [db.User],
+      include: [db.User.id, db.User.username],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
@@ -139,10 +139,10 @@ const DocumentController = {
               });
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid parameters. Document not retrieved'
           });
       });
   },

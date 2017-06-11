@@ -14,6 +14,7 @@ const RoleController = {
    * @param {Object} response Response object
    */
   createRole(request, response) {
+    console.log(request.body);
     db.Role
       .create(request.body)
       .then((role) => {
@@ -32,7 +33,7 @@ const RoleController = {
         }
         response.status(400)
           .send({
-            error: error.message
+            message: error.message
           });
       });
   },

@@ -7,15 +7,15 @@ import isEmpty from 'lodash/isEmpty';
 const ValidateInput = {
   /**
    * Handles user login input validation
-   * @param  {Object} details Data containing login details
+   * @param  {Object} credentials Data containing login details
    * @return {Object}
    */
-  loginInput(details) {
+  checkLogin: (credentials) => {
     const errors = {};
-    if (!validator.isEmail(details.email)) {
-      errors.email = 'Email is invalid';
+    if (!validator.isEmail(credentials.email)) {
+      errors.email = 'This field is required';
     }
-    if (validator.isEmpty(details.password)) {
+    if (validator.isEmpty(credentials.password)) {
       errors.password = 'This field is required';
     }
     return {
@@ -25,33 +25,33 @@ const ValidateInput = {
   },
   /**
    * Handles user signup inputs validation
-   * @param  {Object} details Data containing signup details
+   * @param  {Object} credentials Data containing signup details
    * @return {Object}
    */
-  signUpInput(details) {
+  checkSignup: (credentials) => {
     const errors = {};
-    if (validator.isEmpty(details.firstName)) {
+    if (validator.isEmpty(credentials.firstName)) {
       errors.firstName = 'This field is required';
     }
-    if (validator.isEmpty(details.lastName)) {
+    if (validator.isEmpty(credentials.lastName)) {
       errors.lastName = 'This field is required';
     }
-    if (validator.isEmpty(details.username)) {
+    if (validator.isEmpty(credentials.username)) {
       errors.username = 'This field is required';
     }
-    if (validator.isEmpty(details.email)) {
+    if (validator.isEmpty(credentials.email)) {
       errors.email = 'This field is required';
     }
-    if (!validator.isEmail(details.email)) {
-      errors.email = 'Email is invalid';
+    if (!validator.isEmail(credentials.email)) {
+      errors.email = 'This field is required';
     }
-    if (validator.isEmpty(details.password)) {
+    if (validator.isEmpty(credentials.password)) {
       errors.password = 'This field is required';
     }
-    if (validator.isEmpty(details.passwordConfirmation)) {
+    if (validator.isEmpty(credentials.passwordConfirmation)) {
       errors.passwordConfirmation = 'This field is required';
     }
-    if (!validator.equals(details.password, details.passwordConfirmation)) {
+    if (!validator.equals(credentials.password, credentials.passwordConfirmation)) {
       errors.passwordConfirmation = 'Passwords must match';
     }
     return {

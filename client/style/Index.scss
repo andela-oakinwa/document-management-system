@@ -19,6 +19,14 @@ main {
   flex: 1 0 auto;
 }
 
+footer {
+  // clear: both;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
 .login-form {
   width: 600px;
 }

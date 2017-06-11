@@ -1,9 +1,14 @@
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import expect from 'expect';
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import DocumentCard from '../../components/document/DocumentCard';
 
-function setup() {
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+const setup = () => {
   const props = {
     document: {
       title: 'title',
@@ -14,19 +19,23 @@ function setup() {
     currentUser: {}
   };
 
-  return mount(<DocumentCard {...props} />);
-}
+  return shallow(
+    <DocumentCard {...props} />,
+    context: { store: mockStore }
+  );
+};
 
 describe('DocumentCard', () => {
-  it('renders a row div', () => {
+  it('renders a col div', () => {
     const wrapper = setup();
-    expect(wrapper.find('.row')).toExist;
+    expect(wrapper.find('.col')).toExist();
   });
 
   it('renders card', () => {
     const wrapper = setup();
-    expect(wrapper.find('.card')).toExist;
+    expect(wrapper.find('.card')).toExist();
   });
+
   it('receives the correct props', () => {
     const wrapper = setup();
     expect(wrapper.find('.card-title').text()).toEqual('title');

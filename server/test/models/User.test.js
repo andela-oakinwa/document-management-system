@@ -85,7 +85,7 @@ describe('User Model', () => {
           expect(decryptPassword).to.be.equal(true);
           expect(user.password).to.not.equal(helper.regularUser.password);
           done();
-        });     
+        });  
     });
   });
 });
