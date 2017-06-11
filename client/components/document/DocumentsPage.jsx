@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import $ from 'jquery';
 import { Pagination, Button } from 'react-materialize';
 import DocumentsList from './DocumentsList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
@@ -151,24 +152,21 @@ class DocumentsPage extends Component {
                 Filter Documents
             </Link>
             <ul id="type-list"
-              className="dropdown-content dropdown-button">
-              <li className="tab col s4">
+              className="dropdown-content blue dropdown-button">
+              <li className="tab blue col s4">
                 <Button
-                  className="blue"
                   onClick={this.filterPublicDocs}>
                   Public Documents
                 </Button>
               </li>
-              <li className="tab col s4">
+              <li className="tab col blue s4">
                 <Button
-                  className="blue"
                   onClick={this.filterPrivateDocs}>
                   Private Documents
                 </Button>
               </li>
-              <li className="tab col s4">
+              <li className="tab blue col s4">
                 <Button
-                  className="blue"
                   onClick={this.filterRoleDocs}>
                   Role Documents
                 </Button>
