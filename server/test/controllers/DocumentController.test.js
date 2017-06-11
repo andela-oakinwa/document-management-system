@@ -1,12 +1,11 @@
 import supertest from 'supertest';
-import chai from 'chai';
+import expect from 'expect';
 
 import db from '../../models';
 import app from '../../Server';
 import helper from '../Test.Helper';
 
 const request = supertest.agent(app),
-  expect = chai.expect,
   publicD = helper.publicDocument,
   privateD = helper.privateDocument,
   roleDoc = helper.roleDocument,

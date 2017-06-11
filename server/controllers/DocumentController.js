@@ -62,10 +62,10 @@ const DocumentController = {
             message: 'Document is private'
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid query details.'
           });
       });
   },
@@ -139,10 +139,10 @@ const DocumentController = {
               });
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid parameters. Document not retrieved'
           });
       });
   },
