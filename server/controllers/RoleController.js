@@ -14,6 +14,7 @@ const RoleController = {
    * @param {Object} response Response object
    */
   createRole(request, response) {
+    console.log(request.body);
     db.Role
       .create(request.body)
       .then((role) => {
