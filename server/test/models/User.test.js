@@ -78,14 +78,14 @@ describe('User Model', () => {
 
   describe('Login In', () => {
     let decryptPassword;
-    it('should login a user', () => {
+    it('should login a user', (done) => {
       db.User.findOne({ where: { email: helper.regularUser.email } })
         .then((user) => {
           decryptPassword = user.validPassword(helper.regularUser.password);
           expect(decryptPassword).to.be.equal(true);
           expect(user.password).to.not.equal(helper.regularUser.password);
           done();
-        });  
+        });
     });
   });
 });
