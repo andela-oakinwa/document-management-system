@@ -83,7 +83,7 @@ const DocumentController = {
           { ownerId: request.tokenDecode.userId }
         ]
       },
-      include: [db.User.id, db.User.username],
+      include: [db.User.id],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]

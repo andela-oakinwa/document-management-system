@@ -198,7 +198,7 @@ const UserController = {
           user.destroy();
           response.status(200)
             .send({
-              message: 'This account has been successfully deleted.'
+              message: 'This user has been successfully deleted.'
             });
         }
       })

@@ -18,11 +18,14 @@ body {
 main {
   flex: 1 0 auto;
 }
+.about-page {
+  height: 100%;
+  position: relative;
+}
 
 footer {
-  // clear: both;
+  position:fixed;
   bottom: 0;
-  position: absolute;
   right: 0;
   left: 0;
 }

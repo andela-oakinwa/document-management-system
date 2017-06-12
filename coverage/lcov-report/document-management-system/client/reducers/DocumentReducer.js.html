@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">93.75% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/16</span>
+        <span class='fraction'>15/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.14% </span>
+        <span class="strong">85.71% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/14</span>
+        <span class='fraction'>12/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30% </span>
+        <span class="strong">90% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/10</span>
+        <span class='fraction'>9/10</span>
       </div>
       <div class='fl pad1y'>
         <span class="strong">1 branch</span>
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -77,26 +77,26 @@
 28
 29</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -105,26 +105,26 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as types from '../actions/ActionType';
 &nbsp;
-const documents = <span class="fstat-no" title="function not covered" >(<span class="cstat-no" title="statement not covered" >state = [], <span class="cstat-no" title="statement not covered" >action = {}) =&gt; {</span></span></span>
-  switch (<span class="cstat-no" title="statement not covered" >action.type) {</span>
+const documents = (state = <span class="branch-1 cbranch-no" title="branch not covered" >[], action = <span class="branch-1 cbranch-no" title="branch not covered" >{}) =&gt; {</span></span>
+  switch (action.type) {
   case types.CREATE_DOCUMENT:
-    return [...<span class="cstat-no" title="statement not covered" >state, Object.assign({}, action.document)];</span>
+    return [...state, Object.assign({}, action.document)];
   case types.LOAD_DOCUMENT:
     return [
-      ...<span class="cstat-no" title="statement not covered" >state.filter(<span class="fstat-no" title="function not covered" >document =&gt; <span class="cstat-no" title="statement not covered" >document.id !== action.document.id),</span></span></span>
+      ...state.filter(document =&gt; document.id !== action.document.id),
       Object.assign({}, action.document)
     ];
   case types.UPDATE_DOCUMENT:
     return [
-      ...<span class="cstat-no" title="statement not covered" >state.filter(<span class="fstat-no" title="function not covered" >document =&gt; <span class="cstat-no" title="statement not covered" >document.id !== action.document.id),</span></span></span>
+      ...state.filter(document =&gt; document.id !== action.document.id),
       Object.assign({}, action.document)
     ];
   case types.DELETE_DOCUMENT:
     return [
-      ...<span class="cstat-no" title="statement not covered" >state.filter(<span class="fstat-no" title="function not covered" >document =&gt; <span class="cstat-no" title="statement not covered" >document.id !== action.documentId),</span></span></span>
+      ...state.filter(document =&gt; document.id !== action.documentId),
     ];
   case types.SET_DOCUMENTS:
-    return <span class="cstat-no" title="statement not covered" >action.documents;</span>
+    return action.documents;
 &nbsp;
   default: return <span class="cstat-no" title="statement not covered" >state;</span>
   }
@@ -137,7 +137,7 @@ export default documents;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jun 11 2017 14:57:10 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 11:59:15 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
