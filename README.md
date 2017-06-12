@@ -19,7 +19,7 @@
 The API has routes, each dedicated to a single task that uses HTTP response codes to indicate API status and errors.
 
 ### API Link
-[API Documentation](https://dms-doqman.herokuapp.com/api-docs/)
+[API Documentation](https://dms-doqman.herokuapp.com/api)
 
 ### Features
 

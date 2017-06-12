@@ -47,6 +47,13 @@ if (process.env.NODE_ENV !== 'test') {
   }));
 }
 /**
+ * Api Documentation
+ */
+app.get('/api', (request, response) => {
+  response.status(200)
+  .sendFile(path.join(__dirname, '../../client/api_docs/index.html'));
+});
+/**
  * Routes
  */
 app.use('/users', userRouter);
