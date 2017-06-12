@@ -11,7 +11,7 @@ const getUser = (userId) => {
       .then((response) => {
         dispatch({
           type: types.GET_CURRENT_USER,
-          user: response.data.users.id
+          user: response.data.user
         });
       });
   };

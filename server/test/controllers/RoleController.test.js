@@ -2,7 +2,6 @@ import supertest from 'supertest';
 import expect from 'expect';
 import db from '../../models';
 import app from '../../Server';
-//import helper from '../Test.Helper';
 import helper from '../test-helper';
 
 const request = supertest.agent(app);

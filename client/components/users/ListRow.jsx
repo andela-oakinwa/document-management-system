@@ -43,9 +43,12 @@ class ListRow extends Component {
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
-        <td>{authenticate.user.roleId !== user.roleId ? <EditUserRole
-          value={parseInt(this.state.user.roleId, 10)}
-          onChange={this.onChange} /> : <span>{user.Role.title}</span>
+        <td>{authenticate.user.roleId !== user.roleId ? 
+          <EditUserRole
+            value={parseInt(this.state.user.roleId, 10)}
+          onChange={this.onChange}
+          /> 
+          : <span>{user.Role.title}</span>
           }
         </td>
         <td>{user.createdAt.substr(0, 10)}</td>

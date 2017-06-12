@@ -83,7 +83,7 @@ const DocumentController = {
           { ownerId: request.tokenDecode.userId }
         ]
       },
-      include: [db.User.id],
+      include: [{ model: db.User, attributes: ['id', 'username', 'firstName', 'lastName'] }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
@@ -201,7 +201,7 @@ const DocumentController = {
         ],
         }],
       },
-      include: [{ model: db.User, as: 'owner' }],
+      include: [{ model: db.User }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
@@ -214,6 +214,7 @@ const DocumentController = {
     }
     db.Document.findAndCountAll(query)
       .then((allDocs) => {
+        const results = allDocs.rows.map(doc => Helper.getDocument(doc));
         const constraint = {
           count: allDocs.count,
           limit: query.limit,
@@ -224,8 +225,10 @@ const DocumentController = {
         response.status(200)
           .send({
             paging,
-            rows: allDocs.rows
+            rows: results
           });
+        response.status(200)
+          .send(results);
       });
   }
 };

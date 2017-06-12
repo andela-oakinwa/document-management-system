@@ -6,6 +6,10 @@ import toastr from 'toastr';
 import { updateDocument } from '../../actions/DocumentAction';
 
 class DocumentEdit extends Component {
+  /**
+   * Instatiates class
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
 
@@ -19,7 +23,10 @@ class DocumentEdit extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClickUpdate = this.onClickUpdate.bind(this);
   }
-
+  /**
+   * Handles on change event
+   * @param {Object} event
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -40,7 +47,9 @@ class DocumentEdit extends Component {
         toastr.success('Document updated');
       });
   }
-
+  /**
+   * Renders to the DOM
+   */
   render() {
     return (
       <form className="container">

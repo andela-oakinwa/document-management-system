@@ -26,7 +26,10 @@ const documentSearched = (searchResult) => {
     return (dispatch) => {
       return axios.get(`/documents/search/documents?q=${queryString}`)
         .then((response) => {
-          dispatch(documentSearched(response.data.rows));
+          dispatch({
+            type: types.SET_DOCUMENTS,
+            document: response.data.rows
+          });
           dispatch({
             type: types.SET_PAGINATION,
             pagination: response.data.pagination

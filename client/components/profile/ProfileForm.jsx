@@ -14,7 +14,7 @@ const ProfileForm = ({ userProps, onChange, onSubmit }) => {
             label="First Name"
             s={6}
             name="firstName"
-            value={userProps.firstName}
+            defaultValue={userProps.firstName}
             onChange={onChange}
             required
           />

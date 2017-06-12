@@ -8,7 +8,7 @@ const SignUpForm = ({ onChange, userProps, onSubmit, errors }) => {
         onSubmit={onSubmit} method="post">
         <center>
           <Row className="container">
-            {errors.form && <div style={{ color: '#f43636' }}>{errors.form}</div>}
+            {errors.form && <div className="error-message">{errors.form}</div>}
             <div className="z-depth-1 grey lighten-4 row card-panel">
               <h5 className="center teal-text">Create Account</h5>
               <Input

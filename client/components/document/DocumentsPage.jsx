@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import toastr from 'toastr';
@@ -106,13 +107,12 @@ class DocumentsPage extends Component {
    * Called after render method
    */
   componentDidMount() {
-    const element = ReactDOM.findDOMNode(this.refs.dropdown)
+    const element = ReactDOM.findDOMNode(this.refs.dropdown);
     $(element).ready(() => {
       $('.dropdown-button').dropdown({
         inDuration: 300,
         outDuration: 225,
-        constrain_width: true,
-        hover: true,
+        constrainWidth: true,
         gutter: 0,
         belowOrigin: false,
         alignment: 'left'
@@ -155,18 +155,21 @@ class DocumentsPage extends Component {
               className="dropdown-content blue dropdown-button">
               <li className="tab blue col s4">
                 <Button
+                  className="blue"
                   onClick={this.filterPublicDocs}>
                   Public Documents
                 </Button>
               </li>
               <li className="tab col blue s4">
                 <Button
+                  className="blue"
                   onClick={this.filterPrivateDocs}>
                   Private Documents
                 </Button>
               </li>
               <li className="tab blue col s4">
                 <Button
+                  className="blue"
                   onClick={this.filterRoleDocs}>
                   Role Documents
                 </Button>
@@ -217,5 +220,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps,
-{ fetchDocuments, deleteDocument, searchDocuments })(DocumentsPage);
+const mapDispatchToProps = (dispatch) => ({
+  fetchDocuments: bindActionCreators(fetchDocuments, dispatch), 
+  deleteDocument: bindActionCreators(deleteDocument, dispatch), 
+  searchDocuments: bindActionCreators(searchDocuments, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentsPage);

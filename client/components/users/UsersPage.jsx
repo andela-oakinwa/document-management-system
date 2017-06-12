@@ -56,9 +56,6 @@ class UsersPage extends Component {
   render() {
     const { totalCount, pageSize, currentPage, pageCount }
       = this.props.metadata;
-    // if (this.props.search.length > 0) {
-
-    // }
     return (
       <div className="container">
         <h5 className="center">Registered Users</h5>

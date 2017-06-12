@@ -30,7 +30,7 @@ const fetchDocuments = (offset) => {
       .then((response) => {
         dispatch({
           type: types.SET_DOCUMENTS,
-          documents: response.data.documents.rows
+          document: response.data.documents.rows
         });
         dispatch({
           type: types.SET_PAGINATION,
@@ -80,8 +80,8 @@ const updateDocument = (id, document) => {
 const deleteDocument = (id) => {
   // return (dispatch) => {
   return axios.delete(`/documents/${id}`)
-    .then((res) => {
-      return res.data;
+    .then((response) => {
+      return response.data;
     }, (error) => {
       throw (error.response.data.message);
     });

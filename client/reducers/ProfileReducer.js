@@ -1,7 +1,10 @@
-import { SET_USER_ID } from '../actions/ActionType';
+import { SET_USER_ID, GET_CURRENT_USER } from '../actions/ActionType';
 
-const user = (state = [], action = {}) => {
+const user = (state = {}, action = {}) => {
   switch (action.type) {
+  case GET_CURRENT_USER: {
+    return Object.assign({}, action.user);
+  }
   case SET_USER_ID:
     return [
       ...state,
