@@ -78,13 +78,17 @@ const updateDocument = (id, document) => {
  * @returns {Object}
  */
 const deleteDocument = (id) => {
-  // return (dispatch) => {
-  return axios.delete(`/documents/${id}`)
+  return (dispatch) => {
+    return axios.delete(`/documents/${id}`)
     .then((response) => {
-      return response.data;
+      dispatch({
+        type: types.DELETE_DOCUMENT,
+        document: response.data,
+      });
     }, (error) => {
       throw (error.response.data.message);
     });
+  };
 };
 
 export { saveDocument, fetchDocument, fetchDocuments,

@@ -2,9 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const DocumentDetails = (
-  { document, deleteDocument, currentUser }
-  ) => {
+const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
   return (
     <div className="col s12 container">
       <div className="card">

@@ -16,6 +16,7 @@ const UsersList = ({ users, deleteUser, auth }) => {
     <table className="responsive-table bordered striped">
       <thead>
         <tr>
+          <th>User ID</th>
           <th>UserName</th>
           <th>First Name</th>
           <th>Last Name</th>

@@ -132,7 +132,7 @@ const UserController = {
       }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     };
     db.User
       .findAndCountAll(query)
@@ -169,7 +169,9 @@ const UserController = {
               message: 'User not found'
             });
         }
-        db.User.update(request.body)
+        db.User.update(
+          request.body,
+          { where: { id: request.body.id } })
           .then((updatedUser) => {
             updatedUser = Helper.userProfile(updatedUser);
             response.status(200)
@@ -194,17 +196,17 @@ const UserController = {
   deleteUser(request, response) {
     db.User.findById(request.params.id)
       .then((user) => {
-        if (request.params.roleId === 1) {
-          user.destroy();
-          response.status(200)
-            .send({
-              message: 'This user has been successfully deleted.'
-            });
-        }
+        user.destroy();
+        response.status(200)
+          .send({
+            message: 'User has been successfully deleted.'
+          });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
-          .send(error.message);
+          .send({
+            message: 'An error has occured. User not deleted.'
+          });
       });
   },
   /**

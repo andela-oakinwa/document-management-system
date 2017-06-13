@@ -32,12 +32,18 @@ class DocumentEdit extends Component {
       [event.target.name]: event.target.value
     });
   }
-
+  /**
+   *Called when document content is changed
+   * @param {Object} event
+   */
   handleChange(event) {
     const content = event.target.getContent();
     this.setState({ content });
   }
-
+  /**
+   * Called when document is updateed
+   * @param {Object} event
+   */
   onClickUpdate(event) {
     event.preventDefault();
     const docId = this.props.document.id;
@@ -61,11 +67,11 @@ class DocumentEdit extends Component {
             <label htmlFor="title" className="active">Title</label>
             <input
               type="text"
-              validate
               name="title"
               value={this.state.title}
               onChange={this.onChange}
               id="title"
+              required
             />
             {/*{errors.title && <span className="red-text">Enter Title</span>}*/}
           </div>
@@ -133,6 +139,6 @@ const mapStateToProps = (state, ownProps) => {
   });
 
   return { document };
-}
+};
 
 export default connect(mapStateToProps, { updateDocument })(DocumentEdit);

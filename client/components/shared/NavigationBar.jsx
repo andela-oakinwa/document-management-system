@@ -5,7 +5,7 @@ import { logout } from '../../actions/Authentication';
 /**
  * Class component
  */
-class NavigationBar extends Component {
+export class NavigationBar extends Component {
   /**
    * Component properties
    * @param {Object} props Component properties

@@ -27,10 +27,10 @@ const DocumentController = {
               createdDoc
             });
         })
-        .catch((error) => {
+        .catch(() => {
           response.status(500)
             .send({
-              message: error.message
+              message: 'An error has occured. Document not created.'
             });
         });
   },

@@ -18,7 +18,7 @@ const fetchUsers = (offset) => {
           });
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: response.data.pagination
+            pagination: response.data.paging
           });
         });
     };
@@ -43,9 +43,9 @@ const fetchUsers = (offset) => {
  * @param {Object} userId User's userId
  * @returns {Object}
  */
-  updateUser = (user, userId) => {
+  updateUser = (user) => {
     return (dispatch) => {
-      return axios.put(`/users/${userId}`, user)
+      return axios.put(`/users/${user.id}`, user)
         .then(response => dispatch({
           type: types.UPDATE_USER,
           user: response.data,
@@ -62,7 +62,7 @@ const fetchUsers = (offset) => {
       return axios.delete(`/users/${id}`)
         .then(() => dispatch({
           type: types.DELETE_USER,
-          userId: id,
+          user: response.data
         }));
     };
   };

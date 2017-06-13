@@ -29,7 +29,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
+        test: /.jsx?$/,
         include: [path.join(__dirname, 'client'), path.join(__dirname, 'server/shared')],
         exclude: /node_modules/,
         loaders: ['react-hot-loader', 'babel-loader']
@@ -39,9 +39,26 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
+        test: /materialize-css\/bin\//,
+        loader: 'imports-loader?jQuery=jquery,$=jquery,hammerjs'
+      },
+      {
         test: /\.(jpg|png)$/,
         loader: 'file-loader'
-      }
+      },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+
+      },
+      { test: /\.woff2(\?\S*)?$/,
+        loader: 'url-loader?limit=100000'
+      },
+      { test: /\.woff(\?\S*)?$/,
+        loader: 'url-loader?limit=100000'
+      },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=100000&mimetype=application/octet-stream'
+      },
     ]
   },
   resolve: {

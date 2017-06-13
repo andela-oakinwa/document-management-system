@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import toastr from 'toastr';
-import $ from 'jquery';
-import { Pagination, Button } from 'react-materialize';
+import { Pagination } from 'react-materialize';
 import DocumentsList from './DocumentsList';
 import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
 import { searchDocuments } from '../../actions/Search';
 import Search from '../shared/SearchBox';
+import SelectInput from '../shared/SelectInput';
+import access from '../../data/options';
 /**
  * Defined as class component.
  */
@@ -22,14 +22,13 @@ class DocumentsPage extends Component {
     super(props);
     this.state = {
       renderedDocuments: props.documents,
-      filtered: false
+      filtered: false,
+      access: 'public'
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
-    this.filterPublicDocs = this.filterPublicDocs.bind(this);
-    this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
-    this.filterRoleDocs = this.filterRoleDocs.bind(this);
+    this.filterDocument = this.filterDocument.bind(this);
   }
   /**
    * Checks for rendered document
@@ -37,6 +36,18 @@ class DocumentsPage extends Component {
   componentWillMount() {
     this.props.fetchDocuments();
     this.setState({ renderedDocuments: this.props.documents });
+  }
+  /**
+   * Called after render method
+   */
+  componentDidMount() {
+    $('select').material_select();
+    $('#section').on('change', this.filterDocument);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      renderedDocuments: nextProps.documents
+      });
   }
   /**
    * Handles document deletion and notification
@@ -71,54 +82,18 @@ class DocumentsPage extends Component {
   /**
    * Returns list of documents with public access
    */
-  filterPublicDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'public');
-    this.setState({ renderedDocuments, filtered: true });
-  }
-  /**
-   * Returns list of documents with private access
-   */
-  filterPrivateDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'private');
-    this.setState({ renderedDocuments, filtered: true });
-  }
-  /**
-   * Returns list of documents with role access
-   */
-  filterRoleDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'role');
-    this.setState({ renderedDocuments, filtered: true });
+  filterDocument(event) {
+    this.setState({ access: event.target.value });
   }
   /**
    * [deleteUserDoc description]
-   * @param  {[type]} docId [description]
-   * @return {[type]}       [description]
+   * @param  {Number} docId Document Id
+   * @return {Object}
    */
   deleteUserDoc(docId) {
     return () => this.props.deleteDocument(docId);
   }
-  /**
-   * Called after render method
-   */
-  componentDidMount() {
-    const element = ReactDOM.findDOMNode(this.refs.dropdown);
-    $(element).ready(() => {
-      $('.dropdown-button').dropdown({
-        inDuration: 300,
-        outDuration: 225,
-        constrainWidth: true,
-        gutter: 0,
-        belowOrigin: false,
-        alignment: 'left'
-      });
-    });
-  }
+
   /**
    * Renders to the DOM
    * @return {Object}
@@ -129,6 +104,9 @@ class DocumentsPage extends Component {
       pageSize,
       currentPage,
       pageCount } = this.props.metadata;
+    const renderedDocuments =
+      this.props.documents
+      .filter(document => document.access === this.state.access);
     return (
       <div className="container">
         <h4 className="center">Available Documents</h4>
@@ -145,42 +123,19 @@ class DocumentsPage extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col s12">
-            <Link
-              className="dropdown-button blue btn s3"
-              data-activates="type-list">
-                Filter Documents
-            </Link>
-            <ul id="type-list"
-              className="dropdown-content blue dropdown-button">
-              <li className="tab blue col s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterPublicDocs}>
-                  Public Documents
-                </Button>
-              </li>
-              <li className="tab col blue s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterPrivateDocs}>
-                  Private Documents
-                </Button>
-              </li>
-              <li className="tab blue col s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterRoleDocs}>
-                  Role Documents
-                </Button>
-              </li>
-            </ul>
+          <div className="col s4">
+            <SelectInput
+              id="section"
+              name="section"
+              options={access}
+              label="Filter Documents by Access"
+              />
           </div>
         </div>
         <DocumentsList
-          documents={this.state.renderedDocuments}
+          documents={renderedDocuments}
           filtered={this.state.filtered}
-          notFiltered={this.props.documents}
+          notFiltered={renderedDocuments}
           deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
@@ -220,10 +175,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchDocuments: bindActionCreators(fetchDocuments, dispatch), 
-  deleteDocument: bindActionCreators(deleteDocument, dispatch), 
+const mapDispatchToProps = dispatch => ({
+  fetchDocuments: bindActionCreators(fetchDocuments, dispatch),
+  deleteDocument: bindActionCreators(deleteDocument, dispatch),
   searchDocuments: bindActionCreators(searchDocuments, dispatch)
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentsPage);

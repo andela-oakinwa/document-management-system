@@ -22,7 +22,7 @@ class ManageDocumentPage extends Component {
     this.redirect = this.redirect.bind(this);
   }
   /**
-   * 
+   * Called during updating phase
    * @param {Object} nextProps
    */
   componentWillReceiveProps(nextProps) {
@@ -44,15 +44,20 @@ class ManageDocumentPage extends Component {
     return this.setState({ document });
   }
   /**
-   * This will run after saving document
+   * Called if document is saved successfully
    */
   saveSuccess() { this.redirect(); }
-
+  /**
+   * Called when saving document fails
+   * @param {Object} error
+   */
   saveFailure(error) {
     toastr.error(error);
     this.setState({ saving: false });
   }
-
+  /**
+   * Checks if document metadata exist
+   */
   isValid() {
     const data = {
       title: this.state.document.title,
@@ -65,7 +70,10 @@ class ManageDocumentPage extends Component {
     }
     return isValid;
   }
-
+  /**
+   * Handles saving of document
+   * @param {Object} event
+   */
   saveDocument(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -79,16 +87,19 @@ class ManageDocumentPage extends Component {
       }
     }
   }
-
+  /**
+   * Handles redirection
+   */
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document saved');
     this.context.router.push('/');
   }
-
+  /**
+   * Renders to the DOM
+   */
   render() {
     const { errors } = this.state;
-
     return (
       <div className="container">
         <DocumentForm

@@ -7,7 +7,7 @@ class LandingPage extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
-      <div>
+      <div className="main">
       {!isAuthenticated &&
         <div className="banner">
           <div className="landing-page" >

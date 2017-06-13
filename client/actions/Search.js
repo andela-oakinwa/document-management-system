@@ -32,7 +32,7 @@ const documentSearched = (searchResult) => {
           });
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: response.data.pagination
+            pagination: response.data.paging
           });
         });
     };
@@ -52,7 +52,7 @@ const documentSearched = (searchResult) => {
           dispatch(userSearched(response.data.rows));
           dispatch({
             type: types.SET_PAGINATION,
-            pagination: response.data.pagination
+            pagination: response.data.paging
           });
         });
     };

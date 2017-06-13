@@ -56,7 +56,7 @@ describe('Document Reducer', () => {
     const newState = documents(initialState, action);
     expect(newState.length).toEqual(initialState.length - 1);
   });
-  
+
   it('should set documents when passed SET_DOCUMENTS', () => {
     const initialState = [];
     const documentsToSet = [
@@ -64,7 +64,7 @@ describe('Document Reducer', () => {
       { id: '2', title: 'B' },
       { id: '3', title: 'C' }
     ];
-    const action = { type: types.SET_DOCUMENTS, documents: documentsToSet };
+    const action = { type: types.SET_DOCUMENTS, document: documentsToSet };
     const newState = documents(initialState, action);
     expect(newState.length).toEqual(documentsToSet.length);
   });

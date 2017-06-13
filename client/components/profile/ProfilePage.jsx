@@ -23,7 +23,7 @@ class ProfilePage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   /**
-   * Checks for mounted details
+   * Called after redering
    */
   componentDidMount() {
     this.props.getUser(this.props.userId)
@@ -42,7 +42,6 @@ class ProfilePage extends Component {
    * @param {Object} event Event object trigered by user
    */
   onChange(event) {
-    // console.log(event.target.name, 'lion', event.target.value)
     this.setState({ [event.target.name]: event.target.value });
   }
   /**
@@ -50,7 +49,6 @@ class ProfilePage extends Component {
    * @param {Object} event Event trigered by user
    */
   onSubmit(event) {
-    console.log(this.state);
     event.preventDefault();
     this.props.updateUser(this.state, this.props.userId)
       .then(

@@ -34,6 +34,10 @@ import toastr from 'toastr';
 import { updateDocument } from '../../actions/DocumentAction';
 
 class DocumentEdit extends Component {
+  /**
+   * Instatiates class
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
 
@@ -47,18 +51,27 @@ class DocumentEdit extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClickUpdate = this.onClickUpdate.bind(this);
   }
-
+  /**
+   * Handles on change event
+   * @param {Object} event
+   */
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
-
+  /**
+   *Called when document content is changed
+   * @param {Object} event
+   */
   handleChange(event) {
     const content = event.target.getContent();
     this.setState({ content });
   }
-
+  /**
+   * Called when document is updateed
+   * @param {Object} event
+   */
   onClickUpdate(event) {
     event.preventDefault();
     const docId = this.props.document.id;
@@ -68,7 +81,9 @@ class DocumentEdit extends Component {
         toastr.success('Document updated');
       });
   }
-
+  /**
+   * Renders to the DOM
+   */
   render() {
     return (
       &lt;form className="container">
@@ -80,11 +95,11 @@ class DocumentEdit extends Component {
             &lt;label htmlFor="title" className="active">Title&lt;/label>
             &lt;input
               type="text"
-              validate
               name="title"
               value={this.state.title}
               onChange={this.onChange}
               id="title"
+              required
             />
             {/*{errors.title &amp;&amp; &lt;span className="red-text">Enter Title&lt;/span>}*/}
           &lt;/div>
@@ -152,7 +167,7 @@ const mapStateToProps = (state, ownProps) => {
   });
 
   return { document };
-}
+};
 
 export default connect(mapStateToProps, { updateDocument })(DocumentEdit);
 </code></pre>
@@ -165,13 +180,13 @@ export default connect(mapStateToProps, { updateDocument })(DocumentEdit);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DocumentsPage.html">DocumentsPage</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ListRow.html">ListRow</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="ManageDocumentPage.html">ManageDocumentPage</a></li><li><a href="NavigationBar.html">NavigationBar</a></li><li><a href="ProfilePage.html">ProfilePage</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="UsersPage.html">UsersPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#CheckDocument">CheckDocument</a></li><li><a href="global.html#deleteDocument">deleteDocument</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#documentSearched">documentSearched</a></li><li><a href="global.html#DocumentsList">DocumentsList</a></li><li><a href="global.html#EditUserRole">EditUserRole</a></li><li><a href="global.html#fetchDocument">fetchDocument</a></li><li><a href="global.html#fetchDocuments">fetchDocuments</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#hashPassword">hashPassword</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapDispatchToProps">mapDispatchToProps</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#ProfileForm">ProfileForm</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#saveDocument">saveDocument</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#searchDocuments">searchDocuments</a></li><li><a href="global.html#searchRouter">searchRouter</a></li><li><a href="global.html#searchUsers">searchUsers</a></li><li><a href="global.html#secretKey">secretKey</a></li><li><a href="global.html#server">server</a></li><li><a href="global.html#setAuthorizationToken">setAuthorizationToken</a></li><li><a href="global.html#signupRequest">signupRequest</a></li><li><a href="global.html#updateDocument">updateDocument</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li><li><a href="global.html#UsersList">UsersList</a></li><li><a href="global.html#ValidateInput">ValidateInput</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DocumentEdit.html">DocumentEdit</a></li><li><a href="DocumentsPage.html">DocumentsPage</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ListRow.html">ListRow</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="ManageDocumentPage.html">ManageDocumentPage</a></li><li><a href="NavigationBar.html">NavigationBar</a></li><li><a href="ProfilePage.html">ProfilePage</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="UsersPage.html">UsersPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#CheckDocument">CheckDocument</a></li><li><a href="global.html#deleteDocument">deleteDocument</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#documentSearched">documentSearched</a></li><li><a href="global.html#DocumentsList">DocumentsList</a></li><li><a href="global.html#EditUserRole">EditUserRole</a></li><li><a href="global.html#fetchDocument">fetchDocument</a></li><li><a href="global.html#fetchDocuments">fetchDocuments</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapDispatchToProps">mapDispatchToProps</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#ProfileForm">ProfileForm</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#saveDocument">saveDocument</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#searchDocuments">searchDocuments</a></li><li><a href="global.html#searchRouter">searchRouter</a></li><li><a href="global.html#searchUsers">searchUsers</a></li><li><a href="global.html#secretKey">secretKey</a></li><li><a href="global.html#server">server</a></li><li><a href="global.html#setAuthorizationToken">setAuthorizationToken</a></li><li><a href="global.html#signupRequest">signupRequest</a></li><li><a href="global.html#updateDocument">updateDocument</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li><li><a href="global.html#UsersList">UsersList</a></li><li><a href="global.html#ValidateInput">ValidateInput</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jun 11 2017 00:44:41 GMT+0100 (WAT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jun 13 2017 16:12:07 GMT+0100 (WAT)
 </footer>
 
 <script> prettyPrint(); </script>

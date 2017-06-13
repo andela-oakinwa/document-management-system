@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { deleteDocument } from '../../actions/DocumentAction';
 
-const DocumentCard = ({ document, currentUser }) => {
+const DocumentCard = ({ document, currentUser, deleteDocument }) => {
   const { firstName, lastName } = document.User ||
   { firstName: '', lastName: '' };
   return (
