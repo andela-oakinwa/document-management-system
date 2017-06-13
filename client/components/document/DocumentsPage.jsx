@@ -93,7 +93,6 @@ class DocumentsPage extends Component {
   deleteUserDoc(docId) {
     return () => this.props.deleteDocument(docId);
   }
-
   /**
    * Renders to the DOM
    * @return {Object}
