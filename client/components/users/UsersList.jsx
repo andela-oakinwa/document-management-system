@@ -34,7 +34,7 @@ const UsersList = ({ users, deleteUser, auth }) => {
 
 UsersList.propTypes = {
   users: React.PropTypes.array.isRequired,
-  deleteUser: React.PropTypes.func.isRequired,
+  deleteUser: React.PropTypes.func,
   auth: React.PropTypes.object.isRequired,
 };
 

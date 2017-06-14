@@ -83,7 +83,7 @@ class ManageDocumentPage extends Component {
             .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
       } else {
         this.props.actions.saveDocument(this.state.document)
-          .then(this.saveSuccess.bind(this), this.saveFailure.bind(this)); 
+          .then(this.saveSuccess.bind(this), this.saveFailure.bind(this));
       }
     }
   }
@@ -99,7 +99,6 @@ class ManageDocumentPage extends Component {
    * Renders to the DOM
    */
   render() {
-    const { errors } = this.state;
     return (
       <div className="container">
         <DocumentForm

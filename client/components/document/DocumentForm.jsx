@@ -10,7 +10,7 @@ const DocumentForm = ({ document,
         Create/Update a Document
       </h5>
       <Row>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <Input
             label="Title"
             validate
@@ -21,7 +21,7 @@ const DocumentForm = ({ document,
           />
           {errors.title && <span className="red-text">Enter Title</span>}
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <TinyMCE
             id="content"
             content={document.content}
@@ -33,7 +33,7 @@ const DocumentForm = ({ document,
           />
           {errors.content && <div className="red-text">Enter Content</div>}
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <select
             style={{ display: 'block' }}
             id="access"
@@ -47,7 +47,7 @@ const DocumentForm = ({ document,
             <option value="role">Role</option>
           </select>
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <Input
             type="submit"
             disabled={saving}

@@ -20,7 +20,7 @@
     "client:watch": "NODE_ENV=test mocha --verbose --watch --coverage --reporter progress testSetup.js client/test/**/*.test.js",
     "lint:client": "node_modules/.bin/eslint client/",
     "lint:server": "node_modules/.bin/eslint server/",
-    "linting": "npm-run-all  lint:server lint:client",
+    "linting": "npm run lint:server && npm run lint:client",
     "test:dev": "npm run 'drop:db' && npm run 'create:db' && npm run 'migrate:db' && npm run test:server",
     "drop:db": "psql -c 'drop database if exists doqman_test;' -U andeladeveloper",
     "create:db": "psql -c 'create database doqman_test;' -U postgres",

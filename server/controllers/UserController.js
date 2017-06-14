@@ -169,11 +169,9 @@ const UserController = {
               message: 'User not found'
             });
         }
-        db.User.update(
-          request.body,
+        user.update(request.body,
           { where: { id: request.body.id } })
           .then((updatedUser) => {
-            updatedUser = Helper.userProfile(updatedUser);
             response.status(200)
               .send({
                 message: 'Profile has been updated successfully.',

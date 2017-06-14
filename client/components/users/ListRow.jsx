@@ -56,14 +56,13 @@ class ListRow extends Component {
         swal('Cancelled', 'User not deleted :)', 'error');
       }
     });
-
   }
   /**
    * renders to the DOM
    * @return {Object}
    */
   render() {
-    const { user, deleteUser, authenticate } = this.props;
+    const { user, authenticate } = this.props;
     return (
       <tr>
         <td>{user.id}</td>
@@ -78,7 +77,11 @@ class ListRow extends Component {
         </td>
         <td>{moment(user.createdAt).format('DD-MM-YYYY')}</td>
         <td>{authenticate.user.userId !== user.id &&
-          <Link to="/user" onClick={() => this.deleteUser(user.id)}>Delete</Link>}
+          <Link
+            to="/user"
+            onClick={() => this.deleteUser(user.id)}>
+            Delete
+          </Link>}
         </td>
       </tr>
     );
@@ -86,7 +89,7 @@ class ListRow extends Component {
 }
 ListRow.propTypes = {
   user: React.PropTypes.object.isRequired,
-  deleteUser: React.PropTypes.func.isRequired,
+  deleteUser: React.PropTypes.func,
   authenticate: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired
 };

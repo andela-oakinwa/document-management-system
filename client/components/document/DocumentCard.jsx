@@ -39,7 +39,7 @@ class DocumentCard extends Component {
    * @return {Object}
    */
   render() {
-    const { document, currentUser} = this.props;
+    const { document, currentUser } = this.props;
     const { firstName, lastName } = document.User ||
       { firstName: '', lastName: '' };
     return (
@@ -50,7 +50,7 @@ class DocumentCard extends Component {
             <p>Access: &nbsp; <span>{(document.access)}</span></p><br />
             <div>
                 Published Date :
-              <p>{(document.createdAt) ? 
+              <p>{(document.createdAt) ?
                 document.createdAt.split('T')[0] : ''}</p>
               <p> Author:
                   {firstName } { lastName }</p>
@@ -65,7 +65,7 @@ class DocumentCard extends Component {
                 <Link className="edit" to={`/document/${document.id}/edit`}>
                   Edit
                 </Link>
-                <Link 
+                <Link
                 className="delete"
                 to="/"
                 onClick={() => this.deleteDocument(document.id)}>

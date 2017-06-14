@@ -67,7 +67,7 @@ const updateDocument = (id, document) => {
       .then((response) => {
         dispatch({
           type: types.UPDATE_DOCUMENT,
-          document: response.data.documents.rows,
+          document: response.data,
         });
       });
   };

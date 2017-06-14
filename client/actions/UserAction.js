@@ -33,7 +33,7 @@ const fetchUsers = (offset) => {
       return axios.get(`/users/${id}`)
         .then(response => dispatch({
           type: types.LOAD_USER,
-          user: response.data.users.rows,
+          user: response.data,
         }));
     };
   },
@@ -45,11 +45,14 @@ const fetchUsers = (offset) => {
  */
   updateUser = (user) => {
     return (dispatch) => {
-      return axios.put(`/users/${user.id}`, user)
-        .then(response => dispatch({
-          type: types.UPDATE_USER,
-          user: response.data.users.rows,
-        }));
+      return axios.put(`/users/${user.id}`)
+        .then((response) => {
+          dispatch({
+            type: types.UPDATE_USER,
+            user: response.data
+          });
+        }
+      );
     };
   },
 /**

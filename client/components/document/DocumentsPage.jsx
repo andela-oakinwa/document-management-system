@@ -151,12 +151,12 @@ class DocumentsPage extends Component {
 }
 
 DocumentsPage.propTypes = {
-  search: React.PropTypes.array.isRequired,
-  fetchDocuments: React.PropTypes.func.isRequired,
-  deleteDocument: React.PropTypes.func.isRequired,
-  searchDocuments: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.object.isRequired,
-  documents: React.PropTypes.array.isRequired,
+  search: React.PropTypes.array,
+  fetchDocuments: React.PropTypes.func,
+  deleteDocument: React.PropTypes.func,
+  searchDocuments: React.PropTypes.func,
+  auth: React.PropTypes.object,
+  documents: React.PropTypes.array,
   metadata: React.PropTypes.object
 };
 /**

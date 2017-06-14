@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
 import * as documentActions from '../../actions/DocumentAction';
 import DocumentDetails from './DocumentDetails';
@@ -19,7 +18,7 @@ class DocumentDetailsPage extends Component {
    * @param  {Number} id
    */
   deleteDoc(id) {
-     swal({
+    swal({
       title: 'Are you sure you want to delete this document?',
       text: ' Press cancel to quit this operation',
       type: 'warning',
@@ -84,4 +83,5 @@ const getDocumentById = (documents, id) => {
     };
   };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentDetailsPage);
+export default connect(mapStateToProps,
+  mapDispatchToProps)(DocumentDetailsPage);
