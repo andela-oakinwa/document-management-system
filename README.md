@@ -6,6 +6,32 @@
 ## About doqMan
 - A simple Document Management System complete with roles and privileges. Each document defines access rights and the document defines which roles can access it.
 
+### Features
+#### Privileges
+- Admin
+  Supercedes all other users. Manages all data and account. An admin have the privilege to update a user information. This is important in case of a forgotten password and to increase/decrease privilege of a user.
+- Regular
+  These are registered users with read write access. A regular user has a profile page, and a dashboard to manage their documents.
+  These documents can be edited and deleted by the regular user.
+
+### Installation
+
+#### Testing
+##### Server
+  - Integration:
+    ```
+     npm run test:client
+    ```
+##### Client
+  - End to end test:
+    ```
+      npm run test:e2e
+    ```
+##### Full test
+  ```
+     npm run test
+  ```
+
 ## Technology Stack
 - [React](https://facebook.github.io/react/)
 - [Redux](http://redux.js.org/)
@@ -65,6 +91,17 @@ The following features make up the doqMan Document Management System API:
 
 ## Postman Collection
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/37ef46b88cd1286341d4)
+
+## Limitations:
+The limitations to the Document Management System API are as follows:
+
+* Users can only create textual documents and retrieve same when needed.
+* Users cannot share documents with people, but can make document `public` to make it available to other users.
+* Spreadsheet is not supported
+* Other file formats not supported
+
+### Contributing
+Contributors are welcome to further enhance the features of this API by contributing to its development.
 
 ## Author
 - _Oluwafemi Akinwa_
