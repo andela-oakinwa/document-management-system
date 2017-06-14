@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { bindActionCreators } from 'redux';
-import validateInput from '../../../server/shared/CheckDocument';
+import validateInput from '../../utilities/CheckDocument';
 import DocumentForm from './DocumentForm';
 import * as documentActions from '../../actions/DocumentAction';
 /**
  * Root component defined as class
  */
-class ManageDocumentPage extends React.Component {
+class ManageDocumentPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -20,10 +20,9 @@ class ManageDocumentPage extends React.Component {
     this.updateDocumentState = this.updateDocumentState.bind(this);
     this.saveDocument = this.saveDocument.bind(this);
     this.redirect = this.redirect.bind(this);
-    this.editorChange = this.editorChange.bind(this);
   }
   /**
-   * 
+   * Called during updating phase
    * @param {Object} nextProps
    */
   componentWillReceiveProps(nextProps) {
@@ -38,30 +37,27 @@ class ManageDocumentPage extends React.Component {
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
+    if (event.target.id === 'content') {
+      document.content = event.target.getContent();
+    }
     document[field] = event.target.value;
     return this.setState({ document });
   }
   /**
-   * 
-   * @param {Object} event 
+   * Called if document is saved successfully
    */
-  editorChange(event) {
-    const document = this.state.document;
-    document.content = event.target.getContent({
-      format: 'raw'
-    });
-    return this.setState({
-      document
-    });
-  }
-
   saveSuccess() { this.redirect(); }
-
+  /**
+   * Called when saving document fails
+   * @param {Object} error
+   */
   saveFailure(error) {
     toastr.error(error);
     this.setState({ saving: false });
   }
-
+  /**
+   * Checks if document metadata exist
+   */
   isValid() {
     const data = {
       title: this.state.document.title,
@@ -74,7 +70,10 @@ class ManageDocumentPage extends React.Component {
     }
     return isValid;
   }
-
+  /**
+   * Handles saving of document
+   * @param {Object} event
+   */
   saveDocument(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -88,21 +87,23 @@ class ManageDocumentPage extends React.Component {
       }
     }
   }
-
+  /**
+   * Handles redirection
+   */
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document saved');
     this.context.router.push('/');
   }
-
+  /**
+   * Renders to the DOM
+   */
   render() {
     const { errors } = this.state;
-
     return (
       <div className="container">
         <DocumentForm
           onChange={this.updateDocumentState}
-          editorChange={this.editorChange}
           onSave={this.saveDocument}
           document={this.state.document}
           errors={this.state.errors}

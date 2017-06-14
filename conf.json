@@ -5,7 +5,7 @@
     },
     "source": {
         "include": ["client/", "server/"],
-        "exclude": ["server/tests"],
+        "exclude": ["server/test", "client/test", "client/api_docs", "client/e2e", "client/javascripts", "client/stylesheets"],
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },

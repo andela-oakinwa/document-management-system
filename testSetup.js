@@ -24,4 +24,12 @@ global.navigator = {
   userAgent: 'node.js'
 };
 
-// documentRef = document;
+global.Materialize = {
+  toast: () => {}
+};
+global.localStorage = {
+  setItem: () => {},
+  removeItem: () => {},
+};
+
+var documentRef = document;

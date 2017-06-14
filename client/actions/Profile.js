@@ -11,7 +11,7 @@ const getUser = (userId) => {
       .then((response) => {
         dispatch({
           type: types.GET_CURRENT_USER,
-          user: response.data.users.id
+          user: response.data.user
         });
       });
   };
@@ -19,12 +19,12 @@ const getUser = (userId) => {
 /**
  * Updates user
  * @param  {Object} data
- * @param  {Number} userID
+ * @param  {Number} userId
  * @return {Object}
  */
-const updateUser = (data, userID) => {
+const updateUser = (data, userId) => {
   return (dispatch) => {
-    return axios.put(`/users/${userID}`, data)
+    return axios.put(`/users/${userId}`, data)
       .then((response) => {
         dispatch({
           type: types.UPDATE_USER,

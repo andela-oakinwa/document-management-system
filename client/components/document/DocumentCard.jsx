@@ -1,41 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { deleteDocument } from '../../actions/DocumentAction';
 
-const DocumentCard = ({ document, deleteDocument, currentUser }) => {
-  const handleClick = () => {
-    deleteDocument(document.id);
-  };
+const DocumentCard = ({ document, currentUser, deleteDocument }) => {
+  const { firstName, lastName } = document.User ||
+  { firstName: '', lastName: '' };
   return (
     <div className="col s4">
-      <div className="card">
-        <div className="card-content white-text">
+      <div className="card main-box">
+        <div className="card-content white-text doc-box">
           <span className="card-title">{document.title}</span>
           <p>Access: &nbsp; <span>{(document.access)}</span></p><br />
           <div>
               Published Date :
             <p>{(document.createdAt) ? document.createdAt.split('T')[0] : ''}</p>
             <p> Author:
-                {document.owner.firstName} {document.owner.lastName}</p>
+                {firstName } { lastName }</p>
           </div>
         </div>
         <div className="card-action">
-          <Link to={`/document-details/${document.id}`}>
+          <Link to={`/document/${document.id}/details`}>
               Details
           </Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link className="edit" to={`/documents/${document.id}`}>Edit</Link>
-              <Link className="deleteDoc" to="/" onClick={handleClick()}>
+              <Link className="edit" to={`/document/${document.id}/edit`}>Edit</Link>
+              <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}>
                 Delete
               </Link>
             </div>}</div>
       </div>
     </div>
   );
-}
+};
+
 DocumentCard.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
-  currentUser: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object.isRequired
 };
+
 export default DocumentCard;

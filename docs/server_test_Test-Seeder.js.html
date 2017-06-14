@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server/test/Test-Seeder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server/test/Test-Seeder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import faker from 'faker';
+import bcrypt from 'bcrypt-nodejs';
+import db from '../models';
+
+/**
+ * hashPassword
+ * convert plain test to a bcrypt hash
+ * @param {String} plainPassword plain test
+ * @returns {String} bcrypt hash value of the plain password
+ */
+const hashPassword = plainPassword =>
+  bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(10));
+
+export const roles = [{
+  title: 'admin'
+}, {
+  title: 'regular'
+}];
+
+export const users = [{
+  firstName: 'Oluwafemi',
+  lastName: 'Akinwa',
+  username: 'kaiser',
+  email: 'femi.akinwa@gmail.com',
+  password: hashPassword('oluwafemi'),
+  roleId: 1
+
+}, {
+  firstName: 'Olusegun',
+  lastName: 'Akinwa',
+  username: 'phemi',
+  email: 'segun@gmail.com',
+  password: hashPassword('oluwafemi'),
+  roleId: 1
+}, {
+  firstName: 'Mark',
+  lastName: 'Angel',
+  username: 'angeli',
+  email: 'mark.angel@gmail.com',
+  password: hashPassword('andelatia'),
+  roleId: 2
+}];
+
+export const documents = [{
+  title: 'seed document test',
+  content: faker.lorem.paragraph(),
+  access: 'private',
+  ownerId: 1,
+  ownerRoleId: '1'
+}, {
+  title: 'public seed document test',
+  content: faker.lorem.paragraph(),
+  access: 'public',
+  ownerId: 1,
+  ownerRoleId: '1'
+}];
+const seeds = () => {
+  db.sequelize.sync({ force: true }).then(() => {
+    db.Role.bulkCreate(roles);
+    db.User.bulkCreate(users, { individualHooks: true }).then(() => {
+      db.Document.bulkCreate(documents);
+    });
+  });
+};
+
+export default seeds();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DocumentEdit.html">DocumentEdit</a></li><li><a href="DocumentsPage.html">DocumentsPage</a></li><li><a href="Footer.html">Footer</a></li><li><a href="ListRow.html">ListRow</a></li><li><a href="LoginPage.html">LoginPage</a></li><li><a href="ManageDocumentPage.html">ManageDocumentPage</a></li><li><a href="NavigationBar.html">NavigationBar</a></li><li><a href="ProfilePage.html">ProfilePage</a></li><li><a href="SignUpPage.html">SignUpPage</a></li><li><a href="UsersPage.html">UsersPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#CheckDocument">CheckDocument</a></li><li><a href="global.html#deleteDocument">deleteDocument</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#DocumentController">DocumentController</a></li><li><a href="global.html#documentRouter">documentRouter</a></li><li><a href="global.html#documentSearched">documentSearched</a></li><li><a href="global.html#DocumentsList">DocumentsList</a></li><li><a href="global.html#EditUserRole">EditUserRole</a></li><li><a href="global.html#fetchDocument">fetchDocument</a></li><li><a href="global.html#fetchDocuments">fetchDocuments</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#hashPassword">hashPassword</a></li><li><a href="global.html#Helper">Helper</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#LoginForm">LoginForm</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapDispatchToProps">mapDispatchToProps</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#ProfileForm">ProfileForm</a></li><li><a href="global.html#RoleController">RoleController</a></li><li><a href="global.html#roleRouter">roleRouter</a></li><li><a href="global.html#saveDocument">saveDocument</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#searchDocuments">searchDocuments</a></li><li><a href="global.html#searchRouter">searchRouter</a></li><li><a href="global.html#searchUsers">searchUsers</a></li><li><a href="global.html#secretKey">secretKey</a></li><li><a href="global.html#server">server</a></li><li><a href="global.html#setAuthorizationToken">setAuthorizationToken</a></li><li><a href="global.html#signupRequest">signupRequest</a></li><li><a href="global.html#updateDocument">updateDocument</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#UserController">UserController</a></li><li><a href="global.html#userRouter">userRouter</a></li><li><a href="global.html#UsersList">UsersList</a></li><li><a href="global.html#ValidateInput">ValidateInput</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jun 13 2017 16:07:15 GMT+0100 (WAT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
 import { logout } from '../../actions/Authentication';
 /**
- * Class component defined as this is a root component
+ * Class component
  */
-class NavigationBar extends React.Component {
+export class NavigationBar extends Component {
   /**
    * Component properties
    * @param {Object} props Component properties
@@ -35,7 +34,7 @@ class NavigationBar extends React.Component {
         <nav role="navigation" className="nav-bar blue darken-4">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
-              <img src="../../assets/images/dms-logo.png" />
+              doqMan
             </Link>
             <Link to="#" data-activates="mobile-menu"
             className="button-collapse">
@@ -49,10 +48,10 @@ class NavigationBar extends React.Component {
               <li><Link to="/about">About</Link></li>
               <li>
                 {!isAuthenticated
-                  && <Link to="/login">Login</Link>}
+                  && <Link id="login" to="/login">Login</Link>}
               </li>
               {user.roleId === 1
-                && <li><Link to="/users"><span>Users</span></Link></li>
+                && <li><Link to="/user"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>
@@ -77,7 +76,7 @@ class NavigationBar extends React.Component {
                 }
               </li>
               {user.roleId === 1
-                && <li><Link to="/users"><span>Users</span></Link></li>
+                && <li><Link to="/user"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>
@@ -106,7 +105,7 @@ NavigationBar.contextTypes = {
 };
 /**
  * Maps component state to properties
- * @param {*} state State of component
+ * @param {Object} state
  */
 const mapStateToProps = (state) => {
   return {

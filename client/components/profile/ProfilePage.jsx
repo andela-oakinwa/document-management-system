@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ProfileForm from './ProfileForm';
-import getUser, { updateUser } from '../../actions/Profile';
+import { getUser, updateUser } from '../../actions/Profile';
 /**
- * Class component as this is a root component
+ * Class component
  */
 class ProfilePage extends Component {
   /**
@@ -23,9 +23,9 @@ class ProfilePage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   /**
-   * Checks for mounted details
+   * Called after redering
    */
-  checkMount() {
+  componentDidMount() {
     this.props.getUser(this.props.userId)
       .then((response) => {
         this.setState({
@@ -62,10 +62,11 @@ class ProfilePage extends Component {
    * @return {Object}
    */
   render() {
+    const user = this.props.user;
     return (
       <div>
         <ProfileForm
-          userProps={this.state}
+          userProps={user}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
         />
@@ -91,6 +92,7 @@ ProfilePage.contextTypes = {
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.user.userId,
+    user: state.user
   };
 };
 

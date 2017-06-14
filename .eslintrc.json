@@ -1,12 +1,15 @@
 {
-"extends": ["airbnb-base"],
-  "plugins": ["react"],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
+    "allowImportExportEverywhere": true,
+    "codeFrame": false,
     "sourceType": "module",
     "ecmaFeatures": { "jsx": true }
   },
   "root": true,
+  "extends": ["airbnb-base"],
+  "plugins": ["react", "import"],
   "env": {
     "es6": true,
     "browser": true,
@@ -14,7 +17,7 @@
     "jquery": true,
     "mocha": true
   },
-  "parser": "babel-eslint",
+  
   "rules": {
     "max-len": [1, 80, 2],
     "indent": [1, 2],

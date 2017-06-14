@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import validateInput from '../../../server/shared/ValidateInput';
+import validateInput from '../../utilities/ValidateInput';
 import { login } from '../../actions/Authentication';
 import LoginForm from './LoginForm';
 
 /**
  * Class component defined as this is a root component
  */
-class LoginPage extends React.Component {
+class LoginPage extends Component {
   /**
    * Component properties
    * @param {Object} props Component properties
@@ -28,7 +28,7 @@ class LoginPage extends React.Component {
    * @return {Boolean}
    */
   isValid() {
-    const { errors, isValid } = validateInput.loginInput(this.state);
+    const { errors, isValid } = validateInput.checkLogin(this.state);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
     }
   }
   /**
-   * Handles change of state event as a result of user input
+   * Handles change of state event
    * @param {Object} event Event triggered
    */
   onChange(event) {

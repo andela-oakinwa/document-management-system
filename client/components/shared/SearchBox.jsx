@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
-import { Button, Icon, Input } from 'react-materialize';
+import { Icon, Input } from 'react-materialize';
 
+/**
+ * Search bar stateless functional component
+ */
 const SearchBox = ({ onChange }) =>
   <div>
     <Input
@@ -10,7 +13,7 @@ const SearchBox = ({ onChange }) =>
       onChange={onChange}
       validate
       className="search"
-    ><Icon style={{ color: 'white' }}>search</Icon></Input>
+    ><Icon>search</Icon></Input>
   </div>;
 
 SearchBox.propTypes = {

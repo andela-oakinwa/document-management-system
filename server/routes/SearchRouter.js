@@ -7,14 +7,14 @@ import Authentication from '../middlewares/Authentication';
 /**
  * Routes for search
  */
-const searchRoute = express.Router();
+const searchRouter = express.Router();
 /**
- * Search for user(s)
+ * Search for user
  */
-searchRoute.route('/users')
-  .get(Authentication.verifyToken, SearchController.searchUser);
+searchRouter.get('/users',
+Authentication.verifyToken, SearchController.searchUser);
 /**
  * Search for document(s)
  */
-searchRoute.route('/documents')
-  .get(Authentication.verifyToken, SearchController.searchDocument);
+searchRouter.get('/documents',
+Authentication.verifyToken, SearchController.searchDocument);

@@ -27,10 +27,10 @@ const DocumentController = {
               createdDoc
             });
         })
-        .catch((error) => {
+        .catch(() => {
           response.status(500)
             .send({
-              message: error.message
+              message: 'An error has occured. Document not created.'
             });
         });
   },
@@ -57,15 +57,15 @@ const DocumentController = {
               searchedDoc,
             });
         }
-        response.status(500)
+        response.status(400)
           .send({
             message: 'Document is private'
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid query details.'
           });
       });
   },
@@ -83,10 +83,11 @@ const DocumentController = {
           { ownerId: request.tokenDecode.userId }
         ]
       },
-      include: [db.User],
+      include: [{ model: db.User,
+        attributes: ['id', 'username', 'firstName', 'lastName'] }],
       limit: request.query.limit || 10,
       offset: request.query.offset || 0,
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     };
     db.Document
       .findAndCountAll(dbQuery)
@@ -114,17 +115,35 @@ const DocumentController = {
    */
   updateDocument(request, response) {
     db.Document.findById(request.params.id)
-      .then((updatedDocument) => {
-        response.status(200)
-          .send({
-            message: 'This document has been updated successfully.',
-            updatedDocument
+      .then((requiredDocument) => {
+        if (!requiredDocument) {
+          return response.status(404)
+            .send({
+              message: `Document with id:${request.params.id} does not exist`
+            });
+        }
+        requiredDocument.update(request.body)
+          .then((updatedDocument) => {
+            db.Document.findById(updatedDocument.id)
+              .then((docData) => {
+                response.status(200)
+                  .send({
+                    message: 'This document has been updated successfully.',
+                    docData
+                  });
+              })
+              .catch((error) => {
+                response.status(404)
+                  .send({
+                    message: error.message
+                  });
+              });
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Invalid parameters. Document not retrieved'
           });
       });
   },
@@ -135,7 +154,7 @@ const DocumentController = {
    * @param {Object} response Response object
    */
   deleteDocument(request, response) {
-    db.Documents.findById(request.params.id)
+    db.Document.findById(request.params.id)
       .then((document) => {
         if (!document) {
           return response.status(404)
@@ -164,6 +183,53 @@ const DocumentController = {
           .send({
             message: error.message
           });
+      });
+  },
+  /**
+   * Search for documents by title
+   * Route: GET: /search/documents?q={title}
+   * @param {Object} request Request object
+   * @param {Object} response Response object
+   * @returns {void} no returns
+   */
+  searchDocument(request, response) {
+    const queryString = request.query.q;
+    const query = {
+      where: {
+        $and: [{ $or: [
+          { access: 'public' },
+          { ownerId: request.tokenDecode.userId },
+        ],
+        }],
+      },
+      include: [{ model: db.User }],
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+
+    if (queryString) {
+      query.where.$and.push({ $or: [
+        { title: { $iLike: `%${queryString}%` } },
+      ] });
+    }
+    db.Document.findAndCountAll(query)
+      .then((allDocs) => {
+        const results = allDocs.rows.map(doc => Helper.getDocument(doc));
+        const constraint = {
+          count: allDocs.count,
+          limit: query.limit,
+          offset: query.offset
+        };
+        delete allDocs.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            paging,
+            rows: results
+          });
+        response.status(200)
+          .send(results);
       });
   }
 };

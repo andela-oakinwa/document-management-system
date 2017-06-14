@@ -2,13 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const DocumentDetails = (
-  { document, deleteDocument, currentUser }
-  ) => {
+const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
   return (
-    <div className="col s12">
+    <div className="col s12 container">
       <div className="card">
-        <div className="card-content white-text">
+        <div className="card-content indigo white-text">
           <span className="card-title">{document.title}</span>
           <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
           <br />
@@ -26,8 +24,8 @@ const DocumentDetails = (
           <Link to="/">back</Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link to={`/documents/${document.id}`}>Edit</Link>
-              <Link to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
+              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
+              <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
             </div>
           }
         </div>
