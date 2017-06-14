@@ -177,7 +177,7 @@ const UserController = {
             response.status(200)
               .send({
                 message: 'Profile has been updated successfully.',
-                updatedUser
+                updatedUser,
               });
           });
       })

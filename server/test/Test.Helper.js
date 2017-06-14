@@ -1,25 +1,25 @@
-const faker = require('faker');
+import faker from 'faker';
 
 const helper = {
   adminRole: {
     id: 1,
     title: 'admin'
   },
-  guestRole1: {
-    id: 3,
-    title: 'guest'
-  },
   regularRole: {
     id: 2,
     title: 'regular'
   },
+  guestRole1: {
+    id: 3,
+    title: 'guest'
+  },
   guestRole2: {
     id: 4,
-    title: 'guest2'
+    title: 'guest111'
   },
   guestRole3: {
     id: 5,
-    title: 'guest3'
+    title: 'guest2'
   },
   sampleRole: {
     id: 6,
@@ -28,7 +28,7 @@ const helper = {
   adminUser: {
     username: faker.internet.userName(),
     firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
+    lastname: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -63,7 +63,7 @@ const helper = {
   secondUser: {
     username: faker.internet.userName(),
     firstName: faker.name.firstName(),
-    lastname: faker.name.lastName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password()
   },
@@ -91,7 +91,7 @@ const helper = {
     username: faker.internet.userName(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    email: 'kaiser',
+    email: 'kkkkk',
     password: faker.internet.password()
   },
   invalidPasswordUser: {
@@ -121,4 +121,4 @@ const helper = {
     content: faker.lorem.paragraph(),
   }
 };
-module.exports = helper;
+export default helper;

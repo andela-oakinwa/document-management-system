@@ -24,7 +24,7 @@ describe('Document Model', () => {
       });
   });
 
-  after((done) => { db.Document.destroy({ where: {} }); done(); });
+  after((done) => { db.Role.destroy({ where: {} }); done(); });
 
   describe('CREATE Document', () => {
     it('should create a document', (done) => {
