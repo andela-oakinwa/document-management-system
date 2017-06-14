@@ -33,7 +33,7 @@ const fetchUsers = (offset) => {
       return axios.get(`/users/${id}`)
         .then(response => dispatch({
           type: types.LOAD_USER,
-          user: response.data,
+          user: response.data.users.rows,
         }));
     };
   },
@@ -48,7 +48,7 @@ const fetchUsers = (offset) => {
       return axios.put(`/users/${user.id}`, user)
         .then(response => dispatch({
           type: types.UPDATE_USER,
-          user: response.data,
+          user: response.data.users.rows,
         }));
     };
   },
@@ -60,10 +60,14 @@ const fetchUsers = (offset) => {
   deleteUser = (id) => {
     return (dispatch) => {
       return axios.delete(`/users/${id}`)
-        .then(() => dispatch({
-          type: types.DELETE_USER,
-          user: response.data
-        }));
+        .then((response) => {
+          dispatch({
+            type: types.DELETE_USER,
+            user: response.data.users.rows
+          });
+          dispatch(fetchUsers());
+        }
+        );
     };
   };
 

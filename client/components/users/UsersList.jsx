@@ -8,7 +8,6 @@ const UsersList = ({ users, deleteUser, auth }) => {
     return <ListRow
         user={user}
         key={user.id}
-        deleteUser={deleteUser}
         auth={auth}
       />;
   });

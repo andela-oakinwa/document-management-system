@@ -24,7 +24,7 @@ const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
           <Link to="/">back</Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link className="edit" to={`/document/${document.id}`}>Edit</Link>
+              <Link className="edit" to={`/document/${document.id}/edit`}>Edit</Link>
               <Link className="delete" to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
             </div>
           }
