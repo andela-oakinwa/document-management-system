@@ -18,9 +18,9 @@
 
 #### Testing
 ##### Server
-  - Integration:
+  - Unit Test:
     ```
-     npm run test:client
+     npm run test:server
     ```
 ##### Client
   - End to end test:
