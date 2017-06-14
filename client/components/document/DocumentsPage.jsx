@@ -25,6 +25,7 @@ class DocumentsPage extends Component {
       filtered: false,
       access: 'public'
     };
+    
     this.handleSearch = this.handleSearch.bind(this);
     this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
