@@ -7,6 +7,7 @@ const EditUserRole = ({ value, onChange }) => {
   return (
     <div className="input-field col s4">
       <select
+        className="role-list"
         value={value}
         onChange={onChange}
         name="roleId"

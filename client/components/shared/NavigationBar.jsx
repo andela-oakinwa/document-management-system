@@ -48,7 +48,7 @@ export class NavigationBar extends Component {
               <li><Link to="/about">About</Link></li>
               <li>
                 {!isAuthenticated
-                  && <Link to="/login">Login</Link>}
+                  && <Link id="login" to="/login">Login</Link>}
               </li>
               {user.roleId === 1
                 && <li><Link to="/user"><span>Users</span></Link></li>

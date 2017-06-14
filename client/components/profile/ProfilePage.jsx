@@ -49,7 +49,6 @@ class ProfilePage extends Component {
    * @param {Object} event Event trigered by user
    */
   onSubmit(event) {
-    console.log(this.state);
     event.preventDefault();
     this.props.updateUser(this.state, this.props.userId)
       .then(

@@ -23,7 +23,7 @@ class LandingPage extends Component {
             <div className="row">
               <div className="col s12">
                 <div className="center-align">
-                    <Link className="btn btn-large waves-effect get-started-btn teal darken-4" to="/signup">
+                    <Link id="signup" className="btn btn-large waves-effect get-started-btn teal darken-4" to="/signup">
                       Get Started
                     </Link>
                     <p className="white-text">
