@@ -6,17 +6,41 @@ import * as documentActions from '../../actions/DocumentAction';
 import DocumentDetails from './DocumentDetails';
 
 class DocumentDetailsPage extends Component {
+  /**
+   * Instantiates the class
+   */
   constructor() {
     super();
 
     this.deleteDoc = this.deleteDoc.bind(this);
   }
-
+  /**
+   * Called when deleting a document
+   * @param  {Number} id
+   */
   deleteDoc(id) {
-    this.props.actions.deleteDocument(id)
-      .then(() => toastr.success('Document deleted successfully!'));
+     swal({
+      title: 'Are you sure you want to delete this document?',
+      text: ' Press cancel to quit this operation',
+      type: 'warning',
+      showCancelButton: true,
+      closeOnConfirm: true,
+      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: '#ec6c62'
+    }, (isConfirm) => {
+      if (isConfirm) {
+        swal('Deleted!',
+        'User has been deleted successfully!', 'success', 5000);
+        this.props.actions.deleteDocument(id);
+      } else {
+        swal('Cancelled', 'Document not deleted :)', 'error');
+      }
+    });
   }
-
+  /**
+   * Renders to the DOM
+   * @return {Object}
+   */
   render() {
     return (
       <div>

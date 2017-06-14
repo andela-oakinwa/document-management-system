@@ -4,7 +4,7 @@ import DocumentCard from './DocumentCard';
 /**
  * Component defined as a function.
  */
-const DocumentsList = ({ documents,
+const DocumentsList = ({ documents, renderAlert,
   deleteDocument, currentUser, filtered, notFiltered }) => {
   const emptyMessage = (<p>No documents Found</p>),
     isFiltered = filtered ? documents : notFiltered,

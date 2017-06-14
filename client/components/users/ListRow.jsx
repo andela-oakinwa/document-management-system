@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import toastr from 'toastr';
+import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import EditUserRole from './EditUserRole';
 import * as allActions from '../../actions/UserAction';
@@ -18,6 +20,7 @@ class ListRow extends Component {
     this.state = {
       user: Object.assign({}, props.user),
     };
+    this.deleteUser = this.deleteUser.bind(this);
     this.onChange = this.onChange.bind(this);
   }
   /**
@@ -29,7 +32,31 @@ class ListRow extends Component {
       user = this.state.user;
     user[field] = event.target.value;
     this.setState({ user });
-    this.props.actions.updateUser(user);
+    this.props.actions.updateUser(user)
+    .then(() => {
+      toastr.success('Role was updated successfully');
+      this.context.router.push('/user');
+    });
+  }
+  deleteUser(userid) {
+    swal({
+      title: 'Are you sure you want to delete this User?',
+      text: ' Press cancel to quit this operation',
+      type: 'warning',
+      showCancelButton: true,
+      closeOnConfirm: true,
+      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: '#ec6c62'
+    }, (isConfirm) => {
+      if (isConfirm) {
+        swal('Deleted!',
+        'User has been deleted successfully!', 'success');
+        this.props.actions.deleteUser(userid);
+      } else {
+        swal('Cancelled', 'User not deleted :)', 'error');
+      }
+    });
+
   }
   /**
    * renders to the DOM
@@ -44,20 +71,19 @@ class ListRow extends Component {
         <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
-        <td>{authenticate.user.userId !== user.id? <EditUserRole
+        <td>{authenticate.user.userId !== user.id ? <EditUserRole
             value={parseInt(this.state.user.roleId, 10)}
             onChange={this.onChange} /> : <span>{user.Role.title}</span>
           }
         </td>
-        <td>{user.createdAt.substr(0, 10)}</td>
+        <td>{moment(user.createdAt).format('DD-MM-YYYY')}</td>
         <td>{authenticate.user.userId !== user.id &&
-          <Link to="/user" onClick={() => deleteUser(user.id)}> Delete </Link>}
+          <Link to="/user" onClick={() => this.deleteUser(user.id)}>Delete</Link>}
         </td>
       </tr>
     );
   }
 }
-
 ListRow.propTypes = {
   user: React.PropTypes.object.isRequired,
   deleteUser: React.PropTypes.func.isRequired,

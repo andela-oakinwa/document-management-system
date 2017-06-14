@@ -5,8 +5,8 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination } from 'react-materialize';
 import DocumentsList from './DocumentsList';
-import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
-import { searchDocuments } from '../../actions/Search';
+import * as DocumentAction from '../../actions/DocumentAction';
+import * as SearchAction from '../../actions/Search';
 import Search from '../shared/SearchBox';
 import SelectInput from '../shared/SelectInput';
 import access from '../../data/options';
@@ -25,17 +25,17 @@ class DocumentsPage extends Component {
       filtered: false,
       access: 'public'
     };
-    
     this.handleSearch = this.handleSearch.bind(this);
     this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterDocument = this.filterDocument.bind(this);
+    this.deleteUserDoc = this.deleteUserDoc.bind(this);
   }
   /**
    * Checks for rendered document
    */
   componentWillMount() {
-    this.props.fetchDocuments();
+    this.props.actions.fetchDocuments();
     this.setState({ renderedDocuments: this.props.documents });
   }
   /**
@@ -65,7 +65,7 @@ class DocumentsPage extends Component {
   handleSearch(event) {
     event.preventDefault();
     const query = event.target.value;
-    this.props.searchDocuments(query);
+    this.props.actions.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
       this.setState({ renderedDocuments: documentSearchResult });
@@ -78,7 +78,7 @@ class DocumentsPage extends Component {
   displayDocuments(pageNumber) {
     const offset = (pageNumber - 1)
       * this.props.metadata.pageSize;
-    this.props.fetchDocuments(offset);
+    this.props.actions.fetchDocuments(offset);
   }
   /**
    * Returns list of documents with public access
@@ -92,7 +92,7 @@ class DocumentsPage extends Component {
    * @return {Object}
    */
   deleteUserDoc(docId) {
-    return () => this.props.deleteDocument(docId);
+    this.props.actions.deleteDocument(docId);
   }
   /**
    * Renders to the DOM
@@ -174,11 +174,11 @@ const mapStateToProps = (state) => {
     metadata: state.paginate
   };
 };
-
-const mapDispatchToProps = dispatch => ({
-  fetchDocuments: bindActionCreators(fetchDocuments, dispatch),
-  deleteDocument: bindActionCreators(deleteDocument, dispatch),
-  searchDocuments: bindActionCreators(searchDocuments, dispatch)
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(
+    Object.assign(DocumentAction, SearchAction), dispatch),
+  };
+  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentsPage);
