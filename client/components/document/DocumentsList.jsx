@@ -17,7 +17,6 @@ const DocumentsList = ({ documents,
         currentUser={currentUser} />)}
       </div>
     );
-
   return (
     <div className="row">
       {isFiltered.length > 0 ? documentsList : emptyMessage}

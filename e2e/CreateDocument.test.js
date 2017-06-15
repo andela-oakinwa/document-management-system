@@ -20,7 +20,7 @@ module.exports = {
         .setValue('#title', faker.lorem.word())
         .setValue('#content', faker.lorem.words())
         .click('#access option[value="private"]')
-        .click('Button[type="submit"]')
+        .click('Input[type="submit"]')
         .end();
   }
 };

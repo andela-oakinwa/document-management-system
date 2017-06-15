@@ -25,11 +25,18 @@ class DocumentsPage extends Component {
       filtered: false,
       access: 'public'
     };
+    this.onChange = this.onChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterDocument = this.filterDocument.bind(this);
     this.deleteUserDoc = this.deleteUserDoc.bind(this);
+  }
+  /**
+   * Called when access type is changed
+   */
+  onChange(event) {
+    event.preventDefault();
   }
   /**
    * Checks for rendered document
@@ -68,7 +75,9 @@ class DocumentsPage extends Component {
     this.props.actions.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
-      this.setState({ renderedDocuments: documentSearchResult });
+      this.setState({
+        renderedDocuments: documentSearchResult
+      });
     }
   }
   /**
@@ -112,7 +121,7 @@ class DocumentsPage extends Component {
         <h4 className="center">Available Documents</h4>
         <div className="row">
           <div className="col s7 push-s4">
-            <Search onChange={this.handleSearch} />
+            <Search id="search" onChange={this.handleSearch} />
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
@@ -129,6 +138,7 @@ class DocumentsPage extends Component {
               id="section"
               name="section"
               options={access}
+              onChange={this.onChange}
               label="Filter Documents by Access"
               />
           </div>
@@ -167,6 +177,7 @@ DocumentsPage.propTypes = {
  */
 const mapStateToProps = (state) => {
   let documents = [];
+  console.log(state.documents);
   documents = state.documents;
   return {
     documents,
