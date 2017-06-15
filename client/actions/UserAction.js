@@ -66,7 +66,7 @@ const fetchUsers = (offset) => {
         .then((response) => {
           dispatch({
             type: types.DELETE_USER,
-            user: response.data.users.rows
+            user: response.data
           });
           dispatch(fetchUsers());
         }

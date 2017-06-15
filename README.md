@@ -6,7 +6,7 @@
 ## About doqMan
 - A simple Document Management System complete with roles and privileges. Each document defines access rights and the document defines which roles can access it.
 
-### Features
+### Features/Functionalities
 #### Privileges
 - Admin
   Supercedes all other users. Manages all data and account. An admin have the privilege to update a user information. This is important in case of a forgotten password and to increase/decrease privilege of a user.
@@ -15,6 +15,13 @@
   These documents can be edited and deleted by the regular user.
 
 ### Installation
+#### Running Locally
+ - Clone the repo `https://github.com/andela-oakinwa/document-management-system.git`
+ - Change to the root folder 
+ - Start app:
+ ```
+  npm start
+ ```
 
 #### Testing
 ##### Server

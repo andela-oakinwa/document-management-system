@@ -98,7 +98,7 @@ const DocumentController = {
       },
       include: [{ model: db.User,
         attributes: ['id', 'username', 'firstName', 'lastName'] }],
-      limit: request.query.limit || 10,
+      limit: request.query.limit,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
     };

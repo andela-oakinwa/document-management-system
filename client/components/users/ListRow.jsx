@@ -49,9 +49,11 @@ class ListRow extends Component {
       confirmButtonColor: '#ec6c62'
     }, (isConfirm) => {
       if (isConfirm) {
+        this.props.actions.deleteUser(userid);
         swal('Deleted!',
         'User has been deleted successfully!', 'success');
-        this.props.actions.deleteUser(userid);
+        window.location.reload();
+        this.context.router.push('/user');
       } else {
         swal('Cancelled', 'User not deleted :)', 'error');
       }
