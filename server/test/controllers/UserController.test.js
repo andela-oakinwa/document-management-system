@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import expect from 'expect';
 import app from '../../Config/App';
 import db from '../../models';
-import helper from '../Test.Helper';
+import helper from '../test-helper';
 
 process.env.NODE_ENV = 'test';
 
@@ -10,7 +10,7 @@ const request = supertest.agent(app);
 
 const userParams = helper.firstUser;
 const roleParams = helper.adminRole;
-const userParamsArray = helper.usersArray();
+const userParamsArray = helper.userArray();
 
 
 let user, token;
@@ -19,13 +19,13 @@ const compareDates = (dateA, dateB) =>
   new Date(dateA).getTime() <= new Date(dateB).getTime();
 
 describe('User API', () => {
-  before(() =>
+  before((done) =>
     db.Role.create(roleParams)
       .then((role) => {
         userParams.roleId = role.id;
       }));
 
-  after(() => db.User.sequelize.sync({ force: true }));
+  after(() => db.Role.sequelize.sync({ force: true }));
 
   describe('CONTEXT: With existing user', () => {
     beforeEach((done) => {
@@ -49,35 +49,6 @@ describe('User API', () => {
             done();
           });
       });
-
-      it('should return all users', (done) => {
-        request.get('/users')
-          .set({ Authorization: token })
-          .end((err, res) => {
-            expect(res.status).toEqual(200);
-            expect(Array.isArray(res.body.rows)).toBe.true;
-            expect(res.body.rows.length).toEqual(1);
-            done();
-          });
-      });
-    });
-
-    describe('Get User GET: /users/:id', () => {
-      it('should get correct user', (done) => {
-        request.get(`/users/${user.id}`)
-          .set({ Authorization: token })
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body.email).to.equal(user.email);
-            done();
-          });
-      });
-
-      it('should return NOT FOUND for invalid id', (done) => {
-        request.get('/users/100')
-          .set({ Authorization: token })
-          .expect(403, done);
-      });
     });
 
     describe('Edit user PUT: /users/:id', () => {
@@ -98,7 +69,7 @@ describe('User API', () => {
       it('should return NOT FOUND for invalid id', (done) => {
         request.put('/users/100')
           .set({ Authorization: token })
-          .expect(403, done);
+          .expect(404, done);
       });
     });
 
@@ -202,34 +173,6 @@ describe('User API', () => {
           db.User.bulkCreate(userParamsArray);
         })
     );
-
-    describe('User Pagination', () => {
-      it('uses query params "limit" to limit the result', () => {
-        request.get('/users?limit=5')
-          .set({ Authorization: token })
-          .end((err, res) => {
-            expect(res.status).toEqual(200);
-            expect(res.body.rows.length).toEqual(5);
-            done();
-          });
-      });
-
-      it('is returned in order of their signed up dates', () => {
-        request.get('/users?limit=5')
-          .set({ Authorization: token })
-          .end((err, res) => {
-            const users = res.body;
-            let flag = true;
-
-            for (let i = 0; i < users.length - 1; i += 1) {
-              flag = compareDates(users[i].createdAt, users[i + 1].createdAt);
-              if (!flag) break;
-            }
-            expect(flag).toBe(true);
-            done();
-          });
-      });
-    });
 
     describe('User search', () => {
       it('searches and returns the correct users', () => {

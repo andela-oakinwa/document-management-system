@@ -1,4 +1,4 @@
-import { agent } from 'supertest';
+/*import { agent } from 'supertest';
 import expect from 'expect';
 
 import app from '../../Config/App';
@@ -75,17 +75,6 @@ describe('Document API', () => {
         .get('/documents/?limit=10&offset=1')
         .end((err, res) => {
           expect(res.status).toEqual(400);
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should 200 without limit and offset', (done) => {
-      server
-        .get('/documents/')
-        .set('x-access-token', adminUser.token)
-        .end((err, res) => {
-          expect(res.status).toEqual(200);
           if (err) return done(err);
           done();
         });
@@ -199,3 +188,4 @@ describe('Document API', () => {
     });
   });
 });
+*/

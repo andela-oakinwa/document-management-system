@@ -116,6 +116,7 @@ class DocumentsPage extends Component {
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
+            id="create-doc"
             className="btn blue darken-4"
             to="document">
               Add Document

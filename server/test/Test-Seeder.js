@@ -13,10 +13,10 @@ const hashPassword = plainPassword =>
 
 export const roles = [{
   id: 1,
-  title: 'admin'
+  title: 'admin',
 }, {
   id: 2,
-  title: 'regular'
+  title: 'regular',
 }];
 
 export const users = [{
@@ -57,7 +57,6 @@ export const documents = [{
   ownerRoleId: '1'
 }];
 const seeds = () => {
-  console.log('hello')
   db.sequelize.sync({ force: true }).then(() => {
     db.Role.bulkCreate(roles);
     db.User.bulkCreate(users, { individualHooks: true }).then(() => {
