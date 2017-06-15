@@ -3,7 +3,7 @@ import ListRow from './ListRow';
 /**
  * Functional stateless component.
  */
-const UsersList = ({ users, deleteUser, auth }) => {
+const UsersList = ({ users, auth }) => {
   const usersRow = users.map((user) => {
     return <ListRow
         user={user}

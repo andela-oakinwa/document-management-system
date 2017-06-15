@@ -27,7 +27,7 @@ const Authentication = {
         if (error) {
           return response.status(401)
             .send({
-              message: 'Token supplied is invalid.'
+              message: 'Invalid Token'
             });
         }
         db.User.findById(decoded.userId)

@@ -12,8 +12,10 @@ const hashPassword = plainPassword =>
   bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(10));
 
 export const roles = [{
+  id: 1,
   title: 'admin'
 }, {
+  id: 2,
   title: 'regular'
 }];
 
@@ -55,6 +57,7 @@ export const documents = [{
   ownerRoleId: '1'
 }];
 const seeds = () => {
+  console.log('hello')
   db.sequelize.sync({ force: true }).then(() => {
     db.Role.bulkCreate(roles);
     db.User.bulkCreate(users, { individualHooks: true }).then(() => {

@@ -216,10 +216,11 @@ const UserController = {
   getUserDocuments(request, response) {
     db.Document.findAll({ where: { ownerId: request.params.id } })
       .then((allDocs) => {
-        response.send({
-          message: 'Documents for user retrieved successfully.',
-          allDocs
-        });
+        response.status(200)
+          .send({
+            message: 'Documents for user retrieved successfully.',
+            allDocs
+          });
       })
       .catch(() => {
         response.status(404)

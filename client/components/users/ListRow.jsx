@@ -15,8 +15,8 @@ class ListRow extends Component {
    * @param  {Object} props Component property
    * @return {void}
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       user: Object.assign({}, props.user),
     };
@@ -92,6 +92,10 @@ ListRow.propTypes = {
   deleteUser: React.PropTypes.func,
   authenticate: React.PropTypes.object.isRequired,
   actions: React.PropTypes.object.isRequired
+};
+
+ListRow.contextTypes = {
+  router: React.PropTypes.object,
 };
 
 /**

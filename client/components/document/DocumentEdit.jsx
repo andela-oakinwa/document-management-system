@@ -69,7 +69,6 @@ class DocumentEdit extends Component {
       this.props.updateDocument(docId, this.state)
         .then(() => {
           this.context.router.push('/');
-          // window.history.back();
           toastr.success('Document updated');
         });
     }

@@ -9,7 +9,7 @@ const userParams = helper.firstUser;
 let role, token;
 
 describe('Roles API', () => {
-  before(() => {
+  before((done) => {
     db.Role.create(helper.adminRole)
       .then((newRole) => {
         userParams.roleId = newRole.id;

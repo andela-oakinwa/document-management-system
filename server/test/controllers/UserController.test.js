@@ -153,7 +153,7 @@ describe('User API', () => {
       });
     });
   });
-/*
+
   describe('CONTEXT: Without existing user', () => {
     // clear DB after each test
     afterEach(() => db.User.destroy({ where: {} }));
@@ -193,7 +193,7 @@ describe('User API', () => {
           });
       });
     });
-  });*/
+  });
 
   describe('CONTEXT: With multiple users', () => {
     before(() =>
