@@ -51,7 +51,8 @@ const ValidateInput = {
     if (validator.isEmpty(credentials.passwordConfirmation)) {
       errors.passwordConfirmation = 'This field is required';
     }
-    if (!validator.equals(credentials.password, credentials.passwordConfirmation)) {
+    if (!validator.equals(credentials.password,
+      credentials.passwordConfirmation)) {
       errors.passwordConfirmation = 'Passwords must match';
     }
     return {

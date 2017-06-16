@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 import { Provider } from 'react-redux';
 
 import './style/Index.scss';
+import '../node_modules/sweetalert/dist/sweetalert.min';
+import '../node_modules/sweetalert/dist/sweetalert.css';
 import '../node_modules/materialize-css/dist/js/materialize.min';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../node_modules/material-icons/css/material-icons.css';

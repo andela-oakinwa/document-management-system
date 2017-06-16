@@ -5,8 +5,8 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import { Pagination } from 'react-materialize';
 import DocumentsList from './DocumentsList';
-import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
-import { searchDocuments } from '../../actions/Search';
+import * as DocumentAction from '../../actions/DocumentAction';
+import * as SearchAction from '../../actions/Search';
 import Search from '../shared/SearchBox';
 import SelectInput from '../shared/SelectInput';
 import access from '../../data/options';
@@ -23,18 +23,28 @@ class DocumentsPage extends Component {
     this.state = {
       renderedDocuments: props.documents,
       filtered: false,
-      access: 'public'
+      access: 'public',
+      isSearching: false
     };
+    this.onChange = this.onChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterDocument = this.filterDocument.bind(this);
+    this.deleteUserDoc = this.deleteUserDoc.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+  }
+  /**
+   * Called when access type is changed
+   */
+  onChange(event) {
+    event.preventDefault();
   }
   /**
    * Checks for rendered document
    */
   componentWillMount() {
-    this.props.fetchDocuments();
+    this.props.actions.fetchDocuments();
     this.setState({ renderedDocuments: this.props.documents });
   }
   /**
@@ -47,7 +57,9 @@ class DocumentsPage extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       renderedDocuments: nextProps.documents
-      });
+    });
+    $('select').material_select();
+    $('#section').on('change', this.filterDocument);
   }
   /**
    * Handles document deletion and notification
@@ -64,10 +76,16 @@ class DocumentsPage extends Component {
   handleSearch(event) {
     event.preventDefault();
     const query = event.target.value;
-    this.props.searchDocuments(query);
+    this.setState({
+      query,
+    });
+    this.props.actions.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
-      this.setState({ renderedDocuments: documentSearchResult });
+      this.setState({
+        isSearching: true,
+        renderedDocuments: documentSearchResult
+      });
     }
   }
   /**
@@ -77,7 +95,16 @@ class DocumentsPage extends Component {
   displayDocuments(pageNumber) {
     const offset = (pageNumber - 1)
       * this.props.metadata.pageSize;
-    this.props.fetchDocuments(offset);
+    this.props.actions.fetchDocuments(offset);
+  }
+  clearSearch() {
+    this.setState({
+      isSearching: false,
+      access: 'public',
+      renderedDocuments: this.props.documents
+    }, () => {
+      this.props.actions.fetchDocuments();
+    });
   }
   /**
    * Returns list of documents with public access
@@ -91,7 +118,7 @@ class DocumentsPage extends Component {
    * @return {Object}
    */
   deleteUserDoc(docId) {
-    return () => this.props.deleteDocument(docId);
+    this.props.actions.deleteDocument(docId);
   }
   /**
    * Renders to the DOM
@@ -103,18 +130,24 @@ class DocumentsPage extends Component {
       pageSize,
       currentPage,
       pageCount } = this.props.metadata;
-    const renderedDocuments =
-      this.props.documents
+    let allDocuments;
+    if (!this.state.isSearching) {
+      allDocuments =
+      this.state.renderedDocuments
       .filter(document => document.access === this.state.access);
+    } else {
+      allDocuments = this.state.renderedDocuments;
+    }
     return (
       <div className="container">
         <h4 className="center">Available Documents</h4>
         <div className="row">
           <div className="col s7 push-s4">
-            <Search onChange={this.handleSearch} />
+            <Search id="search" onChange={this.handleSearch} />
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
+            id="create-doc"
             className="btn blue darken-4"
             to="document">
               Add Document
@@ -122,19 +155,32 @@ class DocumentsPage extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col s4">
-            <SelectInput
+            {!this.state.isSearching ?
+              <div className="col s4">
+              <SelectInput
               id="section"
               name="section"
               options={access}
+              onChange={this.onChange}
               label="Filter Documents by Access"
-              />
-          </div>
+              /></div> :
+              <nav className="blue darken-4">
+              <div className="nav-wrapper">
+              <ul>
+              <li />
+              <li>Showing result for "{this.state.query}"</li>
+              <li><a onClick={this.clearSearch}>
+              <i className="material-icons">clear</i>
+              </a></li>
+              </ul>
+              </div>
+              </nav>
+          }
         </div>
         <DocumentsList
-          documents={renderedDocuments}
+          documents={allDocuments}
           filtered={this.state.filtered}
-          notFiltered={renderedDocuments}
+          notFiltered={allDocuments}
           deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
@@ -150,12 +196,12 @@ class DocumentsPage extends Component {
 }
 
 DocumentsPage.propTypes = {
-  search: React.PropTypes.array.isRequired,
-  fetchDocuments: React.PropTypes.func.isRequired,
-  deleteDocument: React.PropTypes.func.isRequired,
-  searchDocuments: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.object.isRequired,
-  documents: React.PropTypes.array.isRequired,
+  search: React.PropTypes.array,
+  fetchDocuments: React.PropTypes.func,
+  deleteDocument: React.PropTypes.func,
+  searchDocuments: React.PropTypes.func,
+  auth: React.PropTypes.object,
+  documents: React.PropTypes.array,
   metadata: React.PropTypes.object
 };
 /**
@@ -165,6 +211,7 @@ DocumentsPage.propTypes = {
  */
 const mapStateToProps = (state) => {
   let documents = [];
+  console.log(state.documents);
   documents = state.documents;
   return {
     documents,
@@ -173,11 +220,11 @@ const mapStateToProps = (state) => {
     metadata: state.paginate
   };
 };
-
-const mapDispatchToProps = dispatch => ({
-  fetchDocuments: bindActionCreators(fetchDocuments, dispatch),
-  deleteDocument: bindActionCreators(deleteDocument, dispatch),
-  searchDocuments: bindActionCreators(searchDocuments, dispatch)
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(
+    Object.assign(DocumentAction, SearchAction), dispatch),
+  };
+  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentsPage);

@@ -12,9 +12,11 @@ const hashPassword = plainPassword =>
   bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(10));
 
 export const roles = [{
-  title: 'admin'
+  id: 1,
+  title: 'admin',
 }, {
-  title: 'regular'
+  id: 2,
+  title: 'regular',
 }];
 
 export const users = [{

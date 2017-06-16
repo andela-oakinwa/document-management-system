@@ -76,7 +76,7 @@ export class NavigationBar extends Component {
                 }
               </li>
               {user.roleId === 1
-                && <li><Link to="/user"><span>Users</span></Link></li>
+                && <li><Link to="/user" id="users-list"><span>Users</span></Link></li>
               }
               {isAuthenticated
                 && <li><Link id="profile" to="/editprofile">Profile</Link></li>

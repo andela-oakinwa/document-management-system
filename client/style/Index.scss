@@ -23,11 +23,18 @@ main {
   flex: 1 0 auto;
   min-height: 900px;
 }
+.nav-wrapper {
+  margin-left: 40px;
+}
+.margin-btm {
+  margin-bottom: 10px;
+}
 
 .about-page {
   height: 100%;
   position: relative;
 }
+
 .role-list {
   display: block;
 }
@@ -38,6 +45,10 @@ footer {
   right: 0;
   left: 0;
   margin-bottom: -400px;
+}
+
+.profile-form {
+  width: 600px;
 }
 
 .login-form {

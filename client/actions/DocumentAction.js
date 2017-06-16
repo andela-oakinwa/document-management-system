@@ -50,7 +50,7 @@ const fetchDocument = (id) => {
       .then((response) => {
         dispatch({
           type: types.LOAD_DOCUMENT,
-          document: response.data,
+          document: response.data.documents.rows,
         });
       });
   };
@@ -80,13 +80,8 @@ const updateDocument = (id, document) => {
 const deleteDocument = (id) => {
   return (dispatch) => {
     return axios.delete(`/documents/${id}`)
-    .then((response) => {
-      dispatch({
-        type: types.DELETE_DOCUMENT,
-        document: response.data,
-      });
-    }, (error) => {
-      throw (error.response.data.message);
+    .then(() => {
+      dispatch(fetchDocuments());
     });
   };
 };

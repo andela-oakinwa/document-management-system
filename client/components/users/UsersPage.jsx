@@ -25,7 +25,7 @@ class UsersPage extends Component {
   /**
    * Fetches list of users
    */
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchUsers();
   }
   /**
@@ -70,7 +70,6 @@ class UsersPage extends Component {
             :
             this.props.users
           }
-          deleteUser={this.props.deleteUser}
           auth={this.props.auth}
         />
         <Pagination

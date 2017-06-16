@@ -13,7 +13,14 @@ module.exports = {
   role: {
     title: 'author'
   },
-
+  adminUser: {
+    username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    roleId: 1
+  },
   firstUser: {
     username: faker.internet.userName(),
     firstName: faker.name.firstName(),

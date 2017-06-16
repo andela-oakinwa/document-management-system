@@ -4,24 +4,27 @@ import { Row, Input } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 import toastr from 'toastr';
 import { updateDocument } from '../../actions/DocumentAction';
+import validateInput from '../../utilities/CheckDocument';
 
 class DocumentEdit extends Component {
   /**
    * Instatiates class
    * @param {Object} props
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       title: props.document.title,
       content: props.document.content,
-      access: props.document.access
+      access: props.document.access,
+      errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClickUpdate = this.onClickUpdate.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
   /**
    * Handles on change event
@@ -33,7 +36,22 @@ class DocumentEdit extends Component {
     });
   }
   /**
-   *Called when document content is changed
+   * Checks if document metadata exist
+   */
+  isValid() {
+    const data = {
+      title: this.state.title,
+      content: this.state.content,
+      access: this.state.access
+    };
+    const { errors, isValid } = validateInput(data);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+  /**
+   * Called when document content is changed
    * @param {Object} event
    */
   handleChange(event) {
@@ -47,23 +65,26 @@ class DocumentEdit extends Component {
   onClickUpdate(event) {
     event.preventDefault();
     const docId = this.props.document.id;
-    this.props.updateDocument(docId, this.state)
-      .then(() => {
-        window.history.back();
-        toastr.success('Document updated');
-      });
+    if (this.isValid()) {
+      this.props.updateDocument(docId, this.state)
+        .then(() => {
+          this.context.router.push('/');
+          toastr.success('Document updated');
+        });
+    }
   }
   /**
    * Renders to the DOM
    */
   render() {
+    const { errors } = this.state;
     return (
       <form className="container">
         <h5 className="center" style={{ margin: 20 }}>
           Create/Update a Document
         </h5>
         <Row>
-          <div className="input-field col s12" style={{ marginBottom: 10 }}>
+          <div className="input-field col s12 margin-btm">
             <label htmlFor="title" className="active">Title</label>
             <input
               type="text"
@@ -73,9 +94,9 @@ class DocumentEdit extends Component {
               id="title"
               required
             />
-            {/*{errors.title && <span className="red-text">Enter Title</span>}*/}
+            {errors.title && <span className="red-text">Enter Title</span>}
           </div>
-          <div className="input-field col s12" style={{ marginBottom: 10 }}>
+          <div className="input-field col s12 margin-btm">
             <TinyMCE
               id="content"
               config={{
@@ -86,9 +107,9 @@ class DocumentEdit extends Component {
               content={this.state.content}
               onChange={this.handleChange}
             />
-            {/*{errors.content && <div className="red-text">Enter Content</div>}*/}
+            {errors.content && <div className="red-text">Enter Content</div>}
           </div>
-          <div className="input-field col s12" style={{ marginBottom: 10 }}>
+          <div className="input-field col s12 margin-btm">
             <select
               style={{ display: 'block' }}
               id="access"
@@ -102,11 +123,9 @@ class DocumentEdit extends Component {
               <option value="role">Role</option>
             </select>
           </div>
-          <div className="input-field col s12" style={{ marginBottom: 10 }}>
+          <div className="input-field col s12 margin-btm">
             <Input
               type="submit"
-              // disabled={saving}
-              // value={saving ? 'Saving...' : 'Save'}
               className="btn waves-effect waves-light blue"
               onClick={this.onClickUpdate}
             />
@@ -121,6 +140,11 @@ DocumentEdit.propTypes = {
   document: PropTypes.object.isRequired,
   updateDocument: PropTypes.func.isRequired,
 };
+
+DocumentEdit.contextTypes = {
+  router: PropTypes.object,
+};
+
 
 /**
  * Maps state to props

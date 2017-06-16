@@ -169,11 +169,9 @@ const UserController = {
               message: 'User not found'
             });
         }
-        db.User.update(
-          request.body,
+        user.update(request.body,
           { where: { id: request.body.id } })
           .then((updatedUser) => {
-            updatedUser = Helper.userProfile(updatedUser);
             response.status(200)
               .send({
                 message: 'Profile has been updated successfully.',
@@ -218,10 +216,11 @@ const UserController = {
   getUserDocuments(request, response) {
     db.Document.findAll({ where: { ownerId: request.params.id } })
       .then((allDocs) => {
-        response.send({
-          message: 'Documents for user retrieved successfully.',
-          allDocs
-        });
+        response.status(200)
+          .send({
+            message: 'Documents for user retrieved successfully.',
+            allDocs
+          });
       })
       .catch(() => {
         response.status(404)

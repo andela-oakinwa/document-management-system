@@ -39,5 +39,17 @@ describe('DocumentCard', () => {
   it('receives the correct props', () => {
     const wrapper = setup();
     expect(wrapper.find('.card-title').text()).toEqual('title');
+    expect(wrapper.find('.card-content').text()).toExist();
+    expect(wrapper.find('.right').text()).toExist();
+  });
+
+  it('should contain links', () => {
+    const wrapper = setup();
+    expect(wrapper.find('Link').length).toBe(3);
+  });
+
+  it('should contain props', () => {
+    const wrapper = setup();
+    expect(wrapper.props('deleteDocument')).toExist();
   });
 });

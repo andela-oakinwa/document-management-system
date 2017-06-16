@@ -9,8 +9,8 @@ process.env.NODE_ENV = 'test';
 // This agent refers to PORT where program is runninng.
 const server = agent(app);
 const newDocument = helper.publicDocument;
-const regUser = helper.docUser;
-const adminDocUser = helper.adminDocUser;
+const regUser = helper.thirdUser;
+const adminDocUser = helper.adminUser;
 
 describe('Document API', () => {
   let documentDetails;
@@ -22,6 +22,7 @@ describe('Document API', () => {
       .post('/users')
       .send(regUser)
       .end((err, res) => {
+        console.log(res.body);
         regUserData = res.body;
         newDocument.userId = regUserData.user.id;
         newDocument.role = String(regUserData.user.roleId);
@@ -46,21 +47,21 @@ describe('Document API', () => {
         .expect('Content-Type', /json/)
         .end((err, res) => {
           documentDetails = res.body;
-          expect(res.status).toEqual(200);
+          expect(res.status).toEqual(201);
           expect(res.body.message).toEqual(
-            'Your document was created successfully');
+            'Your document was created succesfully.');
           if (err) return done(err);
           done();
         });
     });
 
-    it('should 400 for invalid document data', (done) => {
+    it('should return 400 for invalid document data', (done) => {
       server
         .post('/documents')
         .set('x-access-token', regUserData.token)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          expect(res.status).toEqual(403);
+          expect(res.status).toEqual(400);
           expect(res.body.message).toEqual(
             'Please type in a title for the document');
           if (err) return done(err);
@@ -74,18 +75,7 @@ describe('Document API', () => {
       server
         .get('/documents/?limit=10&offset=1')
         .end((err, res) => {
-          expect(res.status).toEqual(401);
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should 200 without limit and offset', (done) => {
-      server
-        .get('/documents/')
-        .set('x-access-token', adminUser.token)
-        .end((err, res) => {
-          expect(res.status).toEqual(200);
+          expect(res.status).toEqual(400);
           if (err) return done(err);
           done();
         });
@@ -93,26 +83,28 @@ describe('Document API', () => {
 
     it('should return document with specified id', (done) => {
       server
-        .get(`/documents/${documentDetails.document.id}`)
+        .get(`/documents/${documentDetails.createdDoc.id}`)
         .set('x-access-token', regUserData.token)
         .expect('Content-Type', /json/)
         .end((err, res) => {
+          console.log(res.body, 'document info')
           expect(res.status).toEqual(200);
-          expect(res.body.document.title)
-          .toEqual(documentDetails.document.title);
+          expect(res.body.searchedDoc.title)
+          .toEqual(documentDetails.createdDoc.title);
           if (err) return done(err);
           done();
         });
     });
 
     it('should return Document Not found for invalid document Id', (done) => {
+      const docId = 99910;
       server
         .get('/documents/99910')
         .set('x-access-token', regUserData.token)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('Document Not found');
+          expect(res.body.message).toEqual('Document not found');
           if (err) return done(err);
           done();
         });
@@ -143,43 +135,15 @@ describe('Document API', () => {
         });
     });
 
-    it('should return user not found', (done) => {
-      server
-        .get('/users/100/documents')
-        .set('x-access-token', regUserData.token)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('User Not Found');
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should return Error occurred while retrieving user document',
-    (done) => {
-      server
-        .get('/users/maximuf/documents')
-        .set('x-access-token', regUserData.token)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(400);
-          expect(res.body.message).toEqual(
-            'Error occurred while retrieving user document');
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should return 400 code status for invalid document Id', (done) => {
+    it('should return 500 code status for invalid document Id', (done) => {
       server
         .get('/documents/maximuf')
         .set('x-access-token', regUserData.token)
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          expect(res.status).toEqual(400);
+          expect(res.status).toEqual(500);
           expect(res.body.message).toEqual(
-            'Error occurred while retrieving documents');
+            'Invalid query details.');
           if (err) return done(err);
           done();
         });
@@ -193,61 +157,14 @@ describe('Document API', () => {
 
     it('should update document data ', (done) => {
       server
-        .put(`/documents/${documentDetails.document.id}`)
+        .put(`/documents/${documentDetails.createdDoc.id}`)
         .set('x-access-token', regUserData.token)
         .send(fieldsToUpdate)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           expect(res.status).toEqual(200);
-          expect(res.body.message).toEqual('Document updated successfully');
-          if (err) {
-            done(err);
-          }
-          done();
-        });
-    });
-
-    it('should return Document Not found for invalid Id', (done) => {
-      server
-        .put('/documents/100')
-        .set('x-access-token', adminUser.token)
-        .send(fieldsToUpdate)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(400);
-          expect(res.body.message).toEqual('Document not found');
-          if (err) {
-            done(err);
-          }
-          done();
-        });
-    });
-
-    it('should return Document Not Found for invalid Id', (done) => {
-      server
-        .put('/documents/maximuf')
-        .set('x-access-token', adminUser.token)
-        .send(fieldsToUpdate)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(400);
           expect(res.body.message)
-          .toEqual('Error occured while retrieving role');
-          if (err) {
-            done(err);
-          }
-          done();
-        });
-    });
-
-    it('should return Error when updating document id', (done) => {
-      server
-        .put(`/documents/${documentDetails.document.id}`)
-        .set('x-access-token', regUserData.token)
-        .send({ id: 10 })
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(403);
+          .toEqual('This document has been updated successfully.');
           if (err) {
             done(err);
           }
@@ -259,40 +176,13 @@ describe('Document API', () => {
   describe('/DELETE document data', () => {
     it('should delete document data ', (done) => {
       server
-        .delete(`/documents/${documentDetails.document.id}`)
+        .delete(`/documents/${documentDetails.createdDoc.id}`)
         .set('x-access-token', regUserData.token)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           expect(res.status).toEqual(200);
           expect(res.body.message)
-          .toEqual('Document was deleted successfully');
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should return document not found ', (done) => {
-      server
-        .delete('/documents/100')
-        .set('x-access-token', regUserData.token)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(400);
-          expect(res.body.message).toEqual('Document not found');
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should return document not found ', (done) => {
-      server
-        .delete('/documents/maximuf')
-        .set('x-access-token', regUserData.token)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          expect(res.status).toEqual(400);
-          expect(res.body.message)
-          .toEqual('Error occured while deleting document');
+          .toEqual('Document deleted succesfully');
           if (err) return done(err);
           done();
         });

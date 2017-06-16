@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import errorMessage from '../utilities/message';
 import setAuthorizationToken from '../utilities/SetAuthorizationToken';
 import * as types from './ActionType';
 /**
@@ -18,6 +19,9 @@ const signupRequest = (userData) => {
           type: types.SET_CURRENT_USER,
           user: jwt.decode(token)
         });
+      })
+      .catch((error) => {
+        dispatch(errorMessage(error.response.data.message));
       });
   };
 };

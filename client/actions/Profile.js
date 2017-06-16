@@ -1,5 +1,7 @@
 import axios from 'axios';
+import errorMessage from '../utilities/message';
 import * as types from './ActionType';
+
 /**
  * Fetches a single user
  * @param  {Number} userId
@@ -13,6 +15,9 @@ const getUser = (userId) => {
           type: types.GET_CURRENT_USER,
           user: response.data.user
         });
+      })
+      .catch((error) => {
+        dispatch(errorMessage(error.response.data.message));
       });
   };
 };
@@ -25,11 +30,8 @@ const getUser = (userId) => {
 const updateUser = (data, userId) => {
   return (dispatch) => {
     return axios.put(`/users/${userId}`, data)
-      .then((response) => {
-        dispatch({
-          type: types.UPDATE_USER,
-          user: response.data
-        });
+      .catch((error) => {
+        dispatch(errorMessage(error.response.data.message));
       });
   };
 };

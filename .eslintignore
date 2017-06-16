@@ -4,7 +4,11 @@ karma.conf.js
 docs/
 db/
 client/test
-client/e2e
+client/api_docs
+client/build
+client/javascripts
+client/style
+client/stylesheets
 node_modules/
 coverage/
 server/test

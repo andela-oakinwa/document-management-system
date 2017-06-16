@@ -1,4 +1,4 @@
-import config from './config';
+import config from './Config';
 
 module.exports = {
   'Login User': (browser) => {
@@ -6,11 +6,11 @@ module.exports = {
       .url(config.url)
       .waitForElementVisible('body')
       .click('#login')
-      .setValue('Input[name=email]', 'kaiser.phemi@gmail.com')
+      .assert.urlContains('login')
+      .setValue('Input[name=email]', 'kaiser@gmail.com')
       .setValue('Input[name=password]', 'oluwafemi')
       .click('Button[type=submit]')
-      .pause(10000)
-      .assert.urlContains('login')
+      .pause(1000)
       .end();
   },
   'Invalid user': (browser) => {
@@ -21,7 +21,7 @@ module.exports = {
       .setValue('Input[name=email]', 'koko@gmail.com')
       .setValue('Input[name=password]', 'password')
       .click('Button[type=submit]')
-      .pause(10000)
+      .pause(1000)
       .assert.urlContains('login')
       .end();
   }

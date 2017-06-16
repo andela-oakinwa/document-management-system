@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Row, Input } from 'react-materialize';
 /**
  * Functional stateless component
  * @return {Object}
@@ -7,62 +6,48 @@ import { Button, Row, Input } from 'react-materialize';
 const ProfileForm = ({ userProps, onChange, onSubmit }) => {
   return (
     <div>
-      <form className="col s6 container" method="post" onSubmit={onSubmit}>
-        <h5 className="center">Edit Profile</h5>
-        <Row>
-          <div className="z-depth-1 grey lighten-4 row card-panel">
-            <Input
-              label="First Name"
-              s={6}
-              name="firstName"
-              defaultValue={userProps.firstName}
-              onChange={onChange}
-              required
-            />
-            <Input
-              label="Last Name"
-              s={6}
-              name="lastName"
-              value={userProps.lastName}
-              onChange={onChange}
-              required
-            />
-            <Input
-              label="Username"
-              s={6}
-              name="username"
-              value={userProps.username}
-              onChange={onChange}
-              required
-            />
-            <Input
-            label="Email"
-              s={6}
-              name="email"
-              type="email"
-              value={userProps.email}
-              onChange={onChange}
-              required
-              validate
-            />
-            <Input
-              label="Password"
-              s={6}
-              name="password"
-              type="password"
-              value={userProps.password}
-              onChange={onChange}
-              required
-            />
-          </div>
-        </Row>
-        <Button
-          type="submit"
-          className="btn blue darken-4 waves-effect"
-        >
-          Update
-        </Button>
-      </form>
+        <div className="center">
+          <form className="col container profile-form s12" method="post" onSubmit={onSubmit}>
+            <h5 className="header2">Edit Profile</h5>
+            <div className="row">
+              <div className="input-field col s6">
+                <input id="firstName" type="text"
+                value={userProps.firstName}
+                onChange={onChange}
+                required />
+                <label className="active" htmlFor="first_name">First Name</label>
+              </div>
+              <div className="input-field col s6">
+                <input id="lastName" type="text"
+                value={userProps.lastName}
+                onChange={onChange}
+                required />
+                <label className="active" htmlFor="last_name">Last Name</label>
+              </div>
+            </div>
+             <div className="row">
+              <div className="input-field col s6">
+                <input id="username" type="text"
+                  value={userProps.username}
+                  onChange={onChange}
+                  required />
+                <label className="active" htmlFor="username">Username</label>
+              </div>
+              <div className="input-field col s6">
+                <input id="email" type="email"
+                  value={userProps.email}
+                  onChange={onChange}
+                  required />
+                <label className="active" htmlFor="email">Email</label>
+              </div>
+            </div>
+            <button
+              type="submit"
+              onClick={onSubmit} className="btn blue btn-waves-effect">
+            Update Account
+            </button>
+          </form>
+        </div>
     </div>
   );
 };

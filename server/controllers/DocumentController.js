@@ -17,6 +17,19 @@ const DocumentController = {
     const { title, content, access } = request.body,
       ownerId = request.tokenDecode.userId,
       ownerRoleId = request.tokenDecode.roleId;
+    if (!title) {
+      response.status(400)
+      .send({
+        message: 'Please type in a title for the document'
+      });
+    }
+    if (!content) {
+      response.status(400)
+      .send({
+        message: 'Please type in content for the document'
+      });
+    }
+    request.body.access = request.body.access || 'public';
     db.Document
       .create({ title, content, access, ownerId, ownerRoleId })
         .then((createdDoc) => {
@@ -28,7 +41,7 @@ const DocumentController = {
             });
         })
         .catch(() => {
-          response.status(500)
+          response.status(400)
             .send({
               message: 'An error has occured. Document not created.'
             });
@@ -46,7 +59,7 @@ const DocumentController = {
         if (!searchedDoc) {
           return response.status(404)
             .send({
-              message: `Document with id:${request.params.id} does not exist.`
+              message: 'Document not found'
             });
         }
         if (searchedDoc.access === 'public' ||
@@ -71,7 +84,7 @@ const DocumentController = {
   },
   /**
    * Gets instances of all document
-   * Route: GET /documents/
+   * Route: GET /documents/?limit=10&offset=1
    * @param {Object} request Request object
    * @param {Object} response Response object
    */
@@ -85,7 +98,7 @@ const DocumentController = {
       },
       include: [{ model: db.User,
         attributes: ['id', 'username', 'firstName', 'lastName'] }],
-      limit: request.query.limit || 10,
+      limit: request.query.limit,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
     };
@@ -105,6 +118,12 @@ const DocumentController = {
             documents,
             paging
           });
+      })
+      .catch(() => {
+        response.status(401)
+          .send({
+            message: 'Unauthorized access'
+          });
       });
   },
   /**
@@ -119,7 +138,7 @@ const DocumentController = {
         if (!requiredDocument) {
           return response.status(404)
             .send({
-              message: `Document with id:${request.params.id} does not exist`
+              message: 'Document not found'
             });
         }
         requiredDocument.update(request.body)
@@ -132,10 +151,10 @@ const DocumentController = {
                     docData
                   });
               })
-              .catch((error) => {
+              .catch(() => {
                 response.status(404)
                   .send({
-                    message: error.message
+                    message: 'Document not found'
                   });
               });
           });
@@ -159,7 +178,7 @@ const DocumentController = {
         if (!document) {
           return response.status(404)
             .send({
-              message: `Document with id:${params.id} does not exist`
+              message: 'Document not found'
             });
         }
         if (document.ownerId === request.tokenDecode.userId ||
@@ -178,10 +197,10 @@ const DocumentController = {
             });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
           .send({
-            message: error.message
+            message: 'Document not found'
           });
       });
   },

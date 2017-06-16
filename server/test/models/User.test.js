@@ -27,37 +27,37 @@ describe('User Model', () => {
   });
   after((done) => { db.User.destroy({ where: {} }); done(); });
 
-  describe('Create user', () => {
-    it('should create a user', (done) => {
-      db.User.create(helper.regularUser)
-        .then((user) => {
-          regularUser = user.dataValues;
-          expect(user.dataValues.firstName)
-            .to.equal(helper.regularUser.firstName);
-          expect(user.dataValues.lastName)
-            .to.equal(helper.regularUser.lastName);
-          expect(user.dataValues.username)
-            .to.equal(helper.regularUser.username);
-          expect(user.dataValues.email).to.equal(helper.regularUser.email);
-          expect(user.dataValues.roleId).to.equal(defaultRoleId);
-          expect(user.dataValues.password)
-            .to.not.equal(helper.regularUser.password);
-          done();
-        });
-    });
+  // describe('Create user', () => {
+  //   it('should create a user', (done) => {
+  //     db.User.create(helper.regularUser)
+  //       .then((user) => {
+  //         regularUser = user.dataValues;
+  //         expect(user.dataValues.firstName)
+  //           .to.equal(helper.regularUser.firstName);
+  //         expect(user.dataValues.lastName)
+  //           .to.equal(helper.regularUser.lastName);
+  //         expect(user.dataValues.username)
+  //           .to.equal(helper.regularUser.username);
+  //         expect(user.dataValues.email).to.equal(helper.regularUser.email);
+  //         expect(user.dataValues.roleId).to.equal(defaultRoleId);
+  //         expect(user.dataValues.password)
+  //           .to.not.equal(helper.regularUser.password);
+  //         done();
+  //       });
+  //   });
 
-    it('should not create a user when email is invalid', (done) => {
-      db.User.create(helper.invalidEmailUser)
-        .then()
-        .catch((error) => {
-          expect(error.errors[0].message)
-            .to.equal('Validation isEmail failed');
-          expect(error.errors[0].type).to.equal('Validation error');
-          expect(error.errors[0].path).to.equal('email');
-          done();
-        });
-    });
-  });
+  //   it('should not create a user when email is invalid', (done) => {
+  //     db.User.create(helper.invalidEmailUser)
+  //       .then()
+  //       .catch((error) => {
+  //         expect(error.errors[0].message)
+  //           .to.equal('Validation isEmail failed');
+  //         expect(error.errors[0].type).to.equal('Validation error');
+  //         expect(error.errors[0].path).to.equal('email');
+  //         done();
+  //       });
+  //   });
+  // });
 
   describe('Unique', () => {
     uniqueFields.forEach((field) => {

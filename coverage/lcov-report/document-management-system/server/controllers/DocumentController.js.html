@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8% </span>
+        <span class="strong">7.14% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/50</span>
+        <span class='fraction'>4/56</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/24</span>
+        <span class='fraction'>0/28</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/21</span>
+        <span class='fraction'>0/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8.16% </span>
+        <span class="strong">7.27% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/49</span>
+        <span class='fraction'>4/55</span>
       </div>
     </div>
   </div>
@@ -280,7 +280,26 @@
 235
 236
 237
-238</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -300,6 +319,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -384,6 +416,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -536,6 +574,19 @@ const DocumentController = {
     const { title, content, access } = <span class="cstat-no" title="statement not covered" >request.body,</span>
       ownerId = request.tokenDecode.userId,
       ownerRoleId = request.tokenDecode.roleId;
+    if (<span class="cstat-no" title="statement not covered" >!title) {</span>
+      response.<span class="cstat-no" title="statement not covered" >status(400)</span>
+      .send({
+        message: 'Please type in a title for the document'
+      });
+    }
+    if (<span class="cstat-no" title="statement not covered" >!content) {</span>
+      response.<span class="cstat-no" title="statement not covered" >status(400)</span>
+      .send({
+        message: 'Please type in content for the document'
+      });
+    }
+    request.<span class="cstat-no" title="statement not covered" >body.access = request.body.access || 'public';</span>
     db.<span class="cstat-no" title="statement not covered" >Document</span>
       .create({ title, content, access, ownerId, ownerRoleId })
         .then(<span class="fstat-no" title="function not covered" >(createdDoc) =&gt; {</span>
@@ -547,7 +598,7 @@ const DocumentController = {
             });
         })
         .catch(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
-          response.<span class="cstat-no" title="statement not covered" >status(500)</span>
+          response.<span class="cstat-no" title="statement not covered" >status(400)</span>
             .send({
               message: 'An error has occured. Document not created.'
             });
@@ -565,7 +616,7 @@ const DocumentController = {
         if (<span class="cstat-no" title="statement not covered" >!searchedDoc) {</span>
           return <span class="cstat-no" title="statement not covered" >response.status(404)</span>
             .send({
-              message: `Document with id:${request.params.id} does not exist.`
+              message: 'Document not found'
             });
         }
         if (<span class="cstat-no" title="statement not covered" >searchedDoc.access === 'public' ||</span>
@@ -590,7 +641,7 @@ const DocumentController = {
   },
   /**
    * Gets instances of all document
-   * Route: GET /documents/
+   * Route: GET /documents/?limit=10&amp;offset=1
    * @param {Object} request Request object
    * @param {Object} response Response object
    */
@@ -604,7 +655,7 @@ const DocumentController = {
       },
       include: [{ model: db.User,
         attributes: ['id', 'username', 'firstName', 'lastName'] }],
-      limit: request.query.limit || 10,
+      limit: request.query.limit,
       offset: request.query.offset || 0,
       order: [['createdAt', 'DESC']]
     };
@@ -624,6 +675,12 @@ const DocumentController = {
             documents,
             paging
           });
+      })
+      .catch(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+        response.<span class="cstat-no" title="statement not covered" >status(401)</span>
+          .send({
+            message: 'Unauthorized access'
+          });
       });
   },
   /**
@@ -638,7 +695,7 @@ const DocumentController = {
         if (<span class="cstat-no" title="statement not covered" >!requiredDocument) {</span>
           return <span class="cstat-no" title="statement not covered" >response.status(404)</span>
             .send({
-              message: `Document with id:${request.params.id} does not exist`
+              message: 'Document not found'
             });
         }
         requiredDocument.<span class="cstat-no" title="statement not covered" >update(request.body)</span>
@@ -651,10 +708,10 @@ const DocumentController = {
                     docData
                   });
               })
-              .catch(<span class="fstat-no" title="function not covered" >(error) =&gt; {</span>
+              .catch(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
                 response.<span class="cstat-no" title="statement not covered" >status(404)</span>
                   .send({
-                    message: error.message
+                    message: 'Document not found'
                   });
               });
           });
@@ -678,7 +735,7 @@ const DocumentController = {
         if (<span class="cstat-no" title="statement not covered" >!document) {</span>
           return <span class="cstat-no" title="statement not covered" >response.status(404)</span>
             .send({
-              message: `Document with id:${params.id} does not exist`
+              message: 'Document not found'
             });
         }
         if (<span class="cstat-no" title="statement not covered" >document.ownerId === request.tokenDecode.userId ||</span>
@@ -697,10 +754,10 @@ const DocumentController = {
             });
         }
       })
-      .catch(<span class="fstat-no" title="function not covered" >(error) =&gt; {</span>
+      .catch(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
         response.<span class="cstat-no" title="statement not covered" >status(500)</span>
           .send({
-            message: error.message
+            message: 'Document not found'
           });
       });
   },
@@ -760,7 +817,7 @@ export default DocumentController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 14 2017 01:44:22 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 16 2017 02:51:59 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
