@@ -63,4 +63,11 @@ describe('Admin Reducer', () => {
 
     expect(newState.length).toEqual(usersToSet.length);
   });
+
+  it('should return state when no action is passed by defualt', () => {
+    const initialState = [];
+    const action = {};
+    const newState = users(initialState, action);
+    expect(newState.length).toEqual(users.length);
+  });
 });
