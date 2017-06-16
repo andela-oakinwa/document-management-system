@@ -159,9 +159,11 @@
 114
 115
 116
+
 117</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,6 +174,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -189,9 +192,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3×</span>
+
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,6 +280,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -283,13 +289,16 @@ import { logout } from '../../actions/Authentication';
  * Class component
  */
 export class NavigationBar extends Component {
+
   /**
    * Component properties
    * @param {Object} props Component properties
    */
+
   constructor(props) {
     super(<span class="branch-1 cbranch-no" title="branch not covered" >p</span>rops);
     this.logout = this.logout.bind(this);
+
   }
   /**
    * Handles logout events
@@ -304,6 +313,7 @@ export class NavigationBar extends Component {
    * Renders to the DOM
    * @return {Object}
    */
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     return (
@@ -312,6 +322,7 @@ export class NavigationBar extends Component {
           &lt;div className="nav-wrapper"&gt;
             &lt;Link to="/" className="brand-logo"&gt;
               doqMan
+
             &lt;/Link&gt;
             &lt;Link to="#" data-activates="mobile-menu"
             className="button-collapse"&gt;
@@ -319,16 +330,20 @@ export class NavigationBar extends Component {
             &lt;ul id="nav-mobile" className="right hide-on-med-and-down"&gt;
               &lt;li&gt;
                 &lt;Link to="/"&gt;
+
                   {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span&gt;Home&lt;/span&gt;}</span>
+
                 &lt;/Link&gt;
               &lt;/li&gt;
               &lt;li&gt;&lt;Link to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
               &lt;li&gt;
                 {!isAuthenticated
+
                   &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link id="login" to="/login"&gt;Login&lt;/Link&gt;}</span>
               &lt;/li&gt;
               {user.roleId === 1
                 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;li&gt;&lt;Link to="/user"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;</span>
+
               }
               {isAuthenticated
                 &amp;&amp; &lt;li&gt;&lt;Link id="profile" to="/editprofile"&gt;Profile&lt;/Link&gt;&lt;/li&gt;
@@ -336,24 +351,30 @@ export class NavigationBar extends Component {
               &lt;li&gt;
                 {isAuthenticated
                     ? &lt;Link to="/" onClick={this.logout}&gt;Logout&lt;/Link&gt;
+
                     : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;</span>
+
                 }
               &lt;/li&gt;
             &lt;/ul&gt;
             &lt;ul id="mobile-menu" className="blue side-nav"&gt;
               &lt;li&gt;
                 &lt;Link to="/"&gt;
+
                   {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span&gt;Home&lt;/span&gt;}</span>
+
                 &lt;/Link&gt;
               &lt;/li&gt;
               &lt;li&gt;&lt;Link to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
               &lt;li&gt;
                 {!isAuthenticated
+
                   &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/login"&gt;Login&lt;/Link&gt;</span>
                 }
               &lt;/li&gt;
               {user.roleId === 1
                 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;li&gt;&lt;Link to="/user" id="users-list"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;</span>
+
               }
               {isAuthenticated
                 &amp;&amp; &lt;li&gt;&lt;Link id="profile" to="/editprofile"&gt;Profile&lt;/Link&gt;&lt;/li&gt;
@@ -361,7 +382,9 @@ export class NavigationBar extends Component {
               &lt;li&gt;
                 {isAuthenticated
                     ? &lt;Link to="/" onClick={this.logout}&gt;Logout&lt;/Link&gt;
+
                     : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;</span>
+
                 }
               &lt;/li&gt;
             &lt;/ul&gt;
@@ -382,7 +405,9 @@ NavigationBar.contextTypes = {
 };
 /**
  * Maps component state to properties
+
  * @param {Object} state
+
  */
 const mapStateToProps = <span class="fstat-no" title="function not covered" >(state) =&gt; {</span>
   return <span class="cstat-no" title="statement not covered" >{</span>
@@ -397,7 +422,9 @@ export default connect(mapStateToProps, { logout })(NavigationBar);
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
+
   generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 16 2017 04:29:57 GMT+0100 (WAT)
+
 </div>
 </div>
 <script src="../../prettify.js"></script>
