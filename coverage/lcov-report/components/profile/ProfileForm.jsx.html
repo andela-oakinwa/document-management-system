@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for components/shared/Footer.jsx</title>
+    <title>Code coverage report for components/profile/ProfileForm.jsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">components/shared/</a> Footer.jsx
+      <a href="../../index.html">all files</a> / <a href="index.html">components/profile/</a> ProfileForm.jsx
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>5/5</span>
       </div>
     </div>
   </div>
@@ -88,14 +88,23 @@
 43
 44
 45
-46</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,52 +141,91 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
-import { Link } from 'react-router';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 /**
- * Class component.
+ * Functional stateless component
+ * @return {Object}
  */
-class Footer extends Component {
-  /**
-   * Renders to the DOM
-   * @param {String} socialUrl Link to twitter page
-   * @return {Object}
-   */
-  render() {
-    const socialUrl = 'https://twitter.com/Kaiser_Phemi';
-    return (
-      &lt;footer className="page-footer blue darken-4"&gt;
-        &lt;div className="container"&gt;
+const ProfileForm = ({ userProps, onChange, onSubmit }) =&gt; {
+  return (
+    &lt;div&gt;
+        &lt;div className="center"&gt;
+          &lt;form className="col container profile-form s12" method="post" onSubmit={onSubmit}&gt;
+            &lt;h5 className="header2"&gt;Edit Profile&lt;/h5&gt;
             &lt;div className="row"&gt;
-              &lt;div className="col l6 s12"&gt;
-                &lt;h5 className="white-text"&gt;doqMan DMS&lt;/h5&gt;
-                &lt;p className="white-text"&gt;Create and store everything online.&lt;/p&gt;
+              &lt;div className="input-field col s6"&gt;
+                &lt;input id="firstName" type="text"
+                value={userProps.firstName}
+                onChange={onChange}
+                required /&gt;
+                &lt;label className="active" htmlFor="first_name"&gt;First Name&lt;/label&gt;
               &lt;/div&gt;
-              &lt;div className="col l4 offset-l2 s12"&gt;
-                &lt;h5 className="white-text"&gt;Navigation&lt;/h5&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="/"&gt;Home&lt;/Link&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="#!"&gt;FAQ&lt;/Link&gt;&lt;/li&gt;
-                &lt;/ul&gt;
+              &lt;div className="input-field col s6"&gt;
+                &lt;input id="lastName" type="text"
+                value={userProps.lastName}
+                onChange={onChange}
+                required /&gt;
+                &lt;label className="active" htmlFor="last_name"&gt;Last Name&lt;/label&gt;
               &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div className="footer-copyright"&gt;
-            &lt;div className="container"&gt;
-            © 2017 Oluwafemi Akinwa
-            &lt;a className="white-text right" href={socialUrl} target="_blank"&gt;
-              Follow on Twitter
-            &lt;/a&gt;
+             &lt;div className="row"&gt;
+              &lt;div className="input-field col s6"&gt;
+                &lt;input id="username" type="text"
+                  value={userProps.username}
+                  onChange={onChange}
+                  required /&gt;
+                &lt;label className="active" htmlFor="username"&gt;Username&lt;/label&gt;
+              &lt;/div&gt;
+              &lt;div className="input-field col s6"&gt;
+                &lt;input id="email" type="email"
+                  value={userProps.email}
+                  onChange={onChange}
+                  required /&gt;
+                &lt;label className="active" htmlFor="email"&gt;Email&lt;/label&gt;
+              &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/div&gt;
-      &lt;/footer&gt;
-    );
-  }
-}
+            &lt;button
+              type="submit"
+              onClick={onSubmit} className="btn blue btn-waves-effect"&gt;
+            Update Account
+            &lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
 &nbsp;
-export default Footer;
+ProfileForm.propTypes = {
+  userProps: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  onSubmit: React.PropTypes.func.isRequired
+};
+&nbsp;
+export default ProfileForm;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
