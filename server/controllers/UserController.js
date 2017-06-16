@@ -86,6 +86,12 @@ const UserController = {
                 message: 'You have successfully logged out.'
               });
           });
+      })
+      .catch(() => {
+        response.status(400)
+        .send({
+          message: 'An error has occured. Invalid request'
+        });
       });
   },
   /**
@@ -163,20 +169,20 @@ const UserController = {
               message: 'User not found'
             });
         }
-        db.User.update(request.body)
+        user.update(request.body,
+          { where: { id: request.body.id } })
           .then((updatedUser) => {
-            updatedUser = Helper.userProfile(updatedUser);
             response.status(200)
               .send({
                 message: 'Profile has been updated successfully.',
-                updatedUser
+                updatedUser,
               });
           });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(400)
           .send({
-            message: error.message
+            message: 'Missing attributes. Please check details.'
           });
       });
   },
@@ -188,17 +194,17 @@ const UserController = {
   deleteUser(request, response) {
     db.User.findById(request.params.id)
       .then((user) => {
-        if (request.params.roleId === 1) {
-          user.destroy();
-          response.status(200)
-            .send({
-              message: 'This account has been successfully deleted.'
-            });
-        }
+        user.destroy();
+        response.status(200)
+          .send({
+            message: 'User has been successfully deleted.'
+          });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500)
-          .send(error.message);
+          .send({
+            message: 'An error has occured. User not deleted.'
+          });
       });
   },
   /**
@@ -210,16 +216,68 @@ const UserController = {
   getUserDocuments(request, response) {
     db.Document.findAll({ where: { ownerId: request.params.id } })
       .then((allDocs) => {
-        response.send({
-          message: 'Documents for user retrieved successfully.',
-          allDocs
-        });
+        response.status(200)
+          .send({
+            message: 'Documents for user retrieved successfully.',
+            allDocs
+          });
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(404)
           .send({
-            message: error.message
+            message: 'Document not found'
           });
+      });
+  },
+  /**
+   * Search for a user
+   * Route: GET: /search/users?q={queryParam}
+   * @param {Object} request Request object
+   * @param {Object} response Response object
+   * @returns {void} no returns
+   */
+  searchUser(request, response) {
+    const query = {
+      where: {
+        $or: [{
+          username: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          firstName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          lastName: {
+            $iLike: `%${request.query.q}%`
+          }
+        }, {
+          email: {
+            $iLike: `%${request.query.q}%`
+          }
+        }],
+      },
+      limit: request.query.limit || 10,
+      offset: request.query.offset || 0,
+      order: [['createdAt', 'DESC']]
+    };
+    db.User.findAndCountAll(query)
+      .then((users) => {
+        const results = users.rows.map(user => Helper.userProfile(user));
+        const constraint = {
+          count: users.count,
+          limit: query.limit,
+          offset: query.offset
+        };
+        delete users.count;
+        const paging = Helper.paging(constraint);
+        response.status(200)
+          .send({
+            paging,
+            rows: results
+          });
+        response.status(200)
+          .send(results);
       });
   }
 };

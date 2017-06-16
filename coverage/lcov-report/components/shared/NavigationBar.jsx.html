@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">55.56% </span>
+        <span class="strong">77.78% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>10/18</span>
+        <span class='fraction'>14/18</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">59.09% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/22</span>
+        <span class='fraction'>13/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>2/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">55.56% </span>
+        <span class="strong">77.78% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>10/18</span>
+        <span class='fraction'>14/18</span>
       </div>
     </div>
   </div>
@@ -159,32 +159,24 @@
 114
 115
 116
-117
-118</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+
+117</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -192,7 +184,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,6 +192,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,22 +280,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-&nbsp;
 import { logout } from '../../actions/Authentication';
 /**
- * Class component defined as this is a root component
+ * Class component
  */
-class NavigationBar extends React.Component {
+export class NavigationBar extends Component {
+
   /**
    * Component properties
    * @param {Object} props Component properties
    */
-  constructor(<span class="fstat-no" title="function not covered" >props) {</span>
-    super(<span class="cstat-no" title="statement not covered" >props);</span>
-    this.<span class="cstat-no" title="statement not covered" >logout = this.logout.bind(this);</span>
+
+  constructor(props) {
+    super(<span class="branch-1 cbranch-no" title="branch not covered" >p</span>rops);
+    this.logout = this.logout.bind(this);
+
   }
   /**
    * Handles logout events
@@ -307,14 +313,16 @@ class NavigationBar extends React.Component {
    * Renders to the DOM
    * @return {Object}
    */
-  render() <span class="fstat-no" title="function not covered" >{</span>
-    const { isAuthenticated, user } = <span class="cstat-no" title="statement not covered" >this.props.auth;</span>
+
+  render() {
+    const { isAuthenticated, user } = this.props.auth;
     return (
-<span class="cstat-no" title="statement not covered" >      &lt;header&gt;</span>
+      &lt;header&gt;
         &lt;nav role="navigation" className="nav-bar blue darken-4"&gt;
           &lt;div className="nav-wrapper"&gt;
             &lt;Link to="/" className="brand-logo"&gt;
-              &lt;img src="../../assets/images/dms-logo.png" /&gt;
+              doqMan
+
             &lt;/Link&gt;
             &lt;Link to="#" data-activates="mobile-menu"
             className="button-collapse"&gt;
@@ -322,16 +330,20 @@ class NavigationBar extends React.Component {
             &lt;ul id="nav-mobile" className="right hide-on-med-and-down"&gt;
               &lt;li&gt;
                 &lt;Link to="/"&gt;
-                  {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : &lt;span&gt;Home&lt;/span&gt;}
+
+                  {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span&gt;Home&lt;/span&gt;}</span>
+
                 &lt;/Link&gt;
               &lt;/li&gt;
               &lt;li&gt;&lt;Link to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
               &lt;li&gt;
                 {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login"&gt;Login&lt;/Link&gt;}
+
+                  &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link id="login" to="/login"&gt;Login&lt;/Link&gt;}</span>
               &lt;/li&gt;
               {user.roleId === 1
-                &amp;&amp; &lt;li&gt;&lt;Link to="/users"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;
+                &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;li&gt;&lt;Link to="/user"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;</span>
+
               }
               {isAuthenticated
                 &amp;&amp; &lt;li&gt;&lt;Link id="profile" to="/editprofile"&gt;Profile&lt;/Link&gt;&lt;/li&gt;
@@ -339,24 +351,30 @@ class NavigationBar extends React.Component {
               &lt;li&gt;
                 {isAuthenticated
                     ? &lt;Link to="/" onClick={this.logout}&gt;Logout&lt;/Link&gt;
-                    : &lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;
+
+                    : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;</span>
+
                 }
               &lt;/li&gt;
             &lt;/ul&gt;
             &lt;ul id="mobile-menu" className="blue side-nav"&gt;
               &lt;li&gt;
                 &lt;Link to="/"&gt;
-                  {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : &lt;span&gt;Home&lt;/span&gt;}
+
+                  {isAuthenticated ? &lt;span&gt;Documents&lt;/span&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span&gt;Home&lt;/span&gt;}</span>
+
                 &lt;/Link&gt;
               &lt;/li&gt;
               &lt;li&gt;&lt;Link to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
               &lt;li&gt;
                 {!isAuthenticated
-                  &amp;&amp; &lt;Link to="/login"&gt;Login&lt;/Link&gt;
+
+                  &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/login"&gt;Login&lt;/Link&gt;</span>
                 }
               &lt;/li&gt;
               {user.roleId === 1
-                &amp;&amp; &lt;li&gt;&lt;Link to="/users"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;
+                &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;li&gt;&lt;Link to="/user" id="users-list"&gt;&lt;span&gt;Users&lt;/span&gt;&lt;/Link&gt;&lt;/li&gt;</span>
+
               }
               {isAuthenticated
                 &amp;&amp; &lt;li&gt;&lt;Link id="profile" to="/editprofile"&gt;Profile&lt;/Link&gt;&lt;/li&gt;
@@ -364,7 +382,9 @@ class NavigationBar extends React.Component {
               &lt;li&gt;
                 {isAuthenticated
                     ? &lt;Link to="/" onClick={this.logout}&gt;Logout&lt;/Link&gt;
-                    : &lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;
+
+                    : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Link to="/signup"&gt;Sign Up&lt;/Link&gt;</span>
+
                 }
               &lt;/li&gt;
             &lt;/ul&gt;
@@ -385,7 +405,9 @@ NavigationBar.contextTypes = {
 };
 /**
  * Maps component state to properties
- * @param {*} state State of component
+
+ * @param {Object} state
+
  */
 const mapStateToProps = <span class="fstat-no" title="function not covered" >(state) =&gt; {</span>
   return <span class="cstat-no" title="statement not covered" >{</span>
@@ -400,7 +422,9 @@ export default connect(mapStateToProps, { logout })(NavigationBar);
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 13 2017 00:15:39 GMT+0100 (WAT)
+
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 16 2017 04:29:57 GMT+0100 (WAT)
+
 </div>
 </div>
 <script src="../../prettify.js"></script>

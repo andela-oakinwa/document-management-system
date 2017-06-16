@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
-import { Pagination, Button } from 'react-materialize';
-import DocumentsList from './DocumentList';
-import { fetchDocuments, deleteDocument } from '../../actions/DocumentAction';
-import { searchDocuments } from '../../actions/Search';
+import { Pagination } from 'react-materialize';
+import DocumentsList from './DocumentsList';
+import * as DocumentAction from '../../actions/DocumentAction';
+import * as SearchAction from '../../actions/Search';
 import Search from '../shared/SearchBox';
+import SelectInput from '../shared/SelectInput';
+import access from '../../data/options';
 /**
  * Defined as class component.
  */
-class DocumentsPage extends React.Component {
+class DocumentsPage extends Component {
   /**
    * Component properties
    * @param {Object} props
@@ -19,27 +22,50 @@ class DocumentsPage extends React.Component {
     super(props);
     this.state = {
       renderedDocuments: props.documents,
-      filtered: false
+      filtered: false,
+      access: 'public',
+      isSearching: false
     };
+    this.onChange = this.onChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.deleteDocument = this.deleteDocument.bind(this);
+    this.removeDocument = this.removeDocument.bind(this);
     this.displayDocuments = this.displayDocuments.bind(this);
-    this.filterPublicDocs = this.filterPublicDocs.bind(this);
-    this.filterPrivateDocs = this.filterPrivateDocs.bind(this);
-    this.filterRoleDocs = this.filterRoleDocs.bind(this);
+    this.filterDocument = this.filterDocument.bind(this);
+    this.deleteUserDoc = this.deleteUserDoc.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+  }
+  /**
+   * Called when access type is changed
+   */
+  onChange(event) {
+    event.preventDefault();
   }
   /**
    * Checks for rendered document
    */
   componentWillMount() {
-    this.props.fetchDocuments();
+    this.props.actions.fetchDocuments();
     this.setState({ renderedDocuments: this.props.documents });
   }
   /**
-   * Handles document deletion and notification
-   * @param  {Number} id Specific document Id
+   * Called after render method
    */
-  deleteDocument(id) {
+  componentDidMount() {
+    $('select').material_select();
+    $('#section').on('change', this.filterDocument);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      renderedDocuments: nextProps.documents
+    });
+    $('select').material_select();
+    $('#section').on('change', this.filterDocument);
+  }
+  /**
+   * Handles document deletion and notification
+   * @param {Number} id Specific document Id
+   */
+  removeDocument(id) {
     this.props.deleteDocument(id)
       .then(() => toastr.success('Document deleted successfully!'));
   }
@@ -50,47 +76,49 @@ class DocumentsPage extends React.Component {
   handleSearch(event) {
     event.preventDefault();
     const query = event.target.value;
-    this.props.searchDocuments(query);
+    this.setState({
+      query,
+    });
+    this.props.actions.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
-      this.setState({ renderedDocuments: documentSearchResult });
+      this.setState({
+        isSearching: true,
+        renderedDocuments: documentSearchResult
+      });
     }
   }
   /**
-   * Displays lit of document
+   * Displays list of document
    * @param  {Number} pageNumber
    */
   displayDocuments(pageNumber) {
     const offset = (pageNumber - 1)
       * this.props.metadata.pageSize;
-    this.props.fetchDocuments(offset);
+    this.props.actions.fetchDocuments(offset);
+  }
+  clearSearch() {
+    this.setState({
+      isSearching: false,
+      access: 'public',
+      renderedDocuments: this.props.documents
+    }, () => {
+      this.props.actions.fetchDocuments();
+    });
   }
   /**
    * Returns list of documents with public access
    */
-  filterPublicDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'public');
-    this.setState({ renderedDocuments, filtered: true });
+  filterDocument(event) {
+    this.setState({ access: event.target.value });
   }
   /**
-   * Returns list of documents with private access
+   * [deleteUserDoc description]
+   * @param  {Number} docId Document Id
+   * @return {Object}
    */
-  filterPrivateDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'private');
-    this.setState({ renderedDocuments, filtered: true });
-  }
-  /**
-   * Returns list of documents with role access
-   */
-  filterRoleDocs() {
-    const renderedDocuments =
-    this.props.documents
-      .filter(document => document.access === 'role');
-    this.setState({ renderedDocuments, filtered: true });
+  deleteUserDoc(docId) {
+    this.props.actions.deleteDocument(docId);
   }
   /**
    * Renders to the DOM
@@ -102,57 +130,58 @@ class DocumentsPage extends React.Component {
       pageSize,
       currentPage,
       pageCount } = this.props.metadata;
+    let allDocuments;
+    if (!this.state.isSearching) {
+      allDocuments =
+      this.state.renderedDocuments
+      .filter(document => document.access === this.state.access);
+    } else {
+      allDocuments = this.state.renderedDocuments;
+    }
     return (
       <div className="container">
         <h4 className="center">Available Documents</h4>
         <div className="row">
           <div className="col s7 push-s4">
-            <Search onChange={this.handleSearch} />
+            <Search id="search" onChange={this.handleSearch} />
           </div>
           <div className="col s5 pull-s7" id="createdocument">
             <Link
-            className="btn create-list-link blue darken-4"
+            id="create-doc"
+            className="btn blue darken-4"
             to="document">
               Add Document
             </Link>
           </div>
         </div>
         <div className="row">
-          <div className="col s12">
-            <ul>
-              <li className="tab col s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterPublicDocs}
-                >
-                  Public Documents
-                </Button>
-              </li>
-              <li className="tab col s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterPrivateDocs}
-                >
-                  Private Documents
-                </Button>
-              </li>
-              <li className="tab col s4">
-                <Button
-                  className="blue"
-                  onClick={this.filterRoleDocs}
-                >
-                  Role Documents
-                </Button>
-              </li>
-            </ul>
-          </div>
+            {!this.state.isSearching ?
+              <div className="col s4">
+              <SelectInput
+              id="section"
+              name="section"
+              options={access}
+              onChange={this.onChange}
+              label="Filter Documents by Access"
+              /></div> :
+              <nav className="blue darken-4">
+              <div className="nav-wrapper">
+              <ul>
+              <li />
+              <li>Showing result for "{this.state.query}"</li>
+              <li><a onClick={this.clearSearch}>
+              <i className="material-icons">clear</i>
+              </a></li>
+              </ul>
+              </div>
+              </nav>
+          }
         </div>
-
         <DocumentsList
-          documents={this.state.renderedDocuments}
+          documents={allDocuments}
           filtered={this.state.filtered}
-          notFiltered={this.props.documents}
-          deleteDocument={this.deleteDoc}
+          notFiltered={allDocuments}
+          deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
         <Pagination
@@ -167,12 +196,12 @@ class DocumentsPage extends React.Component {
 }
 
 DocumentsPage.propTypes = {
-  search: React.PropTypes.array.isRequired,
-  fetchDocuments: React.PropTypes.func.isRequired,
-  deleteDocument: React.PropTypes.func.isRequired,
-  searchDocuments: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.object.isRequired,
-  documents: React.PropTypes.array.isRequired,
+  search: React.PropTypes.array,
+  fetchDocuments: React.PropTypes.func,
+  deleteDocument: React.PropTypes.func,
+  searchDocuments: React.PropTypes.func,
+  auth: React.PropTypes.object,
+  documents: React.PropTypes.array,
   metadata: React.PropTypes.object
 };
 /**
@@ -182,6 +211,7 @@ DocumentsPage.propTypes = {
  */
 const mapStateToProps = (state) => {
   let documents = [];
+  console.log(state.documents);
   documents = state.documents;
   return {
     documents,
@@ -190,6 +220,11 @@ const mapStateToProps = (state) => {
     metadata: state.paginate
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(
+    Object.assign(DocumentAction, SearchAction), dispatch),
+  };
+  };
 
-export default connect(mapStateToProps,
-{ fetchDocuments, deleteDocument, searchDocuments })(DocumentsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentsPage);

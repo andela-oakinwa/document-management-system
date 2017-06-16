@@ -1,75 +1,76 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require('webpack'),
+  path = require('path'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  GLOBALS = {
+    'process.env.NODE_ENV': JSON.stringify('production')
+  };
 
 module.exports = {
-  context: `${__dirname}/client`,
-  entry: {
-    javascript: path.resolve(__dirname, 'client/Index.jsx'),
-    html: path.resolve(__dirname, 'client/Index.html'),
-  },
-  output: {
-    filename: '[name].js',
-    path: `${__dirname}/build/client`,
-    publicPath: '/'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(jsx|js)$/,
-        include: [
-          path.resolve(__dirname, 'client')
-        ],
-        exclude: /node_modules/,
-        use: ['react-hot-loader', 'babel-loader'],
-      },
-      {
-        test: /\.scss?$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.json$/,
-        loader: ['json-loader'],
-      },
-      {
-        test: /\.(jpg|png|svg)$/,
-        loader: ['url-loader']
-      },
-      {
-        test: /\.html$/,
-        loader: 'file-loader?name=[name].[ext]',
-      }
-    ],
-  },
-  resolve: {
-    extensions: ['.js', '.json', '.jsx', '.scss']
-  },
-  devtool: 'cheap-source-map',
+  entry: './client/Index',
   target: 'web',
+  output: {
+    path: path.join(__dirname, '/dist/'),
+    publicPath: '/client',
+    filename: 'Bundle.js'
+  },
+  devServer: {
+    contentBase: './dist'
+  },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin(GLOBALS),
+    new ExtractTextPlugin('styles.css'),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-      // beautify: false,
-      // mangle: {
-      //   screw_ie8: true,
-      //   keep_fnames: true,
-      // },
-      // compress: {
-      //   screw_ie8: true,
-      //   warnings: false,
-      //   pure_funcs: ['console.log', 'window.console.log.apply']
-      // },
-      // comments: false
-    // })
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
+        screw_ie8: true
+      },
+      comments: false
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jquery: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        include: [path.join(__dirname, 'client'),
+          path.join(__dirname, 'server/shared')],
+        loaders: ['babel-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'file-loader'
+      },
+    ],
+  },
+  resolve: {
+    extensions: [' ', '.js', '.jsx', '.css']
+  },
   node: {
     net: 'empty',
-    dns: 'empty',
-  },
+    dns: 'empty'
+  }
 };

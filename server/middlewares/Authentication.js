@@ -27,7 +27,7 @@ const Authentication = {
         if (error) {
           return response.status(401)
             .send({
-              message: 'Token supplied is invalid.'
+              message: 'Invalid Token'
             });
         }
         db.User.findById(decoded.userId)
@@ -66,13 +66,13 @@ const Authentication = {
     db.Role
       .findById(request.tokenDecode.roleId)
       .then((role) => {
-        if (role.title === 'admin') {
-          next();
+        if (role.title !== 'admin') {
+          return response.status(403)
+            .send({
+              message: 'You are not permitted to perform this action.'
+            });
         }
-        return response.status(403)
-          .send({
-            message: 'You are not permitted to perform this action.'
-          });
+        next();
       });
   },
   /**

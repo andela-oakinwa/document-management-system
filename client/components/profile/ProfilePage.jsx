@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import toastr from 'toastr';
 import ProfileForm from './ProfileForm';
-import getUser, { updateUser } from '../../actions/Profile';
+import { getUser, updateUser } from '../../actions/Profile';
 /**
- * Class component as this is a root component
+ * Class component
  */
 class ProfilePage extends Component {
   /**
@@ -12,37 +13,41 @@ class ProfilePage extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: ''
+    this.state =
+    {
+      user: {
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: ''
+      }
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   /**
-   * Checks for mounted details
+   * Called after redering
    */
-  checkMount() {
-    this.props.getUser(this.props.userId)
-      .then((response) => {
-        this.setState({
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          username: response.data.username,
-          email: response.data.email,
-          password: response.data.password
-        });
+  componentWillMount() {
+    this.props.getUser(this.props.userId);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      this.setState({
+        user: nextProps.user
       });
+    }
   }
   /**
    * Handles change of state as a result of user input
    * @param {Object} event Event object trigered by user
    */
   onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    const field = event.target.id;
+    const user = this.state.user;
+    user[field] = event.target.value;
+    return this.setState({ user });
   }
   /**
    * Handles submit events
@@ -50,10 +55,11 @@ class ProfilePage extends Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    this.props.updateUser(this.state, this.props.userId)
+    this.props.updateUser(this.state.user, this.props.userId)
       .then(
         () => {
           this.context.router.push('/');
+          toastr.success('Profile updated successfully!');
         }
       );
   }
@@ -62,10 +68,11 @@ class ProfilePage extends Component {
    * @return {Object}
    */
   render() {
+    const user = this.state.user;
     return (
       <div>
         <ProfileForm
-          userProps={this.state}
+          userProps={user}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
         />
@@ -91,6 +98,7 @@ ProfilePage.contextTypes = {
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.user.userId,
+    user: state.user
   };
 };
 

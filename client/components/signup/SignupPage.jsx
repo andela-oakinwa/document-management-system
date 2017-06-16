@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import SignUpForm from './SignUpForm';
-import signupRequest from '../../actions/SignUpAction';
-import validateInput from '../../../server/shared/ValidateInput';
+import signupRequest from '../../actions/SignupAction';
+import validateInput from '../../utilities/ValidateInput';
 /**
- * Component declared as a class since it's a root component
+ * Component declared as a class
  */
 class SignUpPage extends Component {
   /**
@@ -38,7 +38,7 @@ class SignUpPage extends Component {
    * @return {Boolean}
    */
   isValid() {
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateInput.checkSignup(this.state);
     if (!isValid) {
       this.setState({ errors });
     }

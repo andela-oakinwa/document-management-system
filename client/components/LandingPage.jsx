@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentsPage from './document/DocumentsPage';
 
-class LandingPage extends React.Component {
+class LandingPage extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
-      <div>
+      <div className="main">
       {!isAuthenticated &&
         <div className="banner">
           <div className="landing-page" >
@@ -23,7 +23,7 @@ class LandingPage extends React.Component {
             <div className="row">
               <div className="col s12">
                 <div className="center-align">
-                    <Link className="btn btn-large waves-effect get-started-btn teal darken-4" to="/signup">
+                    <Link id="signup" className="btn btn-large waves-effect get-started-btn teal darken-4" to="/signup">
                       Get Started
                     </Link>
                     <p className="white-text">

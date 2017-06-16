@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Input } from 'react-materialize';
 import TinyMCE from 'react-tinymce';
 
-const DocumentForm = ({ document, editorChange,
+const DocumentForm = ({ document,
   onSave, onChange, saving, errors }) => {
   return (
     <form className="container">
@@ -10,34 +10,34 @@ const DocumentForm = ({ document, editorChange,
         Create/Update a Document
       </h5>
       <Row>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <Input
             label="Title"
             validate
             name="title"
             onChange={onChange}
-            value={document.title || ''}
+            value={document.title}
             id="title"
           />
           {errors.title && <span className="red-text">Enter Title</span>}
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <TinyMCE
             id="content"
-            content={document.content || ''}
+            content={document.content}
             config={{
               plugins: 'autolink link image lists print preview',
               toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
             }}
-            onChange={editorChange}
+            onChange={onChange}
           />
           {errors.content && <div className="red-text">Enter Content</div>}
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <select
             style={{ display: 'block' }}
             id="access"
-            value={document.access || ''}
+            value={document.access}
             onChange={onChange}
             name="access"
           >
@@ -47,7 +47,7 @@ const DocumentForm = ({ document, editorChange,
             <option value="role">Role</option>
           </select>
         </div>
-        <div className="input-field col s12" style={{ marginBottom: 10 }}>
+        <div className="input-field col s12 margin-btm">
           <Input
             type="submit"
             disabled={saving}
@@ -67,7 +67,7 @@ DocumentForm.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   errors: React.PropTypes.object.isRequired,
-  editorChange: React.PropTypes.object.isRequired
+  // editorChange: React.PropTypes.func.isRequired
 };
 
 export default DocumentForm;

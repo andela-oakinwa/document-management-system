@@ -1,16 +1,15 @@
 /* eslint "react/no-danger": 0 */
 import React from 'react';
 import { Link } from 'react-router';
-import { Button } from 'react-materialize';
 
-export default
-function DocumentDetails({ document, deleteDocument, currentUser }) {
+const DocumentDetails = ({ document, deleteDocument, currentUser }) => {
   return (
-    <div className="col s12">
+    <div className="col s12 container">
       <div className="card">
-        <div className="card-content white-text">
+        <div className="card-content indigo white-text">
           <span className="card-title">{document.title}</span>
-          <p dangerouslySetInnerHTML={{ __html: document.content }} className="document-content" />
+          <p dangerouslySetInnerHTML={{ __html: document.content }}
+            className="document-content" />
           <br />
           <p>Access Type: &nbsp;
             <span>{(document.access).toUpperCase()}</span></p><br />
@@ -26,18 +25,24 @@ function DocumentDetails({ document, deleteDocument, currentUser }) {
           <Link to="/">back</Link>
           {currentUser.userId === document.ownerId &&
             <div className="right">
-              <Link to={`/documents/${document.id}`}>Edit</Link>
-              <Link to="/" onClick={() => deleteDocument(document.id)}> Delete </Link>
+              <Link className="edit" to={`/document/${document.id}/edit`}>
+                Edit
+              </Link>
+              <Link className="delete" to="/"
+                onClick={() => deleteDocument(document.id)}>
+                Delete
+              </Link>
             </div>
           }
         </div>
       </div>
     </div>
   );
-}
+};
 
 DocumentDetails.propTypes = {
   document: React.PropTypes.object.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
   currentUser: React.PropTypes.object.isRequired,
 };
+export default DocumentDetails;
