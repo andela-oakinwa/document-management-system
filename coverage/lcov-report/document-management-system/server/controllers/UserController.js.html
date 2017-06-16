@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">23.64% </span>
+        <span class="strong">10.91% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/55</span>
+        <span class='fraction'>6/55</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>0/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.52% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>5/27</span>
+        <span class='fraction'>0/27</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">24.07% </span>
+        <span class="strong">11.11% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/54</span>
+        <span class='fraction'>6/54</span>
       </div>
     </div>
   </div>
@@ -347,20 +347,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -544,9 +544,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -631,21 +631,21 @@ const UserController = {
    * @param {Object} request Request object
    * @param {Object} response Response object
    */
-  createUser(request, response) {
-    db.User
+  createUser(<span class="fstat-no" title="function not covered" >request, response) {</span>
+    db.<span class="cstat-no" title="statement not covered" >User</span>
       .create(request.body)
-      .then((user) =&gt; {
-        const token = Authentication.getToken(user);
-        user = Helper.userProfile(user);
-        return response.status(201)
+      .then(<span class="fstat-no" title="function not covered" >(user) =&gt; {</span>
+        const <span class="cstat-no" title="statement not covered" >token = Authentication.getToken(user);</span>
+        user = <span class="cstat-no" title="statement not covered" >Helper.userProfile(user);</span>
+        return <span class="cstat-no" title="statement not covered" >response.status(201)</span>
           .send({
             message: 'Your account has been created successfully.',
             token,
             user
           });
       })
-      .catch((error) =&gt; {
-        response.status(500)
+      .catch(<span class="fstat-no" title="function not covered" >(error) =&gt; {</span>
+        response.<span class="cstat-no" title="statement not covered" >status(500)</span>
           .send({
             message: 'An error has occured. Account was not created',
             error
@@ -828,10 +828,10 @@ const UserController = {
    * @param  {Object} request  Request object
    * @param  {Object} response Response object
    */
-  getUserDocuments(request, response) {
-    db.Document.findAll({ where: { ownerId: request.params.id } })
-      .then((allDocs) =&gt; {
-        response.status(200)
+  getUserDocuments(<span class="fstat-no" title="function not covered" >request, response) {</span>
+    db.<span class="cstat-no" title="statement not covered" >Document.findAll({ where: { ownerId: request.params.id } })</span>
+      .then(<span class="fstat-no" title="function not covered" >(allDocs) =&gt; {</span>
+        response.<span class="cstat-no" title="statement not covered" >status(200)</span>
           .send({
             message: 'Documents for user retrieved successfully.',
             allDocs
@@ -904,7 +904,7 @@ export default UserController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 15 2017 06:47:21 GMT+0100 (WAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 16 2017 02:51:59 GMT+0100 (WAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

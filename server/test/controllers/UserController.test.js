@@ -27,7 +27,7 @@ describe('User API', () => {
 
   after(() => db.Role.sequelize.sync({ force: true }));
 
-  describe('CONTEXT: With existing user', () => {
+  describe.only('CONTEXT: With existing user', () => {
     beforeEach((done) => {
       request.post('/users')
         .send(userParams)

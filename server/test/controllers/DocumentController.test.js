@@ -1,4 +1,4 @@
-/*import { agent } from 'supertest';
+import { agent } from 'supertest';
 import expect from 'expect';
 
 import app from '../../Config/App';
@@ -22,6 +22,7 @@ describe('Document API', () => {
       .post('/users')
       .send(regUser)
       .end((err, res) => {
+        console.log(res.body);
         regUserData = res.body;
         newDocument.userId = regUserData.user.id;
         newDocument.role = String(regUserData.user.roleId);
@@ -188,4 +189,3 @@ describe('Document API', () => {
     });
   });
 });
-*/

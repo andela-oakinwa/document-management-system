@@ -23,7 +23,8 @@ class DocumentsPage extends Component {
     this.state = {
       renderedDocuments: props.documents,
       filtered: false,
-      access: 'public'
+      access: 'public',
+      isSearching: false
     };
     this.onChange = this.onChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -31,6 +32,7 @@ class DocumentsPage extends Component {
     this.displayDocuments = this.displayDocuments.bind(this);
     this.filterDocument = this.filterDocument.bind(this);
     this.deleteUserDoc = this.deleteUserDoc.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
   /**
    * Called when access type is changed
@@ -55,7 +57,9 @@ class DocumentsPage extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       renderedDocuments: nextProps.documents
-      });
+    });
+    $('select').material_select();
+    $('#section').on('change', this.filterDocument);
   }
   /**
    * Handles document deletion and notification
@@ -72,10 +76,14 @@ class DocumentsPage extends Component {
   handleSearch(event) {
     event.preventDefault();
     const query = event.target.value;
+    this.setState({
+      query,
+    });
     this.props.actions.searchDocuments(query);
     const documentSearchResult = this.props.search;
     if (query.trim().length > 0) {
       this.setState({
+        isSearching: true,
         renderedDocuments: documentSearchResult
       });
     }
@@ -88,6 +96,15 @@ class DocumentsPage extends Component {
     const offset = (pageNumber - 1)
       * this.props.metadata.pageSize;
     this.props.actions.fetchDocuments(offset);
+  }
+  clearSearch() {
+    this.setState({
+      isSearching: false,
+      access: 'public',
+      renderedDocuments: this.props.documents
+    }, () => {
+      this.props.actions.fetchDocuments();
+    });
   }
   /**
    * Returns list of documents with public access
@@ -113,9 +130,14 @@ class DocumentsPage extends Component {
       pageSize,
       currentPage,
       pageCount } = this.props.metadata;
-    const renderedDocuments =
-      this.props.documents
+    let allDocuments;
+    if (!this.state.isSearching) {
+      allDocuments =
+      this.state.renderedDocuments
       .filter(document => document.access === this.state.access);
+    } else {
+      allDocuments = this.state.renderedDocuments;
+    }
     return (
       <div className="container">
         <h4 className="center">Available Documents</h4>
@@ -133,20 +155,32 @@ class DocumentsPage extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col s4">
-            <SelectInput
+            {!this.state.isSearching ?
+              <div className="col s4">
+              <SelectInput
               id="section"
               name="section"
               options={access}
               onChange={this.onChange}
               label="Filter Documents by Access"
-              />
-          </div>
+              /></div> :
+              <nav className="blue darken-4">
+              <div className="nav-wrapper">
+              <ul>
+              <li />
+              <li>Showing result for "{this.state.query}"</li>
+              <li><a onClick={this.clearSearch}>
+              <i className="material-icons">clear</i>
+              </a></li>
+              </ul>
+              </div>
+              </nav>
+          }
         </div>
         <DocumentsList
-          documents={renderedDocuments}
+          documents={allDocuments}
           filtered={this.state.filtered}
-          notFiltered={renderedDocuments}
+          notFiltered={allDocuments}
           deleteDocument={this.deleteUserDoc}
           currentUser={this.props.auth.user}
         />
