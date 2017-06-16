@@ -68,4 +68,11 @@ describe('Document Reducer', () => {
     const newState = documents(initialState, action);
     expect(newState.length).toEqual(documentsToSet.length);
   });
+
+  it('should return state when no action is passed by default', () => {
+    const initialState = [];
+    const action = {};
+    const newState = documents(initialState, action);
+    expect(newState.length).toEqual(initialState.length);
+  });
 });

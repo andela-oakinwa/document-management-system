@@ -16,4 +16,12 @@ describe('Search Reducer', () => {
 
     expect(newState.length).toEqual(documentSearched.length);
   });
+
+  it('should return state when no action is passed by default', () => {
+    const initialState = [];
+    const action = {};
+    const newState = search(initialState, action);
+
+    expect(newState.length).toEqual(search.length);
+  });
 });
