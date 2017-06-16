@@ -18,6 +18,7 @@ describe('Authentication Reducer', () => {
     expect(newState.isAuthenticated).toEqual(true);
     expect(newState.user).toEqual(user);
   });
+
   it('should set clear when passed SET_CURRENT_USER with empty object', () => {
     const initialState = {
       isAuthenticated: false,
@@ -31,5 +32,16 @@ describe('Authentication Reducer', () => {
 
     expect(newState.isAuthenticated).toEqual(false);
     expect(newState.user).toEqual(user);
+  });
+
+  it('should return state when no action is passed by default', () => {
+    const initialState = {
+      isAuthenticated: false,
+      user: {},
+    };
+    const user = {};
+    const action = {};
+    const newState = users(initialState, action);
+    expect(newState.length).toEqual(user.length);
   });
 });
