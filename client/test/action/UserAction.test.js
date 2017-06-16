@@ -23,17 +23,42 @@ describe('User Actions', () => {
         }
       });
     const expectedActions = [{
-        type: types.DELETE_USER,
-        user: {
-          username: '',
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: ''
-        }
+      type: types.DELETE_USER,
+      user: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      }
     }];
     const store = mockStore({ users: {} });
     store.dispatch(actions.deleteUser())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates LOAD_USER when a user is fetched', () => {
+    nock('http://localhost:4000')
+      .get(`/users/${2}`)
+      .reply(200, {
+        body: {
+          data: 'You have successfully retrieved this user..'
+        }
+      });
+    const expectedActions = [{
+      type: types.DELETE_USER,
+      user: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      }
+    }];
+    const store = mockStore({ users: {} });
+    store.dispatch(actions.fetchUser())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
