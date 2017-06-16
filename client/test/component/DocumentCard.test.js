@@ -36,7 +36,7 @@ describe('DocumentCard', () => {
     expect(wrapper.find('.card')).toExist();
   });
 
-  it('receives the correct props', () => {
+  it('should render DOM elements', () => {
     const wrapper = setup();
     expect(wrapper.find('.card-title').text()).toEqual('title');
     expect(wrapper.find('.card-content').text()).toExist();
@@ -50,6 +50,9 @@ describe('DocumentCard', () => {
 
   it('should contain props', () => {
     const wrapper = setup();
+    expect(wrapper.props('document')).toExist();
     expect(wrapper.props('deleteDocument')).toExist();
+    expect(wrapper.props('currentUser')).toExist();
+    expect(wrapper.find('onClick')).toExist();
   });
 });
