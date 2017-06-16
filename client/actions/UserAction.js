@@ -39,13 +39,13 @@ const fetchUsers = (offset) => {
   },
 /**
  * Dispatch action to update a user
- * @param {Object} user User object
+ * @param {Object} id User object
  * @param {Object} userId User's userId
  * @returns {Object}
  */
-  updateUser = (user) => {
+  updateUser = (id) => {
     return (dispatch) => {
-      return axios.put(`/users/${user.id}`)
+      return axios.put(`/users/${id}`)
         .then((response) => {
           dispatch({
             type: types.UPDATE_USER,

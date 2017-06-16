@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
 import * as actions from '../../actions/UserAction';
-import userSignupRequest from '../../actions/SignupAction';
 import * as auth from '../../actions/Authentication';
 import * as types from '../../actions/ActionType';
 
@@ -15,10 +14,60 @@ describe('User Actions', () => {
     nock.cleanAll();
   });
 
+  it('creates DELETE_USER when succesfully deleted a user', () => {
+    nock('http://localhost:4000')
+      .delete(`/users/${2}`)
+      .reply(200, {
+        body: {
+          data: 'User has been successfully deleted.'
+        }
+      });
+    const expectedActions = [{
+        type: types.DELETE_USER,
+        user: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: ''
+        }
+    }];
+    const store = mockStore({ users: {} });
+    store.dispatch(actions.deleteUser())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates UPDATE_USER when succesfully updated a user', () => {
+    nock('http://localhost:4000')
+      .put(`/users/${2}`)
+      .reply(200, {
+        body: {
+          data: 'User has been successfully deleted.'
+        }
+      });
+    const expectedActions = [{
+      type: types.UPDATE_USER,
+      user: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      }
+    }];
+    const store = mockStore({ user: {} });
+    store.dispatch(actions.updateUser())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
   it('creates SET_USERS and SET_PAGINATION when fetching users has been done',
     () => {
       nock('http://localhost:4000')
-        .get('/users')
+        .get(`/users/?offset=${0}&limit=${5}`)
         .reply(200, {
           body: {
             pagination: {
@@ -52,27 +101,6 @@ describe('User Actions', () => {
       }];
       const store = mockStore({ users: [], paginate: {} });
       store.dispatch(actions.fetchUsers())
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
-    });
-
-  it('creates ADD_USER when sign up has been done',
-    () => {
-      const user = {
-        username: 'oluwafemi',
-        firstName: 'Oluwafemi',
-        lastName: 'Akinwa',
-        email: 'femi.akinwa@gmail.com',
-        password: 'oluwafemi' };
-      nock('http://localhost:4000')
-        .post('/users', user)
-        .reply(200, {
-          body: { user } });
-
-      const expectedActions = [{ type: types.ADD_USER, user }];
-      const store = mockStore({ users: [] });
-      store.dispatch(userSignupRequest(user))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });

@@ -40,5 +40,6 @@ describe('NavigationBar', () => {
   it('should contain links', () => {
     const wrapper = setup();
     expect(wrapper.find('Link').length).toBe(10);
+    expect(wrapper.find('span').length).toBe(2);
   });
 });
