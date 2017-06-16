@@ -12,27 +12,49 @@ describe('User Actions', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  it('creates ADD_USER when sign up has been done',
-    () => {
-      const user = {
-        username: 'oluwafemi',
-        firstName: 'Segun',
-        lastName: 'Akinwa',
-        email: 'femi.akinwa@gmail.com',
-        password: 'oluwafemi' };
-      nock('http://localhost:4000')
-        .post('/users', user)
-        .reply(200, {
-          body: { user } });
+  it('creates ADD_USER when sign up has been done', () => {
+    const user = {
+      username: 'oluwafemi',
+      firstName: 'Segun',
+      lastName: 'Akinwa',
+      email: 'femi.akinwa@gmail.com',
+      password: 'oluwafemi' };
+    nock('http://localhost:4000')
+      .post('/users', user)
+      .reply(200, {
+        body: { user } });
 
-      const expectedActions = [{
-        type: types.ADD_USER,
-        user
-      }];
-      const store = mockStore({ users: [] });
-      store.dispatch(userSignupRequest(user))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
-    });
+    const expectedActions = [{
+      type: types.ADD_USER,
+      user
+    }];
+    const store = mockStore({ users: [] });
+    store.dispatch(userSignupRequest(user))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates SET_CURRENT_USER when sign up has been done', () => {
+    const user = {
+      username: 'oluwafemi',
+      firstName: 'Segun',
+      lastName: 'Akinwa',
+      email: 'femi.akinwa@gmail.com',
+      password: 'oluwafemi' };
+    nock('http://localhost:4000')
+      .post('/users', user)
+      .reply(200, {
+        body: { user } });
+
+    const expectedActions = [{
+      type: types.SET_CURRENT_USER,
+      user
+    }];
+    const store = mockStore({ users: [] });
+    store.dispatch(userSignupRequest(user))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
 });

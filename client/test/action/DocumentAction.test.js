@@ -73,4 +73,74 @@ describe('Document Actions', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
+
+  it('creates LOAD_DOCUMENT when a document is fetched', () => {
+    nock('http://localhost:4000')
+      .get(`/documents/${3}`)
+      .reply(200, {
+        body: {
+          rows: [{
+            title: '',
+            content: '',
+            access: '',
+            owner: {}
+          }]
+        }
+      });
+
+    const expectedActions = [{
+      type: types.LOAD_DOCUMENT,
+      documents: [{ title: '', content: '', access: '', owner: {} }]
+    }];
+    const store = mockStore({ documents: [] });
+
+    store.dispatch(actions.fetchDocument())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates UPDATE_DOCUMENT when a document is updated', () => {
+    nock('http://localhost:4000')
+      .put(`/documents/${3}`)
+      .reply(200, {
+        body: {
+          rows: [{
+            title: '',
+            content: '',
+            access: '',
+            owner: {}
+          }]
+        }
+      });
+
+    const expectedActions = [{
+      type: types.UPDATE_DOCUMENT,
+      documents: [{ title: '', content: '', access: '', owner: {} }]
+    }];
+    const store = mockStore({ documents: [] });
+
+    store.dispatch(actions.updateDocument())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('creates DELETE_DOCUMENT when a document is deleted', () => {
+    nock('http://localhost:4000')
+      .delete(`/documents/${3}`)
+      .reply(200, {
+        body: {}
+      });
+
+    const expectedActions = [{
+      type: types.UPDATE_DOCUMENT
+    }];
+    const store = mockStore({ documents: [] });
+
+    store.dispatch(actions.deleteDocument())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
 });
