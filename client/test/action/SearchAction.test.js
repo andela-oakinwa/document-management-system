@@ -17,7 +17,7 @@ describe('Search Actions', () => {
     () => {
       const queryString = 'queryString';
       nock('http://localhost:4000')
-        .post(`/documents/search/documents?q=${queryString}`)
+        .get(`/documents/search/documents?q=${queryString}`)
         .reply(200, {
           body: {
             pagination: {},
@@ -53,7 +53,7 @@ describe('Search Actions', () => {
   () => {
     const queryString = 'queryString';
     nock('http://localhost:4000')
-      .post(`/users/search/users?q=${queryString}`)
+      .get(`/users/search/users?q=${queryString}`)
       .reply(200, {
         body: {
           pagination: {},
