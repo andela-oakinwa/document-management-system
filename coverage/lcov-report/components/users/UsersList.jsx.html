@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for components/shared/Footer.jsx</title>
+    <title>Code coverage report for components/users/UsersList.jsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">components/shared/</a> Footer.jsx
+      <a href="../../index.html">all files</a> / <a href="index.html">components/users/</a> UsersList.jsx
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">88.89% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>8/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>7/8</span>
       </div>
     </div>
   </div>
@@ -88,27 +88,23 @@
 43
 44
 45
-46</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+46
+47</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,51 +129,58 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
-import { Link } from 'react-router';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import ListRow from './ListRow';
 /**
- * Class component.
+ * Functional stateless component.
  */
-class Footer extends Component {
-  /**
-   * Renders to the DOM
-   * @param {String} socialUrl Link to twitter page
-   * @return {Object}
-   */
-  render() {
-    const socialUrl = 'https://twitter.com/Kaiser_Phemi';
-    return (
-      &lt;footer className="page-footer blue darken-4"&gt;
-        &lt;div className="container"&gt;
-            &lt;div className="row"&gt;
-              &lt;div className="col l6 s12"&gt;
-                &lt;h5 className="white-text"&gt;doqMan DMS&lt;/h5&gt;
-                &lt;p className="white-text"&gt;Create and store everything online.&lt;/p&gt;
-              &lt;/div&gt;
-              &lt;div className="col l4 offset-l2 s12"&gt;
-                &lt;h5 className="white-text"&gt;Navigation&lt;/h5&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="/"&gt;Home&lt;/Link&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;Link className="white-text" to="#!"&gt;FAQ&lt;/Link&gt;&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div className="footer-copyright"&gt;
-            &lt;div className="container"&gt;
-            © 2017 Oluwafemi Akinwa
-            &lt;a className="white-text right" href={socialUrl} target="_blank"&gt;
-              Follow on Twitter
-            &lt;/a&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-      &lt;/footer&gt;
-    );
-  }
-}
+const UsersList = ({ users, auth }) =&gt; {
+  // const emptyMessage = 'No user found';
+  const usersRow = users.map(<span class="fstat-no" title="function not covered" >(user) =&gt; {</span>
+    return <span class="cstat-no" title="statement not covered" >&lt;ListRow</span>
+        user={user}
+        key={user.id}
+        auth={auth}
+      /&gt;;
+  });
+  return (
+    &lt;div&gt;
+    {usersRow.length &gt; 0 ?
+<span class="branch-0 cbranch-no" title="branch not covered" >      &lt;table className="responsive-table bordered striped"&gt;</span>
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;User ID&lt;/th&gt;
+            &lt;th&gt;UserName&lt;/th&gt;
+            &lt;th&gt;First Name&lt;/th&gt;
+            &lt;th&gt;Last Name&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+            &lt;th&gt;Role&lt;/th&gt;
+            &lt;th&gt;Date Joined&lt;/th&gt;
+            &lt;th&gt;Delete&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {usersRow}
+        &lt;/tbody&gt;
+      &lt;/table&gt; : &lt;p&gt;No user found&lt;/p&gt;
+    }
+    &lt;/div&gt;
+  );
+};
 &nbsp;
-export default Footer;
+UsersList.propTypes = {
+  users: React.PropTypes.array.isRequired,
+  deleteUser: React.PropTypes.func,
+  auth: React.PropTypes.object.isRequired,
+};
+&nbsp;
+export default UsersList;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

@@ -33,4 +33,10 @@ describe('Component: ProfileForm', () => {
     expect(wrapper.find('button').length).toBe(1);
     expect(wrapper.find('input').length).toBe(4);
   });
+
+  it('should check for update button', () => {
+    const wrapper = setup();
+    expect(wrapper.find('onClick')).toExist();
+    expect(wrapper.find('button')).toExist();
+  });
 });

@@ -16,7 +16,7 @@ module.exports = {
         onDelete: 'SET NULL',
         references: {
           model: 'Users',
-          kei: 'id'
+          key: 'id'
         }
       },
       content: {
